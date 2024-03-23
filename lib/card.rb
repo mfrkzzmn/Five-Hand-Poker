@@ -17,8 +17,21 @@ class Card
     values = make_values()
     suits = ["spade", "hearts", "club", "diamond"]
     suits.each do |suit|
-      cards.append({'suit': suit, 'values': values})
+      cards.append({'suit':suit, 'values':values})
     end
     return cards
+  end
+
+  def make_card_set
+    simple_cards = []
+    cards = make_suits()
+    cards.each do |card|
+      suit = card[:suit]
+      values = card[:values]
+      values.each do |value|
+        simple_cards.append({'suit':suit, 'value':value})
+      end
+    end
+    return simple_cards
   end
 end
