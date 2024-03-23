@@ -4,10 +4,6 @@ class Deck
     @cards = cards
   end
 
-  def get_cards
-    return @cards
-  end
-
   def shuffle_cards
     @cards.shuffle!()
     return @cards
