@@ -11,4 +11,14 @@ class Card
     value.append('A')
     return value
   end
+
+  def make_suits
+    cards = []
+    values = make_values()
+    suits = ["spade", "hearts", "club", "diamond"]
+    suits.each do |suit|
+      cards.append({'suit': suit, 'values': values})
+    end
+    return cards
+  end
 end
