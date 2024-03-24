@@ -24,14 +24,33 @@ class Hand
     return result
   end
 
-  def check_single_pair(hand)
+  def get_pair_arrays(hand)
     hand_index_array = get_hand_index_array(hand)
     hand_pairs = hand_index_array.find_all{ |e| hand_index_array.count(e) > 1 }
     hand_pairs_unique = hand_pairs.group_by(&:itself).select{|_, a| a[1]}.keys
+
+    return hand_pairs, hand_pairs_unique
+  end
+
+  def check_single_pair(hand)
+    hand_pairs, hand_pairs_unique = get_pair_arrays(hand)
     element_count = hand_pairs.length()
     unique_pair_count = hand_pairs_unique.length()
 
     if unique_pair_count == 1 && element_count == 2
+      result = 1
+    else
+      result = 0
+    end
+    return result
+  end
+
+  def check_double_pairs(hand)
+    hand_pairs, hand_pairs_unique = get_pair_arrays(hand)
+    element_count = hand_pairs.length()
+    unique_pair_count = hand_pairs_unique.length()
+
+    if unique_pair_count == 2 && element_count == 4
       result = 1
     else
       result = 0
