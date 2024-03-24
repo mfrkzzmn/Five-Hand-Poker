@@ -12,7 +12,6 @@ describe Deck do
         @cards.append({'suit':suit, 'value':value})
       end
     end
-    # puts @cards
   end
 
   describe "#shuffle_cards" do
@@ -29,7 +28,7 @@ describe Deck do
     it "deal cards in deck" do
       deck = Deck.new(@cards)
       shuffled_cards = deck.shuffle_cards()
-      {:player=>"1", :cards=>[{:suit=>"hearts", :value=>"10"}, {:suit=>"spade", :value=>"9"}, {:suit=>"hearts", :value=>"Q"}, {:suit=>"diamond", :value=>"7"}, {:suit=>"diamond", :value=>"10"}]}
+
       player = "1"
       cards = []
       cards.append(shuffled_cards[0])
@@ -37,7 +36,8 @@ describe Deck do
       cards.append(shuffled_cards[8])
       cards.append(shuffled_cards[12])
       cards.append(shuffled_cards[16])
-      result = {'player':player, 'cards': cards}
+      result = {'player':player, 'hand': cards}
+
       expect(deck.deal_cards(shuffled_cards)[0]).to eql(result)
     end
   end

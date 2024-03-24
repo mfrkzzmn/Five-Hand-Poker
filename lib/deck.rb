@@ -12,7 +12,6 @@ class Deck
   def deal_cards(shuffled_cards)
     result = []
     players = ['1', '2', '3', '4']
-    # puts shuffled_cards
     i = -1
     players.each do |player|
       cards = []
@@ -22,9 +21,8 @@ class Deck
         cards.append(shuffled_cards[card_index])
         card_index = card_index + 4
       end
-      result.append({'player':player, 'cards': cards})
+      result.append({'player':player, 'hand': cards})
     end
-    puts result
     return result
   end
 
