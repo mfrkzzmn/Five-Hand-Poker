@@ -175,4 +175,23 @@ class Hand
     return flush
   end
 
+  def check_full_house(hand)
+    hand_pairs, hand_pairs_unique = get_pair_arrays(hand)
+    full_house = 0
+
+    if hand_pairs_unique.length() != 2
+      return full_house
+    end
+
+    hand_card_occurance = hand_pairs.group_by{|e| e}.map{|k, v| [k, v.length]}.to_h
+    hand_card_occurance = hand_card_occurance.sort_by {|_key, value| value}.to_h
+
+    card_occurance =  hand_card_occurance.values
+    if card_occurance[0] == 2 && card_occurance[1] == 3
+      full_house = 1
+    end
+
+    return full_house
+  end
+
 end
