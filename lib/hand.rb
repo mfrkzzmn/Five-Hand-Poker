@@ -84,25 +84,56 @@ class Hand
     return result
   end
 
-  def check_straight(hand)
+  def check_pre_straight(hand)
     hand_index_array = get_hand_index_array(hand)
     hand_suits = hand.map { |p| p[:suit] }.uniq
     straight_value = 1
-    straight = 0
 
     (0...4).each do |n|
       first_index = hand_index_array[n]
       second_index = hand_index_array[n+1]
       second_index = Integer(second_index) + 1
 
-      if first_index != second_index
-        straight_value = 0
+      if n == 0
+        if first_index != second_index
+          if first_index == 12 && second_index == 4
+            straight_value = 1
+          else
+            straight_value = 0
+          end
+        end
+      else
+        if first_index != second_index
+          straight_value = 0
+        end
       end
     end
+    return straight_value, hand_suits, hand_index_array
+  end
+
+  def check_straight(hand)
+    straight = 0
+    straight_value, hand_suits, hand_index_array = check_pre_straight(hand)
 
     if straight_value == 1 && hand_suits.length() > 1
       straight = 1
     end
+
+    return straight
+  end
+
+  def check_straight_flush(hand)
+    straight = 0
+    straight_value, hand_suits, hand_index_array = check_pre_straight(hand)
+
+    if straight_value == 1 && hand_suits.length() == 1
+      straight = 1
+    end
+
+    if hand_index_array[0] == 12 && hand_index_array[1] == 11
+      straight = 0
+    end
+
     return straight
   end
 

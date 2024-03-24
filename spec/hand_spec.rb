@@ -415,6 +415,36 @@ describe Hand do
   end
 
   describe "#check_straight" do
+    it "check if a hand is straight if five cards of any squence occurs" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      suits = ["spade", "hearts", "club", "diamond"]
+      values = ['A', 'K', 'Q', 'J', '10']
+
+      hand1.append({'suit':suits[1], 'value': values[0]})
+      hand1.append({'suit':suits[0], 'value': values[1]})
+      hand1.append({'suit':suits[2], 'value': values[2]})
+      hand1.append({'suit':suits[0], 'value': values[3]})
+      hand1.append({'suit':suits[3], 'value': values[4]})
+
+      expect(hand.check_straight(hand1)).to eql(1)
+    end
+
+    it "check if a hand is straight if five cards of any suit squence occurs with an Ace and lower valued cards" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      suits = ["spade", "hearts", "club", "diamond"]
+      values = ['4', '3', '5', '2', 'A']
+
+      hand1.append({'suit':suits[1], 'value': values[0]})
+      hand1.append({'suit':suits[0], 'value': values[1]})
+      hand1.append({'suit':suits[2], 'value': values[2]})
+      hand1.append({'suit':suits[0], 'value': values[3]})
+      hand1.append({'suit':suits[3], 'value': values[4]})
+
+      expect(hand.check_straight(hand1)).to eql(1)
+    end
+
     it "check if a hand is straight" do
       hand = Hand.new(@cards)
       hand1 = []
@@ -434,7 +464,7 @@ describe Hand do
       hand = Hand.new(@cards)
       hand1 = []
       suits = ["spade", "spade", "spade", "spade"]
-      values = ['2', 'K', 'Q', 'J', '10']
+      values = ['9', 'K', 'Q', 'J', '10']
 
       hand1.append({'suit':suits[1], 'value': values[0]})
       hand1.append({'suit':suits[0], 'value': values[1]})
@@ -458,6 +488,83 @@ describe Hand do
       hand1.append({'suit':suits[3], 'value': values[4]})
 
       expect(hand.check_straight(hand1)).to eql(0)
+    end
+  end
+
+  describe "#check_straight_flush " do
+    it "check if a hand is straight flush if five cards of any squence occurs" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      suits = ["spade", "hearts", "club", "diamond"]
+      values = ['A', 'K', 'Q', 'J', '10']
+
+      hand1.append({'suit':suits[1], 'value': values[0]})
+      hand1.append({'suit':suits[0], 'value': values[1]})
+      hand1.append({'suit':suits[2], 'value': values[2]})
+      hand1.append({'suit':suits[0], 'value': values[3]})
+      hand1.append({'suit':suits[3], 'value': values[4]})
+
+      expect(hand.check_straight_flush(hand1)).to eql(0)
+    end
+
+    it "check if a hand is straight flush if five cards of any suit squence occurs with an Ace and lower valued cards" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      suits = ["spade", "hearts", "club", "diamond"]
+      values = ['4', '3', '5', '2', 'A']
+
+      hand1.append({'suit':suits[1], 'value': values[0]})
+      hand1.append({'suit':suits[0], 'value': values[1]})
+      hand1.append({'suit':suits[2], 'value': values[2]})
+      hand1.append({'suit':suits[0], 'value': values[3]})
+      hand1.append({'suit':suits[3], 'value': values[4]})
+
+      expect(hand.check_straight_flush(hand1)).to eql(0)
+    end
+
+    it "check if a hand is straight flush if there is straight flush" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      suits = ["spade", "spade", "spade", "spade"]
+      values = ['9', 'K', 'Q', 'J', '10']
+
+      hand1.append({'suit':suits[1], 'value': values[0]})
+      hand1.append({'suit':suits[0], 'value': values[1]})
+      hand1.append({'suit':suits[2], 'value': values[2]})
+      hand1.append({'suit':suits[0], 'value': values[3]})
+      hand1.append({'suit':suits[3], 'value': values[4]})
+
+      expect(hand.check_straight_flush(hand1)).to eql(1)
+    end
+
+    it "check if a hand is straight flush if there is straight flush with Ace and lower valued cards" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      suits = ["spade", "spade", "spade", "spade"]
+      values = ['3', '2', '4', 'A', '5']
+
+      hand1.append({'suit':suits[1], 'value': values[0]})
+      hand1.append({'suit':suits[0], 'value': values[1]})
+      hand1.append({'suit':suits[2], 'value': values[2]})
+      hand1.append({'suit':suits[0], 'value': values[3]})
+      hand1.append({'suit':suits[3], 'value': values[4]})
+
+      expect(hand.check_straight_flush(hand1)).to eql(1)
+    end
+
+    it "check if a hand is straight flush if there is royal flash" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      suits = ["spade", "spade", "spade", "spade"]
+      values = ['A', 'K', 'Q', 'J', '10']
+
+      hand1.append({'suit':suits[1], 'value': values[0]})
+      hand1.append({'suit':suits[0], 'value': values[1]})
+      hand1.append({'suit':suits[2], 'value': values[2]})
+      hand1.append({'suit':suits[0], 'value': values[3]})
+      hand1.append({'suit':suits[3], 'value': values[4]})
+
+      expect(hand.check_straight_flush(hand1)).to eql(0)
     end
   end
 end
