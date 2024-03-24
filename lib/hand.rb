@@ -123,15 +123,42 @@ class Hand
   end
 
   def check_straight_flush(hand)
+    straight_first_condition = 0
+    straight_second_condition = 1
     straight = 0
     straight_value, hand_suits, hand_index_array = check_pre_straight(hand)
 
     if straight_value == 1 && hand_suits.length() == 1
-      straight = 1
+      straight_first_condition = 1
     end
 
     if hand_index_array[0] == 12 && hand_index_array[1] == 11
-      straight = 0
+      straight_second_condition = 0
+    end
+
+    if straight_first_condition == 1 && straight_second_condition == 1
+      straight = 1
+    end
+
+    return straight
+  end
+
+  def check_royal_flush(hand)
+    straight_first_condition = 0
+    straight_second_condition = 0
+    straight = 0
+    straight_value, hand_suits, hand_index_array = check_pre_straight(hand)
+
+    if straight_value == 1 && hand_suits.length() == 1
+      straight_first_condition = 1
+    end
+
+    if hand_index_array[0] == 12 && hand_index_array[1] == 11
+      straight_second_condition = 1
+    end
+
+    if straight_first_condition == 1 && straight_second_condition == 1
+      straight = 1
     end
 
     return straight
