@@ -164,4 +164,15 @@ class Hand
     return straight
   end
 
+  def check_flush(hand)
+    flush = 0
+    hand_suits = hand.map { |p| p[:suit] }.uniq
+
+    if hand_suits.length() == 1
+      flush = 1
+    end
+
+    return flush
+  end
+
 end
