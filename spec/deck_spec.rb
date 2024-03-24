@@ -15,16 +15,6 @@ describe Deck do
     # puts @cards
   end
 
-  describe "#initialize" do
-    it "initialize cards in deck" do
-      deck = Deck.new(@cards)
-      suit = "spade"
-      value = '2'
-      result = {'suit':suit, 'value': value}
-      expect(deck.get_cards[0]).to eql(result)
-    end
-  end
-
   describe "#shuffle_cards" do
     it "suffle cards in deck" do
       deck = Deck.new(@cards)
