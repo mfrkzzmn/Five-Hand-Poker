@@ -413,4 +413,51 @@ describe Hand do
       expect(hand.check_four_of_a_kind(hand1)).to eql(1)
     end
   end
+
+  describe "#check_straight" do
+    it "check if a hand is straight" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      suits = ["spade", "hearts", "club", "diamond"]
+      values = ['A', 'K', 'Q', 'J', '10']
+
+      hand1.append({'suit':suits[1], 'value': values[0]})
+      hand1.append({'suit':suits[0], 'value': values[1]})
+      hand1.append({'suit':suits[2], 'value': values[2]})
+      hand1.append({'suit':suits[0], 'value': values[3]})
+      hand1.append({'suit':suits[3], 'value': values[4]})
+
+      expect(hand.check_straight(hand1)).to eql(1)
+    end
+
+    it "check if a hand is straight if there is straight flash" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      suits = ["spade", "spade", "spade", "spade"]
+      values = ['2', 'K', 'Q', 'J', '10']
+
+      hand1.append({'suit':suits[1], 'value': values[0]})
+      hand1.append({'suit':suits[0], 'value': values[1]})
+      hand1.append({'suit':suits[2], 'value': values[2]})
+      hand1.append({'suit':suits[0], 'value': values[3]})
+      hand1.append({'suit':suits[3], 'value': values[4]})
+
+      expect(hand.check_straight(hand1)).to eql(0)
+    end
+
+    it "check if a hand is straight if there is royal flash" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      suits = ["spade", "spade", "spade", "spade"]
+      values = ['A', 'K', 'Q', 'J', '10']
+
+      hand1.append({'suit':suits[1], 'value': values[0]})
+      hand1.append({'suit':suits[0], 'value': values[1]})
+      hand1.append({'suit':suits[2], 'value': values[2]})
+      hand1.append({'suit':suits[0], 'value': values[3]})
+      hand1.append({'suit':suits[3], 'value': values[4]})
+
+      expect(hand.check_straight(hand1)).to eql(0)
+    end
+  end
 end
