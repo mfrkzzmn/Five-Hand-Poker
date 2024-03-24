@@ -35,9 +35,9 @@ class Hand
   def check_single_pair(hand)
     hand_pairs, hand_pairs_unique = get_pair_arrays(hand)
     element_count = hand_pairs.length()
-    unique_pair_count = hand_pairs_unique.length()
+    unique_element_count = hand_pairs_unique.length()
 
-    if unique_pair_count == 1 && element_count == 2
+    if unique_element_count == 1 && element_count == 2
       result = 1
     else
       result = 0
@@ -48,9 +48,22 @@ class Hand
   def check_double_pairs(hand)
     hand_pairs, hand_pairs_unique = get_pair_arrays(hand)
     element_count = hand_pairs.length()
-    unique_pair_count = hand_pairs_unique.length()
+    unique_element_count = hand_pairs_unique.length()
 
-    if unique_pair_count == 2 && element_count == 4
+    if unique_element_count == 2 && element_count == 4
+      result = 1
+    else
+      result = 0
+    end
+    return result
+  end
+
+  def check_three_of_a_kind(hand)
+    hand_pairs, hand_pairs_unique = get_pair_arrays(hand)
+    element_count = hand_pairs.length()
+    unique_element_count = hand_pairs_unique.length()
+
+    if unique_element_count == 1 && element_count == 3
       result = 1
     else
       result = 0

@@ -2,7 +2,6 @@ require 'hand'
 
 
 describe Hand do
-  let(:cards) { double("card") }
   before do
     @cards = []
     suits = ["spade", "hearts", "club", "diamond"]
@@ -258,6 +257,83 @@ describe Hand do
       hand1.append({'suit':suits[3], 'value': values[4]})
 
       expect(hand.check_double_pairs(hand1)).to eql(0)
+    end
+  end
+
+  describe "#three_of_a_kind" do
+    it "check if three of a kind exists if there is a double pair" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      suits = ["spade", "hearts", "club", "diamond"]
+      values = ['A', 'A', '9', '9', '10']
+
+      hand1.append({'suit':suits[1], 'value': values[0]})
+      hand1.append({'suit':suits[0], 'value': values[1]})
+      hand1.append({'suit':suits[2], 'value': values[2]})
+      hand1.append({'suit':suits[0], 'value': values[3]})
+      hand1.append({'suit':suits[3], 'value': values[4]})
+
+      expect(hand.check_three_of_a_kind(hand1)).to eql(0)
+    end
+
+    it "check if three of a kind exists if there is all different card values" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      suits = ["spade", "hearts", "club", "diamond"]
+      values = ['A', '2', '9', '6', '10']
+
+      hand1.append({'suit':suits[1], 'value': values[0]})
+      hand1.append({'suit':suits[0], 'value': values[1]})
+      hand1.append({'suit':suits[2], 'value': values[2]})
+      hand1.append({'suit':suits[0], 'value': values[3]})
+      hand1.append({'suit':suits[3], 'value': values[4]})
+
+      expect(hand.check_three_of_a_kind(hand1)).to eql(0)
+    end
+
+    it "check if three of a kind exists if there is a single pair" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      suits = ["spade", "hearts", "club", "diamond"]
+      values = ['A', '2', 'K', '2', '10']
+
+      hand1.append({'suit':suits[1], 'value': values[0]})
+      hand1.append({'suit':suits[0], 'value': values[1]})
+      hand1.append({'suit':suits[2], 'value': values[2]})
+      hand1.append({'suit':suits[0], 'value': values[3]})
+      hand1.append({'suit':suits[3], 'value': values[4]})
+
+      expect(hand.check_three_of_a_kind(hand1)).to eql(0)
+    end
+
+    it "check if three of a kind exists if there is a three of a kind" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      suits = ["spade", "hearts", "club", "diamond"]
+      values = ['A', '2', '6', '6', '6']
+
+      hand1.append({'suit':suits[1], 'value': values[0]})
+      hand1.append({'suit':suits[0], 'value': values[1]})
+      hand1.append({'suit':suits[2], 'value': values[2]})
+      hand1.append({'suit':suits[0], 'value': values[3]})
+      hand1.append({'suit':suits[3], 'value': values[4]})
+
+      expect(hand.check_three_of_a_kind(hand1)).to eql(1)
+    end
+
+    it "check if three of a kind exists if there is a four of a kind" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      suits = ["spade", "hearts", "club", "diamond"]
+      values = ['6', 'A', '6', '6', '6']
+
+      hand1.append({'suit':suits[1], 'value': values[0]})
+      hand1.append({'suit':suits[0], 'value': values[1]})
+      hand1.append({'suit':suits[2], 'value': values[2]})
+      hand1.append({'suit':suits[0], 'value': values[3]})
+      hand1.append({'suit':suits[3], 'value': values[4]})
+
+      expect(hand.check_three_of_a_kind(hand1)).to eql(0)
     end
   end
 end
