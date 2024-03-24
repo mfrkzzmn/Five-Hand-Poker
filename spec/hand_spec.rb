@@ -106,4 +106,81 @@ describe Hand do
       expect(hand.check_high_hand(hand1, hand2)).to eql(-1)
     end
   end
+
+  describe "#single_pair" do
+    it "check if single pair exists" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      suits = ["spade", "hearts", "club", "diamond"]
+      values = ['A', 'A', '9', '6', '10']
+
+      hand1.append({'suit':suits[1], 'value': values[0]})
+      hand1.append({'suit':suits[0], 'value': values[1]})
+      hand1.append({'suit':suits[2], 'value': values[2]})
+      hand1.append({'suit':suits[0], 'value': values[3]})
+      hand1.append({'suit':suits[3], 'value': values[4]})
+
+      expect(hand.check_single_pair(hand1)).to eql(1)
+    end
+
+    it "check if single pair not exists by all different card values" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      suits = ["spade", "hearts", "club", "diamond"]
+      values = ['A', '2', '9', '6', '10']
+
+      hand1.append({'suit':suits[1], 'value': values[0]})
+      hand1.append({'suit':suits[0], 'value': values[1]})
+      hand1.append({'suit':suits[2], 'value': values[2]})
+      hand1.append({'suit':suits[0], 'value': values[3]})
+      hand1.append({'suit':suits[3], 'value': values[4]})
+
+      expect(hand.check_single_pair(hand1)).to eql(0)
+    end
+
+    it "check if single pair exists by having double pairs" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      suits = ["spade", "hearts", "club", "diamond"]
+      values = ['A', '2', 'A', '2', '10']
+
+      hand1.append({'suit':suits[1], 'value': values[0]})
+      hand1.append({'suit':suits[0], 'value': values[1]})
+      hand1.append({'suit':suits[2], 'value': values[2]})
+      hand1.append({'suit':suits[0], 'value': values[3]})
+      hand1.append({'suit':suits[3], 'value': values[4]})
+
+      expect(hand.check_single_pair(hand1)).to eql(0)
+    end
+
+    it "check if single pair not exists by having three of a kind" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      suits = ["spade", "hearts", "club", "diamond"]
+      values = ['A', '2', '6', '6', '6']
+
+      hand1.append({'suit':suits[1], 'value': values[0]})
+      hand1.append({'suit':suits[0], 'value': values[1]})
+      hand1.append({'suit':suits[2], 'value': values[2]})
+      hand1.append({'suit':suits[0], 'value': values[3]})
+      hand1.append({'suit':suits[3], 'value': values[4]})
+
+      expect(hand.check_single_pair(hand1)).to eql(0)
+    end
+
+    it "check if single pair not exists by having four of a kind" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      suits = ["spade", "hearts", "club", "diamond"]
+      values = ['6', 'A', '6', '6', '6']
+
+      hand1.append({'suit':suits[1], 'value': values[0]})
+      hand1.append({'suit':suits[0], 'value': values[1]})
+      hand1.append({'suit':suits[2], 'value': values[2]})
+      hand1.append({'suit':suits[0], 'value': values[3]})
+      hand1.append({'suit':suits[3], 'value': values[4]})
+
+      expect(hand.check_single_pair(hand1)).to eql(0)
+    end
+  end
 end
