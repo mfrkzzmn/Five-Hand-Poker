@@ -88,7 +88,7 @@ describe Hand do
       hand2 = []
       suits = ["spade", "hearts", "club", "diamond"]
       values1 = ['A', 'J', '8', '6', '7']
-      values2 = ['A', 'K', '4', '3', '2']
+      values2 = ['A', 'J', '8', '6', '7']
 
       hand1.append({'suit':suits[1], 'value': values1[0]})
       hand1.append({'suit':suits[0], 'value': values1[1]})
@@ -102,7 +102,7 @@ describe Hand do
       hand2.append({'suit':suits[3], 'value': values2[3]})
       hand2.append({'suit':suits[2], 'value': values2[4]})
 
-      expect(hand.check_high_hand(hand1, hand2)).to eql(-1)
+      expect(hand.check_high_hand(hand1, hand2)).to eql(0)
     end
   end
 
@@ -828,6 +828,5185 @@ describe Hand do
       expect(hand.check_full_house(hand1)).to eql(1)
     end
 
+
+  end
+
+  describe "#compare hands" do
+
+    it "check if first hand has high cards and second hand has same high cards" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+      suits = ["spade", "hearts", "club", "diamond"]
+      values1 = ['A', 'J', '9', '6', '10']
+      values2 = ['A', 'J', '9', '6', '10']
+
+      hand1.append({'suit':suits[1], 'value': values1[0]})
+      hand1.append({'suit':suits[0], 'value': values1[1]})
+      hand1.append({'suit':suits[2], 'value': values1[2]})
+      hand1.append({'suit':suits[0], 'value': values1[3]})
+      hand1.append({'suit':suits[3], 'value': values1[4]})
+
+      hand2.append({'suit':suits[0], 'value': values2[0]})
+      hand2.append({'suit':suits[1], 'value': values2[1]})
+      hand2.append({'suit':suits[0], 'value': values2[2]})
+      hand2.append({'suit':suits[3], 'value': values2[3]})
+      hand2.append({'suit':suits[2], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(0)
+    end
+
+    it "check if first hand has high cards and second hand has low cards" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+      suits = ["spade", "hearts", "club", "diamond"]
+      values1 = ['A', 'J', '9', '6', '10']
+      values2 = ['A', 'J', '4', '7', '8']
+
+      hand1.append({'suit':suits[1], 'value': values1[0]})
+      hand1.append({'suit':suits[0], 'value': values1[1]})
+      hand1.append({'suit':suits[2], 'value': values1[2]})
+      hand1.append({'suit':suits[0], 'value': values1[3]})
+      hand1.append({'suit':suits[3], 'value': values1[4]})
+
+      hand2.append({'suit':suits[0], 'value': values2[0]})
+      hand2.append({'suit':suits[1], 'value': values2[1]})
+      hand2.append({'suit':suits[0], 'value': values2[2]})
+      hand2.append({'suit':suits[3], 'value': values2[3]})
+      hand2.append({'suit':suits[2], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(1)
+    end
+
+    it "check if first hand has low cards and second hand has high cards" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+      suits = ["spade", "hearts", "club", "diamond"]
+      values1 = ['A', '2', '9', '6', '10']
+      values2 = ['A', 'J', '9', '6', '10']
+
+      hand1.append({'suit':suits[1], 'value': values1[0]})
+      hand1.append({'suit':suits[0], 'value': values1[1]})
+      hand1.append({'suit':suits[2], 'value': values1[2]})
+      hand1.append({'suit':suits[0], 'value': values1[3]})
+      hand1.append({'suit':suits[3], 'value': values1[4]})
+
+      hand2.append({'suit':suits[0], 'value': values2[0]})
+      hand2.append({'suit':suits[1], 'value': values2[1]})
+      hand2.append({'suit':suits[0], 'value': values2[2]})
+      hand2.append({'suit':suits[3], 'value': values2[3]})
+      hand2.append({'suit':suits[2], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(-1)
+    end
+
+    it "check if first hand has high cards and second hand has single pair" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+      suits = ["spade", "hearts", "club", "diamond"]
+      values1 = ['A', '2', '9', '6', '10']
+      values2 = ['A', 'J', '9', '10', '10']
+
+      hand1.append({'suit':suits[1], 'value': values1[0]})
+      hand1.append({'suit':suits[0], 'value': values1[1]})
+      hand1.append({'suit':suits[2], 'value': values1[2]})
+      hand1.append({'suit':suits[0], 'value': values1[3]})
+      hand1.append({'suit':suits[3], 'value': values1[4]})
+
+      hand2.append({'suit':suits[0], 'value': values2[0]})
+      hand2.append({'suit':suits[1], 'value': values2[1]})
+      hand2.append({'suit':suits[0], 'value': values2[2]})
+      hand2.append({'suit':suits[3], 'value': values2[3]})
+      hand2.append({'suit':suits[2], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(-1)
+    end
+
+    it "check if first hand has high cards and second hand has double pair" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+      suits = ["spade", "hearts", "club", "diamond"]
+      values1 = ['A', '2', '9', '6', '10']
+      values2 = ['A', 'J', 'A', '10', '10']
+
+      hand1.append({'suit':suits[1], 'value': values1[0]})
+      hand1.append({'suit':suits[0], 'value': values1[1]})
+      hand1.append({'suit':suits[2], 'value': values1[2]})
+      hand1.append({'suit':suits[0], 'value': values1[3]})
+      hand1.append({'suit':suits[3], 'value': values1[4]})
+
+      hand2.append({'suit':suits[0], 'value': values2[0]})
+      hand2.append({'suit':suits[1], 'value': values2[1]})
+      hand2.append({'suit':suits[0], 'value': values2[2]})
+      hand2.append({'suit':suits[3], 'value': values2[3]})
+      hand2.append({'suit':suits[2], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(-1)
+    end
+
+    it "check if first hand has high cards and second hand has three of a kind" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+      suits = ["spade", "hearts", "club", "diamond"]
+      values1 = ['A', '2', '9', '6', '10']
+      values2 = ['A', 'J', '10', '10', '10']
+
+      hand1.append({'suit':suits[1], 'value': values1[0]})
+      hand1.append({'suit':suits[0], 'value': values1[1]})
+      hand1.append({'suit':suits[2], 'value': values1[2]})
+      hand1.append({'suit':suits[0], 'value': values1[3]})
+      hand1.append({'suit':suits[3], 'value': values1[4]})
+
+      hand2.append({'suit':suits[0], 'value': values2[0]})
+      hand2.append({'suit':suits[1], 'value': values2[1]})
+      hand2.append({'suit':suits[0], 'value': values2[2]})
+      hand2.append({'suit':suits[3], 'value': values2[3]})
+      hand2.append({'suit':suits[2], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(-1)
+    end
+
+    it "check if first hand has high cards and second hand has straight" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+      suits = ["spade", "hearts", "club", "diamond"]
+      values1 = ['A', '2', '9', '6', '10']
+      values2 = ['Q', 'J', '10', 'K', '9']
+
+      hand1.append({'suit':suits[1], 'value': values1[0]})
+      hand1.append({'suit':suits[0], 'value': values1[1]})
+      hand1.append({'suit':suits[2], 'value': values1[2]})
+      hand1.append({'suit':suits[0], 'value': values1[3]})
+      hand1.append({'suit':suits[3], 'value': values1[4]})
+
+      hand2.append({'suit':suits[0], 'value': values2[0]})
+      hand2.append({'suit':suits[1], 'value': values2[1]})
+      hand2.append({'suit':suits[0], 'value': values2[2]})
+      hand2.append({'suit':suits[3], 'value': values2[3]})
+      hand2.append({'suit':suits[2], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(-1)
+    end
+
+    it "check if first hand has high cards and second hand has a flush" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+      suits1 = ["spade", "club", "club", "club"]
+      suits2 = ["club", "club", "club", "club"]
+      values1 = ['A', '2', '9', '6', '10']
+      values2 = ['A', 'J', '10', '10', '10']
+
+      hand1.append({'suit':suits1[1], 'value': values1[0]})
+      hand1.append({'suit':suits1[0], 'value': values1[1]})
+      hand1.append({'suit':suits1[2], 'value': values1[2]})
+      hand1.append({'suit':suits1[0], 'value': values1[3]})
+      hand1.append({'suit':suits1[3], 'value': values1[4]})
+
+      hand2.append({'suit':suits2[0], 'value': values2[0]})
+      hand2.append({'suit':suits2[1], 'value': values2[1]})
+      hand2.append({'suit':suits2[0], 'value': values2[2]})
+      hand2.append({'suit':suits2[3], 'value': values2[3]})
+      hand2.append({'suit':suits2[2], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(-1)
+    end
+
+    it "check if first hand has high cards and second hand has a full house" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+      suits1 = ["spade", "club", "club", "club"]
+      suits2 = ["club", "hearts", "club", "club"]
+      values1 = ['A', '2', '9', '6', '10']
+      values2 = ['J', 'J', '10', '10', '10']
+
+      hand1.append({'suit':suits1[1], 'value': values1[0]})
+      hand1.append({'suit':suits1[0], 'value': values1[1]})
+      hand1.append({'suit':suits1[2], 'value': values1[2]})
+      hand1.append({'suit':suits1[0], 'value': values1[3]})
+      hand1.append({'suit':suits1[3], 'value': values1[4]})
+
+      hand2.append({'suit':suits2[0], 'value': values2[0]})
+      hand2.append({'suit':suits2[1], 'value': values2[1]})
+      hand2.append({'suit':suits2[0], 'value': values2[2]})
+      hand2.append({'suit':suits2[3], 'value': values2[3]})
+      hand2.append({'suit':suits2[2], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(-1)
+    end
+
+    it "check if first hand has high cards and second hand has a four of a kind" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+      suits1 = ["spade", "club", "club", "club"]
+      suits2 = ["club", "hearts", "club", "club"]
+      values1 = ['A', '2', '9', '6', '10']
+      values2 = ['J', '10', '10', '10', '10']
+
+      hand1.append({'suit':suits1[1], 'value': values1[0]})
+      hand1.append({'suit':suits1[0], 'value': values1[1]})
+      hand1.append({'suit':suits1[2], 'value': values1[2]})
+      hand1.append({'suit':suits1[0], 'value': values1[3]})
+      hand1.append({'suit':suits1[3], 'value': values1[4]})
+
+      hand2.append({'suit':suits2[0], 'value': values2[0]})
+      hand2.append({'suit':suits2[1], 'value': values2[1]})
+      hand2.append({'suit':suits2[0], 'value': values2[2]})
+      hand2.append({'suit':suits2[3], 'value': values2[3]})
+      hand2.append({'suit':suits2[2], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(-1)
+    end
+
+    it "check if first hand has high cards and second hand has a straight flush" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+      suits1 = ["spade", "club", "club", "club"]
+      suits2 = ["club", "club", "club", "club"]
+      values1 = ['A', '2', '9', '6', '10']
+      values2 = ['J', '10', '8', '7', '9']
+
+      hand1.append({'suit':suits1[1], 'value': values1[0]})
+      hand1.append({'suit':suits1[0], 'value': values1[1]})
+      hand1.append({'suit':suits1[2], 'value': values1[2]})
+      hand1.append({'suit':suits1[0], 'value': values1[3]})
+      hand1.append({'suit':suits1[3], 'value': values1[4]})
+
+      hand2.append({'suit':suits2[0], 'value': values2[0]})
+      hand2.append({'suit':suits2[1], 'value': values2[1]})
+      hand2.append({'suit':suits2[0], 'value': values2[2]})
+      hand2.append({'suit':suits2[3], 'value': values2[3]})
+      hand2.append({'suit':suits2[2], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(-1)
+    end
+
+    it "check if first hand has high cards and second hand has a royal flush" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+      suits1 = ["spade", "club", "club", "club"]
+      suits2 = ["club", "club", "club", "club"]
+      values1 = ['A', '2', '9', '6', '10']
+      values2 = ['A', 'K', 'Q', 'J', '10']
+
+      hand1.append({'suit':suits1[1], 'value': values1[0]})
+      hand1.append({'suit':suits1[0], 'value': values1[1]})
+      hand1.append({'suit':suits1[2], 'value': values1[2]})
+      hand1.append({'suit':suits1[0], 'value': values1[3]})
+      hand1.append({'suit':suits1[3], 'value': values1[4]})
+
+      hand2.append({'suit':suits2[0], 'value': values2[0]})
+      hand2.append({'suit':suits2[1], 'value': values2[1]})
+      hand2.append({'suit':suits2[0], 'value': values2[2]})
+      hand2.append({'suit':suits2[3], 'value': values2[3]})
+      hand2.append({'suit':suits2[2], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(-1)
+    end
+
+    #first hand has single pair and second hand has other pattern start
+
+    it "check if first hand has single pair and second hand has high cards" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+      suits = ["spade", "hearts", "club", "diamond"]
+      values1 = ['8', '4', '3', '2', '2']
+      values2 = ['A', 'J', '9', '8', '7']
+
+      hand1.append({'suit':suits[1], 'value': values1[0]})
+      hand1.append({'suit':suits[0], 'value': values1[1]})
+      hand1.append({'suit':suits[2], 'value': values1[2]})
+      hand1.append({'suit':suits[0], 'value': values1[3]})
+      hand1.append({'suit':suits[3], 'value': values1[4]})
+
+      hand2.append({'suit':suits[0], 'value': values2[0]})
+      hand2.append({'suit':suits[1], 'value': values2[1]})
+      hand2.append({'suit':suits[0], 'value': values2[2]})
+      hand2.append({'suit':suits[3], 'value': values2[3]})
+      hand2.append({'suit':suits[2], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(1)
+    end
+
+    it "check if first hand has single pair and second hand has single pair" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+      suits = ["spade", "hearts", "club", "diamond"]
+      values1 = ['A', '2', '9', '6', '6']
+      values2 = ['A', 'J', '9', '2', '2']
+
+      hand1.append({'suit':suits[1], 'value': values1[0]})
+      hand1.append({'suit':suits[0], 'value': values1[1]})
+      hand1.append({'suit':suits[2], 'value': values1[2]})
+      hand1.append({'suit':suits[0], 'value': values1[3]})
+      hand1.append({'suit':suits[3], 'value': values1[4]})
+
+      hand2.append({'suit':suits[0], 'value': values2[0]})
+      hand2.append({'suit':suits[1], 'value': values2[1]})
+      hand2.append({'suit':suits[0], 'value': values2[2]})
+      hand2.append({'suit':suits[3], 'value': values2[3]})
+      hand2.append({'suit':suits[2], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(1)
+    end
+
+    it "check if first hand has single pair and second hand has double pair" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+      suits = ["spade", "hearts", "club", "diamond"]
+      values1 = ['A', '2', '9', '6', '6']
+      values2 = ['A', 'J', 'A', '10', '10']
+
+      hand1.append({'suit':suits[1], 'value': values1[0]})
+      hand1.append({'suit':suits[0], 'value': values1[1]})
+      hand1.append({'suit':suits[2], 'value': values1[2]})
+      hand1.append({'suit':suits[0], 'value': values1[3]})
+      hand1.append({'suit':suits[3], 'value': values1[4]})
+
+      hand2.append({'suit':suits[0], 'value': values2[0]})
+      hand2.append({'suit':suits[1], 'value': values2[1]})
+      hand2.append({'suit':suits[0], 'value': values2[2]})
+      hand2.append({'suit':suits[3], 'value': values2[3]})
+      hand2.append({'suit':suits[2], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(-1)
+    end
+
+    it "check if first hand has single pair and second hand has three of a kind" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+      suits = ["spade", "hearts", "club", "diamond"]
+      values1 = ['A', '2', '9', '6', '6']
+      values2 = ['A', 'J', '10', '10', '10']
+
+      hand1.append({'suit':suits[1], 'value': values1[0]})
+      hand1.append({'suit':suits[0], 'value': values1[1]})
+      hand1.append({'suit':suits[2], 'value': values1[2]})
+      hand1.append({'suit':suits[0], 'value': values1[3]})
+      hand1.append({'suit':suits[3], 'value': values1[4]})
+
+      hand2.append({'suit':suits[0], 'value': values2[0]})
+      hand2.append({'suit':suits[1], 'value': values2[1]})
+      hand2.append({'suit':suits[0], 'value': values2[2]})
+      hand2.append({'suit':suits[3], 'value': values2[3]})
+      hand2.append({'suit':suits[2], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(-1)
+    end
+
+    it "check if first hand has single pair and second hand has straight" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+      suits = ["spade", "hearts", "club", "diamond"]
+      values1 = ['A', '2', '9', '6', '6']
+      values2 = ['Q', 'J', '10', 'K', '9']
+
+      hand1.append({'suit':suits[1], 'value': values1[0]})
+      hand1.append({'suit':suits[0], 'value': values1[1]})
+      hand1.append({'suit':suits[2], 'value': values1[2]})
+      hand1.append({'suit':suits[0], 'value': values1[3]})
+      hand1.append({'suit':suits[3], 'value': values1[4]})
+
+      hand2.append({'suit':suits[0], 'value': values2[0]})
+      hand2.append({'suit':suits[1], 'value': values2[1]})
+      hand2.append({'suit':suits[0], 'value': values2[2]})
+      hand2.append({'suit':suits[3], 'value': values2[3]})
+      hand2.append({'suit':suits[2], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(-1)
+    end
+
+    it "check if first hand has single pair and second hand has a flush" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+      suits1 = ["spade", "club", "club", "club"]
+      suits2 = ["club", "club", "club", "club"]
+      values1 = ['A', '2', '9', '6', '6']
+      values2 = ['A', 'J', '10', '10', '10']
+
+      hand1.append({'suit':suits1[1], 'value': values1[0]})
+      hand1.append({'suit':suits1[0], 'value': values1[1]})
+      hand1.append({'suit':suits1[2], 'value': values1[2]})
+      hand1.append({'suit':suits1[0], 'value': values1[3]})
+      hand1.append({'suit':suits1[3], 'value': values1[4]})
+
+      hand2.append({'suit':suits2[0], 'value': values2[0]})
+      hand2.append({'suit':suits2[1], 'value': values2[1]})
+      hand2.append({'suit':suits2[0], 'value': values2[2]})
+      hand2.append({'suit':suits2[3], 'value': values2[3]})
+      hand2.append({'suit':suits2[2], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(-1)
+    end
+
+    it "check if first hand has single pair and second hand has a full house" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+      suits1 = ["spade", "club", "club", "club"]
+      suits2 = ["club", "hearts", "club", "club"]
+      values1 = ['A', '2', '9', '6', '6']
+      values2 = ['J', 'J', '10', '10', '10']
+
+      hand1.append({'suit':suits1[1], 'value': values1[0]})
+      hand1.append({'suit':suits1[0], 'value': values1[1]})
+      hand1.append({'suit':suits1[2], 'value': values1[2]})
+      hand1.append({'suit':suits1[0], 'value': values1[3]})
+      hand1.append({'suit':suits1[3], 'value': values1[4]})
+
+      hand2.append({'suit':suits2[0], 'value': values2[0]})
+      hand2.append({'suit':suits2[1], 'value': values2[1]})
+      hand2.append({'suit':suits2[0], 'value': values2[2]})
+      hand2.append({'suit':suits2[3], 'value': values2[3]})
+      hand2.append({'suit':suits2[2], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(-1)
+    end
+
+    it "check if first hand has single pair and second hand has a four of a kind" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+      suits1 = ["spade", "club", "club", "club"]
+      suits2 = ["club", "hearts", "club", "club"]
+      values1 = ['A', '2', '9', '6', '6']
+      values2 = ['J', '10', '10', '10', '10']
+
+      hand1.append({'suit':suits1[1], 'value': values1[0]})
+      hand1.append({'suit':suits1[0], 'value': values1[1]})
+      hand1.append({'suit':suits1[2], 'value': values1[2]})
+      hand1.append({'suit':suits1[0], 'value': values1[3]})
+      hand1.append({'suit':suits1[3], 'value': values1[4]})
+
+      hand2.append({'suit':suits2[0], 'value': values2[0]})
+      hand2.append({'suit':suits2[1], 'value': values2[1]})
+      hand2.append({'suit':suits2[0], 'value': values2[2]})
+      hand2.append({'suit':suits2[3], 'value': values2[3]})
+      hand2.append({'suit':suits2[2], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(-1)
+    end
+
+    it "check if first hand has single pair and second hand has a straight flush" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+      suits1 = ["spade", "club", "club", "club"]
+      suits2 = ["club", "club", "club", "club"]
+      values1 = ['A', '2', '9', '6', '6']
+      values2 = ['J', '10', '8', '7', '9']
+
+      hand1.append({'suit':suits1[1], 'value': values1[0]})
+      hand1.append({'suit':suits1[0], 'value': values1[1]})
+      hand1.append({'suit':suits1[2], 'value': values1[2]})
+      hand1.append({'suit':suits1[0], 'value': values1[3]})
+      hand1.append({'suit':suits1[3], 'value': values1[4]})
+
+      hand2.append({'suit':suits2[0], 'value': values2[0]})
+      hand2.append({'suit':suits2[1], 'value': values2[1]})
+      hand2.append({'suit':suits2[0], 'value': values2[2]})
+      hand2.append({'suit':suits2[3], 'value': values2[3]})
+      hand2.append({'suit':suits2[2], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(-1)
+    end
+
+    it "check if first hand has single pair and second hand has a royal flush" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+      suits1 = ["spade", "club", "club", "club"]
+      suits2 = ["club", "club", "club", "club"]
+      values1 = ['A', '2', '9', '6', '6']
+      values2 = ['A', 'K', 'Q', 'J', '10']
+
+      hand1.append({'suit':suits1[1], 'value': values1[0]})
+      hand1.append({'suit':suits1[0], 'value': values1[1]})
+      hand1.append({'suit':suits1[2], 'value': values1[2]})
+      hand1.append({'suit':suits1[0], 'value': values1[3]})
+      hand1.append({'suit':suits1[3], 'value': values1[4]})
+
+      hand2.append({'suit':suits2[0], 'value': values2[0]})
+      hand2.append({'suit':suits2[1], 'value': values2[1]})
+      hand2.append({'suit':suits2[0], 'value': values2[2]})
+      hand2.append({'suit':suits2[3], 'value': values2[3]})
+      hand2.append({'suit':suits2[2], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(-1)
+    end
+
+    #first hand has single pair and second hand has other patterns end
+
+    #first hand has double pair and second hand has other patterns
+    it "check if first hand has double pairs and second hand has high cards" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+      suits = ["spade", "hearts", "club", "diamond"]
+      values1 = ['8', '3', '3', '2', '2']
+      values2 = ['A', 'J', '9', '8', '7']
+
+      hand1.append({'suit':suits[1], 'value': values1[0]})
+      hand1.append({'suit':suits[0], 'value': values1[1]})
+      hand1.append({'suit':suits[2], 'value': values1[2]})
+      hand1.append({'suit':suits[0], 'value': values1[3]})
+      hand1.append({'suit':suits[3], 'value': values1[4]})
+
+      hand2.append({'suit':suits[0], 'value': values2[0]})
+      hand2.append({'suit':suits[1], 'value': values2[1]})
+      hand2.append({'suit':suits[0], 'value': values2[2]})
+      hand2.append({'suit':suits[3], 'value': values2[3]})
+      hand2.append({'suit':suits[2], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(1)
+    end
+
+    it "check if first hand has double pairs and second hand has single pair" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+      suits = ["spade", "hearts", "club", "diamond"]
+      values1 = ['A', '2', '2', '6', '6']
+      values2 = ['A', 'J', '9', '2', '2']
+
+      hand1.append({'suit':suits[1], 'value': values1[0]})
+      hand1.append({'suit':suits[0], 'value': values1[1]})
+      hand1.append({'suit':suits[2], 'value': values1[2]})
+      hand1.append({'suit':suits[0], 'value': values1[3]})
+      hand1.append({'suit':suits[3], 'value': values1[4]})
+
+      hand2.append({'suit':suits[0], 'value': values2[0]})
+      hand2.append({'suit':suits[1], 'value': values2[1]})
+      hand2.append({'suit':suits[0], 'value': values2[2]})
+      hand2.append({'suit':suits[3], 'value': values2[3]})
+      hand2.append({'suit':suits[2], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(1)
+    end
+
+    it "check if first hand has double pairs and second hand has double pairs but higher cards" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+      suits = ["spade", "hearts", "club", "diamond"]
+      values1 = ['A', '2', '2', '6', '6']
+      values2 = ['A', 'J', 'A', '10', '10']
+
+      hand1.append({'suit':suits[1], 'value': values1[0]})
+      hand1.append({'suit':suits[0], 'value': values1[1]})
+      hand1.append({'suit':suits[2], 'value': values1[2]})
+      hand1.append({'suit':suits[0], 'value': values1[3]})
+      hand1.append({'suit':suits[3], 'value': values1[4]})
+
+      hand2.append({'suit':suits[0], 'value': values2[0]})
+      hand2.append({'suit':suits[1], 'value': values2[1]})
+      hand2.append({'suit':suits[0], 'value': values2[2]})
+      hand2.append({'suit':suits[3], 'value': values2[3]})
+      hand2.append({'suit':suits[2], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(-1)
+    end
+
+    it "check if first hand has double pair and second hand has three of a kind" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+      suits = ["spade", "hearts", "club", "diamond"]
+      values1 = ['A', '2', '2', '6', '6']
+      values2 = ['A', 'J', '10', '10', '10']
+
+      hand1.append({'suit':suits[1], 'value': values1[0]})
+      hand1.append({'suit':suits[0], 'value': values1[1]})
+      hand1.append({'suit':suits[2], 'value': values1[2]})
+      hand1.append({'suit':suits[0], 'value': values1[3]})
+      hand1.append({'suit':suits[3], 'value': values1[4]})
+
+      hand2.append({'suit':suits[0], 'value': values2[0]})
+      hand2.append({'suit':suits[1], 'value': values2[1]})
+      hand2.append({'suit':suits[0], 'value': values2[2]})
+      hand2.append({'suit':suits[3], 'value': values2[3]})
+      hand2.append({'suit':suits[2], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(-1)
+    end
+
+    it "check if first hand has double pair and second hand has straight" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+      suits = ["spade", "hearts", "club", "diamond"]
+      values1 = ['A', '2', '2', '6', '6']
+      values2 = ['Q', 'J', '10', 'K', '9']
+
+      hand1.append({'suit':suits[1], 'value': values1[0]})
+      hand1.append({'suit':suits[0], 'value': values1[1]})
+      hand1.append({'suit':suits[2], 'value': values1[2]})
+      hand1.append({'suit':suits[0], 'value': values1[3]})
+      hand1.append({'suit':suits[3], 'value': values1[4]})
+
+      hand2.append({'suit':suits[0], 'value': values2[0]})
+      hand2.append({'suit':suits[1], 'value': values2[1]})
+      hand2.append({'suit':suits[0], 'value': values2[2]})
+      hand2.append({'suit':suits[3], 'value': values2[3]})
+      hand2.append({'suit':suits[2], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(-1)
+    end
+
+    it "check if first hand has double pair and second hand has a flush" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+      suits1 = ["spade", "club", "club", "club"]
+      suits2 = ["club", "club", "club", "club"]
+      values1 = ['A', '2', '2', '6', '6']
+      values2 = ['A', 'J', '10', '10', '10']
+
+      hand1.append({'suit':suits1[1], 'value': values1[0]})
+      hand1.append({'suit':suits1[0], 'value': values1[1]})
+      hand1.append({'suit':suits1[2], 'value': values1[2]})
+      hand1.append({'suit':suits1[0], 'value': values1[3]})
+      hand1.append({'suit':suits1[3], 'value': values1[4]})
+
+      hand2.append({'suit':suits2[0], 'value': values2[0]})
+      hand2.append({'suit':suits2[1], 'value': values2[1]})
+      hand2.append({'suit':suits2[0], 'value': values2[2]})
+      hand2.append({'suit':suits2[3], 'value': values2[3]})
+      hand2.append({'suit':suits2[2], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(-1)
+    end
+
+    it "check if first hand has double pair and second hand has a full house" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+      suits1 = ["spade", "club", "club", "club"]
+      suits2 = ["club", "hearts", "club", "club"]
+      values1 = ['A', '2', '2', '6', '6']
+      values2 = ['J', 'J', '10', '10', '10']
+
+      hand1.append({'suit':suits1[1], 'value': values1[0]})
+      hand1.append({'suit':suits1[0], 'value': values1[1]})
+      hand1.append({'suit':suits1[2], 'value': values1[2]})
+      hand1.append({'suit':suits1[0], 'value': values1[3]})
+      hand1.append({'suit':suits1[3], 'value': values1[4]})
+
+      hand2.append({'suit':suits2[0], 'value': values2[0]})
+      hand2.append({'suit':suits2[1], 'value': values2[1]})
+      hand2.append({'suit':suits2[0], 'value': values2[2]})
+      hand2.append({'suit':suits2[3], 'value': values2[3]})
+      hand2.append({'suit':suits2[2], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(-1)
+    end
+
+    it "check if first hand has double pair and second hand has a four of a kind" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+      suits1 = ["spade", "club", "club", "club"]
+      suits2 = ["club", "hearts", "club", "club"]
+      values1 = ['A', '2', '2', '6', '6']
+      values2 = ['J', '10', '10', '10', '10']
+
+      hand1.append({'suit':suits1[1], 'value': values1[0]})
+      hand1.append({'suit':suits1[0], 'value': values1[1]})
+      hand1.append({'suit':suits1[2], 'value': values1[2]})
+      hand1.append({'suit':suits1[0], 'value': values1[3]})
+      hand1.append({'suit':suits1[3], 'value': values1[4]})
+
+      hand2.append({'suit':suits2[0], 'value': values2[0]})
+      hand2.append({'suit':suits2[1], 'value': values2[1]})
+      hand2.append({'suit':suits2[0], 'value': values2[2]})
+      hand2.append({'suit':suits2[3], 'value': values2[3]})
+      hand2.append({'suit':suits2[2], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(-1)
+    end
+
+    it "check if first hand has double pair and second hand has a straight flush" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+      suits1 = ["spade", "club", "club", "club"]
+      suits2 = ["club", "club", "club", "club"]
+      values1 = ['A', '2', '2', '6', '6']
+      values2 = ['J', '10', '8', '7', '9']
+
+      hand1.append({'suit':suits1[1], 'value': values1[0]})
+      hand1.append({'suit':suits1[0], 'value': values1[1]})
+      hand1.append({'suit':suits1[2], 'value': values1[2]})
+      hand1.append({'suit':suits1[0], 'value': values1[3]})
+      hand1.append({'suit':suits1[3], 'value': values1[4]})
+
+      hand2.append({'suit':suits2[0], 'value': values2[0]})
+      hand2.append({'suit':suits2[1], 'value': values2[1]})
+      hand2.append({'suit':suits2[0], 'value': values2[2]})
+      hand2.append({'suit':suits2[3], 'value': values2[3]})
+      hand2.append({'suit':suits2[2], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(-1)
+    end
+
+    it "check if first hand has double pair and second hand has a royal flush" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+      suits1 = ["spade", "club", "club", "club"]
+      suits2 = ["club", "club", "club", "club"]
+      values1 = ['A', '2', '2', '6', '6']
+      values2 = ['A', 'K', 'Q', 'J', '10']
+
+      hand1.append({'suit':suits1[1], 'value': values1[0]})
+      hand1.append({'suit':suits1[0], 'value': values1[1]})
+      hand1.append({'suit':suits1[2], 'value': values1[2]})
+      hand1.append({'suit':suits1[0], 'value': values1[3]})
+      hand1.append({'suit':suits1[3], 'value': values1[4]})
+
+      hand2.append({'suit':suits2[0], 'value': values2[0]})
+      hand2.append({'suit':suits2[1], 'value': values2[1]})
+      hand2.append({'suit':suits2[0], 'value': values2[2]})
+      hand2.append({'suit':suits2[3], 'value': values2[3]})
+      hand2.append({'suit':suits2[2], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(-1)
+    end
+
+    #first hand has double pair and second hand has other patterns end
+
+    #first hand has a three of a kind and second hand has other patterns
+    it "check if first hand has a three of a kind and second hand has high cards" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+      suits = ["spade", "hearts", "club", "diamond"]
+      values1 = ['8', '3', '3', '3', '2']
+      values2 = ['A', 'J', '9', '8', '7']
+
+      hand1.append({'suit':suits[1], 'value': values1[0]})
+      hand1.append({'suit':suits[0], 'value': values1[1]})
+      hand1.append({'suit':suits[2], 'value': values1[2]})
+      hand1.append({'suit':suits[1], 'value': values1[3]})
+      hand1.append({'suit':suits[3], 'value': values1[4]})
+
+      hand2.append({'suit':suits[0], 'value': values2[0]})
+      hand2.append({'suit':suits[1], 'value': values2[1]})
+      hand2.append({'suit':suits[0], 'value': values2[2]})
+      hand2.append({'suit':suits[3], 'value': values2[3]})
+      hand2.append({'suit':suits[2], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(1)
+    end
+
+    it "check if first hand has a three of a kind and second hand has single pair" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+      suits = ["spade", "hearts", "club", "diamond"]
+      values1 = ['A', '2', '2', '2', '6']
+      values2 = ['A', 'J', '9', '2', '2']
+
+      hand1.append({'suit':suits[1], 'value': values1[0]})
+      hand1.append({'suit':suits[0], 'value': values1[1]})
+      hand1.append({'suit':suits[2], 'value': values1[2]})
+      hand1.append({'suit':suits[1], 'value': values1[3]})
+      hand1.append({'suit':suits[3], 'value': values1[4]})
+
+      hand2.append({'suit':suits[0], 'value': values2[0]})
+      hand2.append({'suit':suits[1], 'value': values2[1]})
+      hand2.append({'suit':suits[0], 'value': values2[2]})
+      hand2.append({'suit':suits[3], 'value': values2[3]})
+      hand2.append({'suit':suits[2], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(1)
+    end
+
+    it "check if first hand has a three of a kind and second hand has double pairs" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+      suits = ["spade", "hearts", "club", "diamond"]
+      values1 = ['A', '2', '2', '2', '6']
+      values2 = ['A', 'J', 'A', '10', '10']
+
+      hand1.append({'suit':suits[1], 'value': values1[0]})
+      hand1.append({'suit':suits[0], 'value': values1[1]})
+      hand1.append({'suit':suits[2], 'value': values1[2]})
+      hand1.append({'suit':suits[1], 'value': values1[3]})
+      hand1.append({'suit':suits[3], 'value': values1[4]})
+
+      hand2.append({'suit':suits[0], 'value': values2[0]})
+      hand2.append({'suit':suits[1], 'value': values2[1]})
+      hand2.append({'suit':suits[0], 'value': values2[2]})
+      hand2.append({'suit':suits[3], 'value': values2[3]})
+      hand2.append({'suit':suits[2], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(1)
+    end
+
+    it "check if first hand has a three of a kind and second hand has three of a kind" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+      suits = ["spade", "hearts", "club", "diamond"]
+      values1 = ['A', '2', '2', '2', '6']
+      values2 = ['A', 'J', '10', '10', '10']
+
+      hand1.append({'suit':suits[1], 'value': values1[0]})
+      hand1.append({'suit':suits[0], 'value': values1[1]})
+      hand1.append({'suit':suits[2], 'value': values1[2]})
+      hand1.append({'suit':suits[1], 'value': values1[3]})
+      hand1.append({'suit':suits[3], 'value': values1[4]})
+
+      hand2.append({'suit':suits[0], 'value': values2[0]})
+      hand2.append({'suit':suits[1], 'value': values2[1]})
+      hand2.append({'suit':suits[0], 'value': values2[2]})
+      hand2.append({'suit':suits[3], 'value': values2[3]})
+      hand2.append({'suit':suits[2], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(-1)
+    end
+
+    it "check if first hand has a three of a kind and second hand has straight" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+      suits = ["spade", "hearts", "club", "diamond"]
+      values1 = ['A', '2', '2', '2', '6']
+      values2 = ['Q', 'J', '10', 'K', '9']
+
+      hand1.append({'suit':suits[1], 'value': values1[0]})
+      hand1.append({'suit':suits[0], 'value': values1[1]})
+      hand1.append({'suit':suits[2], 'value': values1[2]})
+      hand1.append({'suit':suits[1], 'value': values1[3]})
+      hand1.append({'suit':suits[3], 'value': values1[4]})
+
+      hand2.append({'suit':suits[0], 'value': values2[0]})
+      hand2.append({'suit':suits[1], 'value': values2[1]})
+      hand2.append({'suit':suits[0], 'value': values2[2]})
+      hand2.append({'suit':suits[3], 'value': values2[3]})
+      hand2.append({'suit':suits[2], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(-1)
+    end
+
+    it "check if first hand has a three of a kind and second hand has a flush" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+      suits1 = ["spade", "hearts", "club", "diamond"]
+      suits2 = ["club", "club", "club", "club"]
+      values1 = ['A', '2', '2', '2', '6']
+      values2 = ['A', 'J', '10', '6', '2']
+
+      hand1.append({'suit':suits1[1], 'value': values1[0]})
+      hand1.append({'suit':suits1[0], 'value': values1[1]})
+      hand1.append({'suit':suits1[2], 'value': values1[2]})
+      hand1.append({'suit':suits1[1], 'value': values1[3]})
+      hand1.append({'suit':suits1[3], 'value': values1[4]})
+
+      hand2.append({'suit':suits2[0], 'value': values2[0]})
+      hand2.append({'suit':suits2[1], 'value': values2[1]})
+      hand2.append({'suit':suits2[0], 'value': values2[2]})
+      hand2.append({'suit':suits2[3], 'value': values2[3]})
+      hand2.append({'suit':suits2[2], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(-1)
+    end
+
+    it "check if first hand has a three of a kind and second hand has a full house" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+      suits1 = ["spade", "hearts", "club", "diamond"]
+      suits2 = ["club", "diamond", "spade", "hearts"]
+      values1 = ['A', '2', '2', '2', '6']
+      values2 = ['A', 'A', '10', '10', '10']
+
+      hand1.append({'suit':suits1[1], 'value': values1[0]})
+      hand1.append({'suit':suits1[0], 'value': values1[1]})
+      hand1.append({'suit':suits1[2], 'value': values1[2]})
+      hand1.append({'suit':suits1[1], 'value': values1[3]})
+      hand1.append({'suit':suits1[3], 'value': values1[4]})
+
+      hand2.append({'suit':suits2[0], 'value': values2[0]})
+      hand2.append({'suit':suits2[1], 'value': values2[1]})
+      hand2.append({'suit':suits2[0], 'value': values2[2]})
+      hand2.append({'suit':suits2[3], 'value': values2[3]})
+      hand2.append({'suit':suits2[2], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(-1)
+    end
+
+    it "check if first hand has a three of a kind and second hand has a four of a kind" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+      suits1 = ["spade", "hearts", "club", "diamond"]
+      values1 = ['A', '2', '2', '2', '6']
+      values2 = ['A', '2', '2', '2', '2']
+
+      hand1.append({'suit':suits1[1], 'value': values1[0]})
+      hand1.append({'suit':suits1[0], 'value': values1[1]})
+      hand1.append({'suit':suits1[2], 'value': values1[2]})
+      hand1.append({'suit':suits1[1], 'value': values1[3]})
+      hand1.append({'suit':suits1[3], 'value': values1[4]})
+
+      hand2.append({'suit':suits1[0], 'value': values2[0]})
+      hand2.append({'suit':suits1[1], 'value': values2[1]})
+      hand2.append({'suit':suits1[0], 'value': values2[2]})
+      hand2.append({'suit':suits1[3], 'value': values2[3]})
+      hand2.append({'suit':suits1[2], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(-1)
+    end
+
+    it "check if first hand has a three of a kind and second hand has a straight flush" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+      suits1 = ["spade", "hearts", "club", "diamond"]
+      suits2 = ["club", "diamond", "spade", "hearts"]
+      values1 = ['A', '2', '2', '2', '6']
+      values2 = ['9', '8', '7', '6', '5']
+
+      hand1.append({'suit':suits1[1], 'value': values1[0]})
+      hand1.append({'suit':suits1[0], 'value': values1[1]})
+      hand1.append({'suit':suits1[2], 'value': values1[2]})
+      hand1.append({'suit':suits1[1], 'value': values1[3]})
+      hand1.append({'suit':suits1[3], 'value': values1[4]})
+
+      hand2.append({'suit':suits2[0], 'value': values2[0]})
+      hand2.append({'suit':suits2[0], 'value': values2[1]})
+      hand2.append({'suit':suits2[0], 'value': values2[2]})
+      hand2.append({'suit':suits2[0], 'value': values2[3]})
+      hand2.append({'suit':suits2[0], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(-1)
+    end
+
+    it "check if first hand has a three of a kind and second hand has a royal flush" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+      suits1 = ["spade", "hearts", "club", "diamond"]
+      suits2 = ["club", "diamond", "spade", "hearts"]
+      values1 = ['A', '2', '2', '2', '6']
+      values2 = ['A', 'K', 'Q', 'J', '10']
+
+      hand1.append({'suit':suits1[1], 'value': values1[0]})
+      hand1.append({'suit':suits1[0], 'value': values1[1]})
+      hand1.append({'suit':suits1[2], 'value': values1[2]})
+      hand1.append({'suit':suits1[1], 'value': values1[3]})
+      hand1.append({'suit':suits1[3], 'value': values1[4]})
+
+      hand2.append({'suit':suits2[0], 'value': values2[0]})
+      hand2.append({'suit':suits2[0], 'value': values2[1]})
+      hand2.append({'suit':suits2[0], 'value': values2[2]})
+      hand2.append({'suit':suits2[0], 'value': values2[3]})
+      hand2.append({'suit':suits2[0], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(-1)
+    end
+
+    #first hand has double pair and second hand has other patterns end
+
+    #first hand has a straight and second hand has other patterns
+    it "check if first hand has a straight and second hand has high cards" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+      suits = ["spade", "hearts", "club", "diamond"]
+      values1 = ['8', '7', '6', '5', '4']
+      values2 = ['A', 'J', '9', '8', '7']
+
+      hand1.append({'suit':suits[1], 'value': values1[0]})
+      hand1.append({'suit':suits[0], 'value': values1[1]})
+      hand1.append({'suit':suits[2], 'value': values1[2]})
+      hand1.append({'suit':suits[1], 'value': values1[3]})
+      hand1.append({'suit':suits[3], 'value': values1[4]})
+
+      hand2.append({'suit':suits[0], 'value': values2[0]})
+      hand2.append({'suit':suits[1], 'value': values2[1]})
+      hand2.append({'suit':suits[0], 'value': values2[2]})
+      hand2.append({'suit':suits[3], 'value': values2[3]})
+      hand2.append({'suit':suits[2], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(1)
+    end
+
+    it "check if first hand has a straight and second hand has single pair" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+      suits = ["spade", "hearts", "club", "diamond"]
+      values1 = ['8', '7', '6', '5', '4']
+      values2 = ['A', 'J', '9', '2', '2']
+
+      hand1.append({'suit':suits[1], 'value': values1[0]})
+      hand1.append({'suit':suits[0], 'value': values1[1]})
+      hand1.append({'suit':suits[2], 'value': values1[2]})
+      hand1.append({'suit':suits[1], 'value': values1[3]})
+      hand1.append({'suit':suits[3], 'value': values1[4]})
+
+      hand2.append({'suit':suits[0], 'value': values2[0]})
+      hand2.append({'suit':suits[1], 'value': values2[1]})
+      hand2.append({'suit':suits[0], 'value': values2[2]})
+      hand2.append({'suit':suits[3], 'value': values2[3]})
+      hand2.append({'suit':suits[2], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(1)
+    end
+
+    it "check if first hand has a straight and second hand has double pairs" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+      suits = ["spade", "hearts", "club", "diamond"]
+      values1 = ['8', '7', '6', '5', '4']
+      values2 = ['A', 'J', 'A', '10', '10']
+
+      hand1.append({'suit':suits[1], 'value': values1[0]})
+      hand1.append({'suit':suits[0], 'value': values1[1]})
+      hand1.append({'suit':suits[2], 'value': values1[2]})
+      hand1.append({'suit':suits[1], 'value': values1[3]})
+      hand1.append({'suit':suits[3], 'value': values1[4]})
+
+      hand2.append({'suit':suits[0], 'value': values2[0]})
+      hand2.append({'suit':suits[1], 'value': values2[1]})
+      hand2.append({'suit':suits[0], 'value': values2[2]})
+      hand2.append({'suit':suits[3], 'value': values2[3]})
+      hand2.append({'suit':suits[2], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(1)
+    end
+
+    it "check if first hand has a straight and second hand has three of a kind" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+      suits = ["spade", "hearts", "club", "diamond"]
+      values1 = ['8', '7', '6', '5', '4']
+      values2 = ['A', 'J', '10', '10', '10']
+
+      hand1.append({'suit':suits[1], 'value': values1[0]})
+      hand1.append({'suit':suits[0], 'value': values1[1]})
+      hand1.append({'suit':suits[2], 'value': values1[2]})
+      hand1.append({'suit':suits[1], 'value': values1[3]})
+      hand1.append({'suit':suits[3], 'value': values1[4]})
+
+      hand2.append({'suit':suits[0], 'value': values2[0]})
+      hand2.append({'suit':suits[1], 'value': values2[1]})
+      hand2.append({'suit':suits[0], 'value': values2[2]})
+      hand2.append({'suit':suits[3], 'value': values2[3]})
+      hand2.append({'suit':suits[2], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(1)
+    end
+
+    it "check if first hand has a straight and second hand has a higher straight " do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+      suits = ["spade", "hearts", "club", "diamond"]
+      values1 = ['8', '7', '6', '5', '4']
+      values2 = ['Q', 'J', '10', 'K', '9']
+
+      hand1.append({'suit':suits[1], 'value': values1[0]})
+      hand1.append({'suit':suits[0], 'value': values1[1]})
+      hand1.append({'suit':suits[2], 'value': values1[2]})
+      hand1.append({'suit':suits[1], 'value': values1[3]})
+      hand1.append({'suit':suits[3], 'value': values1[4]})
+
+      hand2.append({'suit':suits[0], 'value': values2[0]})
+      hand2.append({'suit':suits[1], 'value': values2[1]})
+      hand2.append({'suit':suits[0], 'value': values2[2]})
+      hand2.append({'suit':suits[3], 'value': values2[3]})
+      hand2.append({'suit':suits[2], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(-1)
+    end
+
+    it "check if first hand has a straight and second hand has a flush" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+
+      suits1 = ["spade", "hearts", "club", "diamond"]
+      values1 = ['8', '7', '6', '5', '4']
+      suits2 = ["spade", "hearts", "club", "diamond"]
+      values2 = ['8', '7', '6', '5', '4']
+
+      hand1.append({'suit':suits1[1], 'value': values1[0]})
+      hand1.append({'suit':suits1[0], 'value': values1[1]})
+      hand1.append({'suit':suits1[2], 'value': values1[2]})
+      hand1.append({'suit':suits1[1], 'value': values1[3]})
+      hand1.append({'suit':suits1[3], 'value': values1[4]})
+
+      hand2.append({'suit':suits2[0], 'value': values2[0]})
+      hand2.append({'suit':suits2[0], 'value': values2[1]})
+      hand2.append({'suit':suits2[0], 'value': values2[2]})
+      hand2.append({'suit':suits2[0], 'value': values2[3]})
+      hand2.append({'suit':suits2[0], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(-1)
+    end
+
+    it "check if first hand has a straight and second hand has a full house" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+      suits1 = ["spade", "hearts", "club", "diamond"]
+      values1 = ['8', '7', '6', '5', '4']
+      suits2 = ["spade", "hearts", "club", "diamond"]
+      values2 = ['8', '8', '6', '6', '6']
+
+      hand1.append({'suit':suits1[1], 'value': values1[0]})
+      hand1.append({'suit':suits1[0], 'value': values1[1]})
+      hand1.append({'suit':suits1[2], 'value': values1[2]})
+      hand1.append({'suit':suits1[1], 'value': values1[3]})
+      hand1.append({'suit':suits1[3], 'value': values1[4]})
+
+      hand2.append({'suit':suits2[0], 'value': values2[0]})
+      hand2.append({'suit':suits2[1], 'value': values2[1]})
+      hand2.append({'suit':suits2[0], 'value': values2[2]})
+      hand2.append({'suit':suits2[3], 'value': values2[3]})
+      hand2.append({'suit':suits2[2], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(-1)
+    end
+
+    it "check if first hand has a straight and second hand has a four of a kind" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+      suits1 = ["spade", "hearts", "club", "diamond"]
+      values1 = ['8', '7', '6', '5', '4']
+      values2 = ['A', '2', '2', '2', '2']
+
+      hand1.append({'suit':suits1[1], 'value': values1[0]})
+      hand1.append({'suit':suits1[0], 'value': values1[1]})
+      hand1.append({'suit':suits1[2], 'value': values1[2]})
+      hand1.append({'suit':suits1[1], 'value': values1[3]})
+      hand1.append({'suit':suits1[3], 'value': values1[4]})
+
+      hand2.append({'suit':suits1[0], 'value': values2[0]})
+      hand2.append({'suit':suits1[1], 'value': values2[1]})
+      hand2.append({'suit':suits1[0], 'value': values2[2]})
+      hand2.append({'suit':suits1[3], 'value': values2[3]})
+      hand2.append({'suit':suits1[2], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(-1)
+    end
+
+    it "check if first hand has a straight and second hand has a straight flush" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+      suits1 = ["spade", "hearts", "club", "diamond"]
+      values1 = ['8', '7', '6', '5', '4']
+      suits2 = ["club", "diamond", "spade", "hearts"]
+      values2 = ['9', '8', '7', '6', '5']
+
+      hand1.append({'suit':suits1[1], 'value': values1[0]})
+      hand1.append({'suit':suits1[0], 'value': values1[1]})
+      hand1.append({'suit':suits1[2], 'value': values1[2]})
+      hand1.append({'suit':suits1[1], 'value': values1[3]})
+      hand1.append({'suit':suits1[3], 'value': values1[4]})
+
+      hand2.append({'suit':suits2[0], 'value': values2[0]})
+      hand2.append({'suit':suits2[0], 'value': values2[1]})
+      hand2.append({'suit':suits2[0], 'value': values2[2]})
+      hand2.append({'suit':suits2[0], 'value': values2[3]})
+      hand2.append({'suit':suits2[0], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(-1)
+    end
+
+    it "check if first hand has a straight and second hand has a royal flush" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+      suits1 = ["spade", "hearts", "club", "diamond"]
+      values1 = ['8', '7', '6', '5', '4']
+      suits2 = ["club", "diamond", "spade", "hearts"]
+      values2 = ['A', 'K', 'Q', 'J', '10']
+
+      hand1.append({'suit':suits1[1], 'value': values1[0]})
+      hand1.append({'suit':suits1[0], 'value': values1[1]})
+      hand1.append({'suit':suits1[2], 'value': values1[2]})
+      hand1.append({'suit':suits1[1], 'value': values1[3]})
+      hand1.append({'suit':suits1[3], 'value': values1[4]})
+
+      hand2.append({'suit':suits2[0], 'value': values2[0]})
+      hand2.append({'suit':suits2[0], 'value': values2[1]})
+      hand2.append({'suit':suits2[0], 'value': values2[2]})
+      hand2.append({'suit':suits2[0], 'value': values2[3]})
+      hand2.append({'suit':suits2[0], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(-1)
+    end
+
+    #first hand has straight and second hand has other patterns end
+
+    #first hand has a flush and second hand has other patterns
+    it "check if first hand has a flush and second hand has high cards" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+
+      suits1 = ["spade", "hearts", "club", "diamond"]
+      values1 = ['8', '7', 'A', '5', '2']
+
+      hand1.append({'suit':suits1[0], 'value': values1[0]})
+      hand1.append({'suit':suits1[0], 'value': values1[1]})
+      hand1.append({'suit':suits1[0], 'value': values1[2]})
+      hand1.append({'suit':suits1[0], 'value': values1[3]})
+      hand1.append({'suit':suits1[0], 'value': values1[4]})
+
+      suits2 = ["spade", "hearts", "club", "diamond"]
+      values2 = ['A', 'J', '9', '8', '7']
+
+      hand2.append({'suit':suits2[0], 'value': values2[0]})
+      hand2.append({'suit':suits2[1], 'value': values2[1]})
+      hand2.append({'suit':suits2[0], 'value': values2[2]})
+      hand2.append({'suit':suits2[3], 'value': values2[3]})
+      hand2.append({'suit':suits2[2], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(1)
+    end
+
+    it "check if first hand has a flush and second hand has single pair" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+
+      suits1 = ["spade", "hearts", "club", "diamond"]
+      values1 = ['8', '7', 'A', '5', '2']
+
+      hand1.append({'suit':suits1[0], 'value': values1[0]})
+      hand1.append({'suit':suits1[0], 'value': values1[1]})
+      hand1.append({'suit':suits1[0], 'value': values1[2]})
+      hand1.append({'suit':suits1[0], 'value': values1[3]})
+      hand1.append({'suit':suits1[0], 'value': values1[4]})
+
+      suits2 = ["spade", "hearts", "club", "diamond"]
+      values2 = ['A', 'J', 'A', '8', '7']
+
+      hand2.append({'suit':suits2[0], 'value': values2[0]})
+      hand2.append({'suit':suits2[1], 'value': values2[1]})
+      hand2.append({'suit':suits2[2], 'value': values2[2]})
+      hand2.append({'suit':suits2[3], 'value': values2[3]})
+      hand2.append({'suit':suits2[0], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(1)
+    end
+
+    it "check if first hand has a flush and second hand has double pairs" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+      suits1 = ["spade", "hearts", "club", "diamond"]
+      values1 = ['8', '7', 'A', '5', '2']
+
+      hand1.append({'suit':suits1[0], 'value': values1[0]})
+      hand1.append({'suit':suits1[0], 'value': values1[1]})
+      hand1.append({'suit':suits1[0], 'value': values1[2]})
+      hand1.append({'suit':suits1[0], 'value': values1[3]})
+      hand1.append({'suit':suits1[0], 'value': values1[4]})
+
+      suits2 = ["spade", "hearts", "club", "diamond"]
+      values2 = ['A', 'J', 'A', 'J', '7']
+
+      hand2.append({'suit':suits2[0], 'value': values2[0]})
+      hand2.append({'suit':suits2[1], 'value': values2[1]})
+      hand2.append({'suit':suits2[2], 'value': values2[2]})
+      hand2.append({'suit':suits2[3], 'value': values2[3]})
+      hand2.append({'suit':suits2[0], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(1)
+    end
+
+    it "check if first hand has a flush and second hand has three of a kind" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+      suits1 = ["spade", "hearts", "club", "diamond"]
+      values1 = ['8', '7', 'A', '5', '2']
+
+      hand1.append({'suit':suits1[0], 'value': values1[0]})
+      hand1.append({'suit':suits1[0], 'value': values1[1]})
+      hand1.append({'suit':suits1[0], 'value': values1[2]})
+      hand1.append({'suit':suits1[0], 'value': values1[3]})
+      hand1.append({'suit':suits1[0], 'value': values1[4]})
+
+      suits2 = ["spade", "hearts", "club", "diamond"]
+      values2 = ['2', '2', '2', 'J', '7']
+
+      hand2.append({'suit':suits2[0], 'value': values2[0]})
+      hand2.append({'suit':suits2[1], 'value': values2[1]})
+      hand2.append({'suit':suits2[2], 'value': values2[2]})
+      hand2.append({'suit':suits2[3], 'value': values2[3]})
+      hand2.append({'suit':suits2[0], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(1)
+    end
+
+    it "check if first hand has a flush and second hand has a straight " do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+
+      suits1 = ["spade", "hearts", "club", "diamond"]
+      values1 = ['8', '7', 'A', '5', '2']
+
+      hand1.append({'suit':suits1[0], 'value': values1[0]})
+      hand1.append({'suit':suits1[0], 'value': values1[1]})
+      hand1.append({'suit':suits1[0], 'value': values1[2]})
+      hand1.append({'suit':suits1[0], 'value': values1[3]})
+      hand1.append({'suit':suits1[0], 'value': values1[4]})
+
+      suits2 = ["spade", "hearts", "club", "diamond"]
+      values2 = ['9', '8', '7', '6', '5']
+
+      hand2.append({'suit':suits2[0], 'value': values2[0]})
+      hand2.append({'suit':suits2[1], 'value': values2[1]})
+      hand2.append({'suit':suits2[2], 'value': values2[2]})
+      hand2.append({'suit':suits2[3], 'value': values2[3]})
+      hand2.append({'suit':suits2[0], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(1)
+    end
+
+    it "check if first hand has a flush and second hand has a flush" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+
+      suits1 = ["spade", "hearts", "club", "diamond"]
+      values1 = ['8', '7', 'A', '5', '2']
+
+      hand1.append({'suit':suits1[0], 'value': values1[0]})
+      hand1.append({'suit':suits1[0], 'value': values1[1]})
+      hand1.append({'suit':suits1[0], 'value': values1[2]})
+      hand1.append({'suit':suits1[0], 'value': values1[3]})
+      hand1.append({'suit':suits1[0], 'value': values1[4]})
+
+      suits2 = ["spade", "hearts", "club", "diamond"]
+      values2 = ['A', 'J', '2', '5', '7']
+
+      hand2.append({'suit':suits2[1], 'value': values2[0]})
+      hand2.append({'suit':suits2[1], 'value': values2[1]})
+      hand2.append({'suit':suits2[1], 'value': values2[2]})
+      hand2.append({'suit':suits2[1], 'value': values2[3]})
+      hand2.append({'suit':suits2[1], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(-1)
+    end
+
+    it "check if first hand has a flush and second hand has a full house" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+
+      suits1 = ["spade", "hearts", "club", "diamond"]
+      values1 = ['8', '7', 'A', '5', '2']
+
+      hand1.append({'suit':suits1[0], 'value': values1[0]})
+      hand1.append({'suit':suits1[0], 'value': values1[1]})
+      hand1.append({'suit':suits1[0], 'value': values1[2]})
+      hand1.append({'suit':suits1[0], 'value': values1[3]})
+      hand1.append({'suit':suits1[0], 'value': values1[4]})
+
+      suits2 = ["spade", "hearts", "club", "diamond"]
+      values2 = ['J', 'J', '2', '2', '2']
+
+      hand2.append({'suit':suits2[0], 'value': values2[0]})
+      hand2.append({'suit':suits2[1], 'value': values2[1]})
+      hand2.append({'suit':suits2[0], 'value': values2[2]})
+      hand2.append({'suit':suits2[2], 'value': values2[3]})
+      hand2.append({'suit':suits2[3], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(-1)
+    end
+
+    it "check if first hand has a flush and second hand has a four of a kind" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+
+      suits1 = ["spade", "hearts", "club", "diamond"]
+      values1 = ['8', '7', 'A', '5', '2']
+
+      hand1.append({'suit':suits1[0], 'value': values1[0]})
+      hand1.append({'suit':suits1[0], 'value': values1[1]})
+      hand1.append({'suit':suits1[0], 'value': values1[2]})
+      hand1.append({'suit':suits1[0], 'value': values1[3]})
+      hand1.append({'suit':suits1[0], 'value': values1[4]})
+
+      suits2 = ["spade", "hearts", "club", "diamond"]
+      values2 = ['J', '2', '2', '2', '2']
+
+      hand2.append({'suit':suits2[0], 'value': values2[0]})
+      hand2.append({'suit':suits2[0], 'value': values2[1]})
+      hand2.append({'suit':suits2[1], 'value': values2[2]})
+      hand2.append({'suit':suits2[2], 'value': values2[3]})
+      hand2.append({'suit':suits2[3], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(-1)
+    end
+
+    it "check if first hand has a flush and second hand has a straight flush" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+
+      suits1 = ["spade", "hearts", "club", "diamond"]
+      values1 = ['8', '7', 'A', '5', '2']
+
+      hand1.append({'suit':suits1[0], 'value': values1[0]})
+      hand1.append({'suit':suits1[0], 'value': values1[1]})
+      hand1.append({'suit':suits1[0], 'value': values1[2]})
+      hand1.append({'suit':suits1[0], 'value': values1[3]})
+      hand1.append({'suit':suits1[0], 'value': values1[4]})
+
+      suits2 = ["spade", "hearts", "club", "diamond"]
+      values2 = ['5', '2', '3', '4', '6']
+
+      hand2.append({'suit':suits2[0], 'value': values2[0]})
+      hand2.append({'suit':suits2[0], 'value': values2[1]})
+      hand2.append({'suit':suits2[0], 'value': values2[2]})
+      hand2.append({'suit':suits2[0], 'value': values2[3]})
+      hand2.append({'suit':suits2[0], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(-1)
+    end
+
+    it "check if first hand has a flush and second hand has a royal flush" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+
+      suits1 = ["spade", "hearts", "club", "diamond"]
+      values1 = ['8', '7', 'A', '5', '2']
+
+      hand1.append({'suit':suits1[0], 'value': values1[0]})
+      hand1.append({'suit':suits1[0], 'value': values1[1]})
+      hand1.append({'suit':suits1[0], 'value': values1[2]})
+      hand1.append({'suit':suits1[0], 'value': values1[3]})
+      hand1.append({'suit':suits1[0], 'value': values1[4]})
+
+      suits2 = ["spade", "hearts", "club", "diamond"]
+      values2 = ['A', 'J', 'K', '10', 'Q']
+
+      hand2.append({'suit':suits2[0], 'value': values2[0]})
+      hand2.append({'suit':suits2[0], 'value': values2[1]})
+      hand2.append({'suit':suits2[0], 'value': values2[2]})
+      hand2.append({'suit':suits2[0], 'value': values2[3]})
+      hand2.append({'suit':suits2[0], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(-1)
+    end
+
+    #first hand has a flush and second hand has other patterns end
+
+    #first hand has a full house and second hand has other patterns
+    it "check if first hand has a full house and second hand has high cards" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+
+      suits1 = ["spade", "hearts", "club", "diamond"]
+      values1 = ['2', '2', '3', '3', '3']
+
+      hand1.append({'suit':suits1[0], 'value': values1[0]})
+      hand1.append({'suit':suits1[1], 'value': values1[1]})
+      hand1.append({'suit':suits1[0], 'value': values1[2]})
+      hand1.append({'suit':suits1[2], 'value': values1[3]})
+      hand1.append({'suit':suits1[3], 'value': values1[4]})
+
+      suits2 = ["spade", "hearts", "club", "diamond"]
+      values2 = ['A', 'J', '9', '8', '7']
+
+      hand2.append({'suit':suits2[0], 'value': values2[0]})
+      hand2.append({'suit':suits2[1], 'value': values2[1]})
+      hand2.append({'suit':suits2[0], 'value': values2[2]})
+      hand2.append({'suit':suits2[3], 'value': values2[3]})
+      hand2.append({'suit':suits2[2], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(1)
+    end
+
+    it "check if first hand has a full house and second hand has single pair" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+
+      suits1 = ["spade", "hearts", "club", "diamond"]
+      values1 = ['2', '2', '3', '3', '3']
+
+      hand1.append({'suit':suits1[0], 'value': values1[0]})
+      hand1.append({'suit':suits1[1], 'value': values1[1]})
+      hand1.append({'suit':suits1[0], 'value': values1[2]})
+      hand1.append({'suit':suits1[2], 'value': values1[3]})
+      hand1.append({'suit':suits1[3], 'value': values1[4]})
+
+      suits2 = ["spade", "hearts", "club", "diamond"]
+      values2 = ['A', 'J', 'A', '8', '7']
+
+      hand2.append({'suit':suits2[0], 'value': values2[0]})
+      hand2.append({'suit':suits2[1], 'value': values2[1]})
+      hand2.append({'suit':suits2[2], 'value': values2[2]})
+      hand2.append({'suit':suits2[3], 'value': values2[3]})
+      hand2.append({'suit':suits2[0], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(1)
+    end
+
+    it "check if first hand has a full house and second hand has double pairs" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+
+      suits1 = ["spade", "hearts", "club", "diamond"]
+      values1 = ['2', '2', '3', '3', '3']
+
+      hand1.append({'suit':suits1[0], 'value': values1[0]})
+      hand1.append({'suit':suits1[1], 'value': values1[1]})
+      hand1.append({'suit':suits1[0], 'value': values1[2]})
+      hand1.append({'suit':suits1[2], 'value': values1[3]})
+      hand1.append({'suit':suits1[3], 'value': values1[4]})
+
+      suits2 = ["spade", "hearts", "club", "diamond"]
+      values2 = ['A', 'J', 'A', 'J', '7']
+
+      hand2.append({'suit':suits2[0], 'value': values2[0]})
+      hand2.append({'suit':suits2[1], 'value': values2[1]})
+      hand2.append({'suit':suits2[2], 'value': values2[2]})
+      hand2.append({'suit':suits2[3], 'value': values2[3]})
+      hand2.append({'suit':suits2[0], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(1)
+    end
+
+    it "check if first hand has a full house and second hand has three of a kind" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+
+      suits1 = ["spade", "hearts", "club", "diamond"]
+      values1 = ['2', '2', '3', '3', '3']
+
+      hand1.append({'suit':suits1[0], 'value': values1[0]})
+      hand1.append({'suit':suits1[1], 'value': values1[1]})
+      hand1.append({'suit':suits1[0], 'value': values1[2]})
+      hand1.append({'suit':suits1[2], 'value': values1[3]})
+      hand1.append({'suit':suits1[3], 'value': values1[4]})
+
+      suits2 = ["spade", "hearts", "club", "diamond"]
+      values2 = ['2', '2', '2', 'J', '7']
+
+      hand2.append({'suit':suits2[0], 'value': values2[0]})
+      hand2.append({'suit':suits2[1], 'value': values2[1]})
+      hand2.append({'suit':suits2[2], 'value': values2[2]})
+      hand2.append({'suit':suits2[3], 'value': values2[3]})
+      hand2.append({'suit':suits2[0], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(1)
+    end
+
+    it "check if first hand has a full house and second hand has a straight " do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+
+      suits1 = ["spade", "hearts", "club", "diamond"]
+      values1 = ['2', '2', '3', '3', '3']
+
+      hand1.append({'suit':suits1[0], 'value': values1[0]})
+      hand1.append({'suit':suits1[1], 'value': values1[1]})
+      hand1.append({'suit':suits1[0], 'value': values1[2]})
+      hand1.append({'suit':suits1[2], 'value': values1[3]})
+      hand1.append({'suit':suits1[3], 'value': values1[4]})
+
+      suits2 = ["spade", "hearts", "club", "diamond"]
+      values2 = ['9', '8', '7', '6', '5']
+
+      hand2.append({'suit':suits2[0], 'value': values2[0]})
+      hand2.append({'suit':suits2[1], 'value': values2[1]})
+      hand2.append({'suit':suits2[2], 'value': values2[2]})
+      hand2.append({'suit':suits2[3], 'value': values2[3]})
+      hand2.append({'suit':suits2[0], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(1)
+    end
+
+    it "check if first hand has a full house and second hand has a flush" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+
+      suits1 = ["spade", "hearts", "club", "diamond"]
+      values1 = ['2', '2', '3', '3', '3']
+
+      hand1.append({'suit':suits1[0], 'value': values1[0]})
+      hand1.append({'suit':suits1[1], 'value': values1[1]})
+      hand1.append({'suit':suits1[0], 'value': values1[2]})
+      hand1.append({'suit':suits1[2], 'value': values1[3]})
+      hand1.append({'suit':suits1[3], 'value': values1[4]})
+
+      suits2 = ["spade", "hearts", "club", "diamond"]
+      values2 = ['A', 'J', '2', '5', '7']
+
+      hand2.append({'suit':suits2[1], 'value': values2[0]})
+      hand2.append({'suit':suits2[1], 'value': values2[1]})
+      hand2.append({'suit':suits2[1], 'value': values2[2]})
+      hand2.append({'suit':suits2[1], 'value': values2[3]})
+      hand2.append({'suit':suits2[1], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(1)
+    end
+
+    it "check if first hand has a full house and second hand has a full house" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+
+      suits1 = ["spade", "hearts", "club", "diamond"]
+      values1 = ['2', '2', '3', '3', '3']
+
+      hand1.append({'suit':suits1[0], 'value': values1[0]})
+      hand1.append({'suit':suits1[1], 'value': values1[1]})
+      hand1.append({'suit':suits1[0], 'value': values1[2]})
+      hand1.append({'suit':suits1[2], 'value': values1[3]})
+      hand1.append({'suit':suits1[3], 'value': values1[4]})
+
+      suits2 = ["spade", "hearts", "club", "diamond"]
+      values2 = ['J', 'J', '2', '2', '2']
+
+      hand2.append({'suit':suits2[0], 'value': values2[0]})
+      hand2.append({'suit':suits2[1], 'value': values2[1]})
+      hand2.append({'suit':suits2[0], 'value': values2[2]})
+      hand2.append({'suit':suits2[2], 'value': values2[3]})
+      hand2.append({'suit':suits2[3], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(-1)
+    end
+
+    it "check if first hand has a full house and second hand has a four of a kind" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+
+      suits1 = ["spade", "hearts", "club", "diamond"]
+      values1 = ['2', '2', '3', '3', '3']
+
+      hand1.append({'suit':suits1[0], 'value': values1[0]})
+      hand1.append({'suit':suits1[1], 'value': values1[1]})
+      hand1.append({'suit':suits1[0], 'value': values1[2]})
+      hand1.append({'suit':suits1[2], 'value': values1[3]})
+      hand1.append({'suit':suits1[3], 'value': values1[4]})
+
+      suits2 = ["spade", "hearts", "club", "diamond"]
+      values2 = ['J', '2', '2', '2', '2']
+
+      hand2.append({'suit':suits2[0], 'value': values2[0]})
+      hand2.append({'suit':suits2[0], 'value': values2[1]})
+      hand2.append({'suit':suits2[1], 'value': values2[2]})
+      hand2.append({'suit':suits2[2], 'value': values2[3]})
+      hand2.append({'suit':suits2[3], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(-1)
+    end
+
+    it "check if first hand has a full house and second hand has a straight flush" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+
+      suits1 = ["spade", "hearts", "club", "diamond"]
+      values1 = ['2', '2', '3', '3', '3']
+
+      hand1.append({'suit':suits1[0], 'value': values1[0]})
+      hand1.append({'suit':suits1[1], 'value': values1[1]})
+      hand1.append({'suit':suits1[0], 'value': values1[2]})
+      hand1.append({'suit':suits1[2], 'value': values1[3]})
+      hand1.append({'suit':suits1[3], 'value': values1[4]})
+
+      suits2 = ["spade", "hearts", "club", "diamond"]
+      values2 = ['5', '2', '3', '4', '6']
+
+      hand2.append({'suit':suits2[0], 'value': values2[0]})
+      hand2.append({'suit':suits2[0], 'value': values2[1]})
+      hand2.append({'suit':suits2[0], 'value': values2[2]})
+      hand2.append({'suit':suits2[0], 'value': values2[3]})
+      hand2.append({'suit':suits2[0], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(-1)
+    end
+
+    it "check if first hand has a full house and second hand has a royal flush" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+
+      suits1 = ["spade", "hearts", "club", "diamond"]
+      values1 = ['2', '2', '3', '3', '3']
+
+      hand1.append({'suit':suits1[0], 'value': values1[0]})
+      hand1.append({'suit':suits1[1], 'value': values1[1]})
+      hand1.append({'suit':suits1[0], 'value': values1[2]})
+      hand1.append({'suit':suits1[2], 'value': values1[3]})
+      hand1.append({'suit':suits1[3], 'value': values1[4]})
+
+      suits2 = ["spade", "hearts", "club", "diamond"]
+      values2 = ['A', 'J', 'K', '10', 'Q']
+
+      hand2.append({'suit':suits2[0], 'value': values2[0]})
+      hand2.append({'suit':suits2[0], 'value': values2[1]})
+      hand2.append({'suit':suits2[0], 'value': values2[2]})
+      hand2.append({'suit':suits2[0], 'value': values2[3]})
+      hand2.append({'suit':suits2[0], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(-1)
+    end
+
+    #first hand has a full house and second hand has other patterns end
+
+    #first hand has a four of a kind and second hand has other patterns
+    it "check if first hand has a four of a kind and second hand has high cards" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+
+      suits1 = ["spade", "hearts", "club", "diamond"]
+      values1 = ['2', '3', '3', '3', '3']
+
+      hand1.append({'suit':suits1[0], 'value': values1[0]})
+      hand1.append({'suit':suits1[0], 'value': values1[1]})
+      hand1.append({'suit':suits1[1], 'value': values1[2]})
+      hand1.append({'suit':suits1[2], 'value': values1[3]})
+      hand1.append({'suit':suits1[3], 'value': values1[4]})
+
+      suits2 = ["spade", "hearts", "club", "diamond"]
+      values2 = ['A', 'J', '9', '8', '7']
+
+      hand2.append({'suit':suits2[0], 'value': values2[0]})
+      hand2.append({'suit':suits2[1], 'value': values2[1]})
+      hand2.append({'suit':suits2[0], 'value': values2[2]})
+      hand2.append({'suit':suits2[3], 'value': values2[3]})
+      hand2.append({'suit':suits2[2], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(1)
+    end
+
+    it "check if first hand has a four of a kind and second hand has single pair" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+
+      suits1 = ["spade", "hearts", "club", "diamond"]
+      values1 = ['2', '3', '3', '3', '3']
+
+      hand1.append({'suit':suits1[0], 'value': values1[0]})
+      hand1.append({'suit':suits1[0], 'value': values1[1]})
+      hand1.append({'suit':suits1[1], 'value': values1[2]})
+      hand1.append({'suit':suits1[2], 'value': values1[3]})
+      hand1.append({'suit':suits1[3], 'value': values1[4]})
+
+      suits2 = ["spade", "hearts", "club", "diamond"]
+      values2 = ['A', 'J', 'A', '8', '7']
+
+      hand2.append({'suit':suits2[0], 'value': values2[0]})
+      hand2.append({'suit':suits2[1], 'value': values2[1]})
+      hand2.append({'suit':suits2[2], 'value': values2[2]})
+      hand2.append({'suit':suits2[3], 'value': values2[3]})
+      hand2.append({'suit':suits2[0], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(1)
+    end
+
+    it "check if first hand has a four of a kind and second hand has double pairs" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+
+      suits1 = ["spade", "hearts", "club", "diamond"]
+      values1 = ['2', '3', '3', '3', '3']
+
+      hand1.append({'suit':suits1[0], 'value': values1[0]})
+      hand1.append({'suit':suits1[0], 'value': values1[1]})
+      hand1.append({'suit':suits1[1], 'value': values1[2]})
+      hand1.append({'suit':suits1[2], 'value': values1[3]})
+      hand1.append({'suit':suits1[3], 'value': values1[4]})
+
+      suits2 = ["spade", "hearts", "club", "diamond"]
+      values2 = ['A', 'J', 'A', 'J', '7']
+
+      hand2.append({'suit':suits2[0], 'value': values2[0]})
+      hand2.append({'suit':suits2[1], 'value': values2[1]})
+      hand2.append({'suit':suits2[2], 'value': values2[2]})
+      hand2.append({'suit':suits2[3], 'value': values2[3]})
+      hand2.append({'suit':suits2[0], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(1)
+    end
+
+    it "check if first hand has a four of a kind and second hand has three of a kind" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+
+      suits1 = ["spade", "hearts", "club", "diamond"]
+      values1 = ['2', '3', '3', '3', '3']
+
+      hand1.append({'suit':suits1[0], 'value': values1[0]})
+      hand1.append({'suit':suits1[0], 'value': values1[1]})
+      hand1.append({'suit':suits1[1], 'value': values1[2]})
+      hand1.append({'suit':suits1[2], 'value': values1[3]})
+      hand1.append({'suit':suits1[3], 'value': values1[4]})
+
+      suits2 = ["spade", "hearts", "club", "diamond"]
+      values2 = ['2', '2', '2', 'J', '7']
+
+      hand2.append({'suit':suits2[0], 'value': values2[0]})
+      hand2.append({'suit':suits2[1], 'value': values2[1]})
+      hand2.append({'suit':suits2[2], 'value': values2[2]})
+      hand2.append({'suit':suits2[3], 'value': values2[3]})
+      hand2.append({'suit':suits2[0], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(1)
+    end
+
+    it "check if first hand has a four of a kind and second hand has a straight " do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+
+      suits1 = ["spade", "hearts", "club", "diamond"]
+      values1 = ['2', '3', '3', '3', '3']
+
+      hand1.append({'suit':suits1[0], 'value': values1[0]})
+      hand1.append({'suit':suits1[0], 'value': values1[1]})
+      hand1.append({'suit':suits1[1], 'value': values1[2]})
+      hand1.append({'suit':suits1[2], 'value': values1[3]})
+      hand1.append({'suit':suits1[3], 'value': values1[4]})
+
+      suits2 = ["spade", "hearts", "club", "diamond"]
+      values2 = ['9', '8', '7', '6', '5']
+
+      hand2.append({'suit':suits2[0], 'value': values2[0]})
+      hand2.append({'suit':suits2[1], 'value': values2[1]})
+      hand2.append({'suit':suits2[2], 'value': values2[2]})
+      hand2.append({'suit':suits2[3], 'value': values2[3]})
+      hand2.append({'suit':suits2[0], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(1)
+    end
+
+    it "check if first hand has a four of a kind and second hand has a flush" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+
+      suits1 = ["spade", "hearts", "club", "diamond"]
+      values1 = ['2', '3', '3', '3', '3']
+
+      hand1.append({'suit':suits1[0], 'value': values1[0]})
+      hand1.append({'suit':suits1[0], 'value': values1[1]})
+      hand1.append({'suit':suits1[1], 'value': values1[2]})
+      hand1.append({'suit':suits1[2], 'value': values1[3]})
+      hand1.append({'suit':suits1[3], 'value': values1[4]})
+
+      suits2 = ["spade", "hearts", "club", "diamond"]
+      values2 = ['A', 'J', '2', '5', '7']
+
+      hand2.append({'suit':suits2[1], 'value': values2[0]})
+      hand2.append({'suit':suits2[1], 'value': values2[1]})
+      hand2.append({'suit':suits2[1], 'value': values2[2]})
+      hand2.append({'suit':suits2[1], 'value': values2[3]})
+      hand2.append({'suit':suits2[1], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(1)
+    end
+
+    it "check if first hand has a four of a kind and second hand has a full house" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+
+      suits1 = ["spade", "hearts", "club", "diamond"]
+      values1 = ['2', '3', '3', '3', '3']
+
+      hand1.append({'suit':suits1[0], 'value': values1[0]})
+      hand1.append({'suit':suits1[0], 'value': values1[1]})
+      hand1.append({'suit':suits1[1], 'value': values1[2]})
+      hand1.append({'suit':suits1[2], 'value': values1[3]})
+      hand1.append({'suit':suits1[3], 'value': values1[4]})
+
+      suits2 = ["spade", "hearts", "club", "diamond"]
+      values2 = ['J', 'J', '2', '2', '2']
+
+      hand2.append({'suit':suits2[0], 'value': values2[0]})
+      hand2.append({'suit':suits2[1], 'value': values2[1]})
+      hand2.append({'suit':suits2[0], 'value': values2[2]})
+      hand2.append({'suit':suits2[2], 'value': values2[3]})
+      hand2.append({'suit':suits2[3], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(1)
+    end
+
+    it "check if first hand has a four of a kind and second hand has a four of a kind" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+
+      suits1 = ["spade", "hearts", "club", "diamond"]
+      values1 = ['2', '3', '3', '3', '3']
+
+      hand1.append({'suit':suits1[0], 'value': values1[0]})
+      hand1.append({'suit':suits1[0], 'value': values1[1]})
+      hand1.append({'suit':suits1[1], 'value': values1[2]})
+      hand1.append({'suit':suits1[2], 'value': values1[3]})
+      hand1.append({'suit':suits1[3], 'value': values1[4]})
+
+      suits2 = ["spade", "hearts", "club", "diamond"]
+      values2 = ['J', '2', '2', '2', '2']
+
+      hand2.append({'suit':suits2[0], 'value': values2[0]})
+      hand2.append({'suit':suits2[0], 'value': values2[1]})
+      hand2.append({'suit':suits2[1], 'value': values2[2]})
+      hand2.append({'suit':suits2[2], 'value': values2[3]})
+      hand2.append({'suit':suits2[3], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(1)
+    end
+
+    it "check if first hand has a four of a kind and second hand has a straight flush" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+
+      suits1 = ["spade", "hearts", "club", "diamond"]
+      values1 = ['2', '3', '3', '3', '3']
+
+      hand1.append({'suit':suits1[0], 'value': values1[0]})
+      hand1.append({'suit':suits1[0], 'value': values1[1]})
+      hand1.append({'suit':suits1[1], 'value': values1[2]})
+      hand1.append({'suit':suits1[2], 'value': values1[3]})
+      hand1.append({'suit':suits1[3], 'value': values1[4]})
+
+      suits2 = ["spade", "hearts", "club", "diamond"]
+      values2 = ['5', '2', '3', '4', '6']
+
+      hand2.append({'suit':suits2[0], 'value': values2[0]})
+      hand2.append({'suit':suits2[0], 'value': values2[1]})
+      hand2.append({'suit':suits2[0], 'value': values2[2]})
+      hand2.append({'suit':suits2[0], 'value': values2[3]})
+      hand2.append({'suit':suits2[0], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(-1)
+    end
+
+    it "check if first hand has a four of a kind and second hand has a royal flush" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+
+      suits1 = ["spade", "hearts", "club", "diamond"]
+      values1 = ['2', '3', '3', '3', '3']
+
+      hand1.append({'suit':suits1[0], 'value': values1[0]})
+      hand1.append({'suit':suits1[0], 'value': values1[1]})
+      hand1.append({'suit':suits1[1], 'value': values1[2]})
+      hand1.append({'suit':suits1[2], 'value': values1[3]})
+      hand1.append({'suit':suits1[3], 'value': values1[4]})
+
+      suits2 = ["spade", "hearts", "club", "diamond"]
+      values2 = ['A', 'J', 'K', '10', 'Q']
+
+      hand2.append({'suit':suits2[0], 'value': values2[0]})
+      hand2.append({'suit':suits2[0], 'value': values2[1]})
+      hand2.append({'suit':suits2[0], 'value': values2[2]})
+      hand2.append({'suit':suits2[0], 'value': values2[3]})
+      hand2.append({'suit':suits2[0], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(-1)
+    end
+
+    #first hand has a four of a kind and second hand has other patterns end
+
+    #first hand has a straight flush and second hand has other patterns
+    it "check if first hand has a straight flush and second hand has high cards" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+
+      suits1 = ["spade", "hearts", "club", "diamond"]
+      values1 = ['2', '3', '5', '4', '6']
+
+      hand1.append({'suit':suits1[0], 'value': values1[0]})
+      hand1.append({'suit':suits1[0], 'value': values1[1]})
+      hand1.append({'suit':suits1[0], 'value': values1[2]})
+      hand1.append({'suit':suits1[0], 'value': values1[3]})
+      hand1.append({'suit':suits1[0], 'value': values1[4]})
+
+      suits2 = ["spade", "hearts", "club", "diamond"]
+      values2 = ['A', 'J', '9', '8', '7']
+
+      hand2.append({'suit':suits2[0], 'value': values2[0]})
+      hand2.append({'suit':suits2[1], 'value': values2[1]})
+      hand2.append({'suit':suits2[0], 'value': values2[2]})
+      hand2.append({'suit':suits2[3], 'value': values2[3]})
+      hand2.append({'suit':suits2[2], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(1)
+    end
+
+    it "check if first hand has a straight flush and second hand has single pair" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+
+      suits1 = ["spade", "hearts", "club", "diamond"]
+      values1 = ['2', '3', '5', '4', '6']
+
+      hand1.append({'suit':suits1[0], 'value': values1[0]})
+      hand1.append({'suit':suits1[0], 'value': values1[1]})
+      hand1.append({'suit':suits1[0], 'value': values1[2]})
+      hand1.append({'suit':suits1[0], 'value': values1[3]})
+      hand1.append({'suit':suits1[0], 'value': values1[4]})
+
+      suits2 = ["spade", "hearts", "club", "diamond"]
+      values2 = ['A', 'J', 'A', '8', '7']
+
+      hand2.append({'suit':suits2[0], 'value': values2[0]})
+      hand2.append({'suit':suits2[1], 'value': values2[1]})
+      hand2.append({'suit':suits2[2], 'value': values2[2]})
+      hand2.append({'suit':suits2[3], 'value': values2[3]})
+      hand2.append({'suit':suits2[0], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(1)
+    end
+
+    it "check if first hand has a straight flush and second hand has double pairs" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+
+      suits1 = ["spade", "hearts", "club", "diamond"]
+      values1 = ['2', '3', '5', '4', '6']
+
+      hand1.append({'suit':suits1[0], 'value': values1[0]})
+      hand1.append({'suit':suits1[0], 'value': values1[1]})
+      hand1.append({'suit':suits1[0], 'value': values1[2]})
+      hand1.append({'suit':suits1[0], 'value': values1[3]})
+      hand1.append({'suit':suits1[0], 'value': values1[4]})
+
+      suits2 = ["spade", "hearts", "club", "diamond"]
+      values2 = ['A', 'J', 'A', 'J', '7']
+
+      hand2.append({'suit':suits2[0], 'value': values2[0]})
+      hand2.append({'suit':suits2[1], 'value': values2[1]})
+      hand2.append({'suit':suits2[2], 'value': values2[2]})
+      hand2.append({'suit':suits2[3], 'value': values2[3]})
+      hand2.append({'suit':suits2[0], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(1)
+    end
+
+    it "check if first hand has a straight flush and second hand has three of a kind" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+
+      suits1 = ["spade", "hearts", "club", "diamond"]
+      values1 = ['2', '3', '5', '4', '6']
+
+      hand1.append({'suit':suits1[0], 'value': values1[0]})
+      hand1.append({'suit':suits1[0], 'value': values1[1]})
+      hand1.append({'suit':suits1[0], 'value': values1[2]})
+      hand1.append({'suit':suits1[0], 'value': values1[3]})
+      hand1.append({'suit':suits1[0], 'value': values1[4]})
+
+      suits2 = ["spade", "hearts", "club", "diamond"]
+      values2 = ['2', '2', '2', 'J', '7']
+
+      hand2.append({'suit':suits2[0], 'value': values2[0]})
+      hand2.append({'suit':suits2[1], 'value': values2[1]})
+      hand2.append({'suit':suits2[2], 'value': values2[2]})
+      hand2.append({'suit':suits2[3], 'value': values2[3]})
+      hand2.append({'suit':suits2[0], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(1)
+    end
+
+    it "check if first hand has a straight flush and second hand has a straight " do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+
+      suits1 = ["spade", "hearts", "club", "diamond"]
+      values1 = ['2', '3', '5', '4', '6']
+
+      hand1.append({'suit':suits1[0], 'value': values1[0]})
+      hand1.append({'suit':suits1[0], 'value': values1[1]})
+      hand1.append({'suit':suits1[0], 'value': values1[2]})
+      hand1.append({'suit':suits1[0], 'value': values1[3]})
+      hand1.append({'suit':suits1[0], 'value': values1[4]})
+
+      suits2 = ["spade", "hearts", "club", "diamond"]
+      values2 = ['9', '8', '7', '6', '5']
+
+      hand2.append({'suit':suits2[0], 'value': values2[0]})
+      hand2.append({'suit':suits2[1], 'value': values2[1]})
+      hand2.append({'suit':suits2[2], 'value': values2[2]})
+      hand2.append({'suit':suits2[3], 'value': values2[3]})
+      hand2.append({'suit':suits2[0], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(1)
+    end
+
+    it "check if first hand has a straight flush and second hand has a flush" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+
+      suits1 = ["spade", "hearts", "club", "diamond"]
+      values1 = ['2', '3', '5', '4', '6']
+
+      hand1.append({'suit':suits1[0], 'value': values1[0]})
+      hand1.append({'suit':suits1[0], 'value': values1[1]})
+      hand1.append({'suit':suits1[0], 'value': values1[2]})
+      hand1.append({'suit':suits1[0], 'value': values1[3]})
+      hand1.append({'suit':suits1[0], 'value': values1[4]})
+
+      suits2 = ["spade", "hearts", "club", "diamond"]
+      values2 = ['A', 'J', '2', '5', '7']
+
+      hand2.append({'suit':suits2[1], 'value': values2[0]})
+      hand2.append({'suit':suits2[1], 'value': values2[1]})
+      hand2.append({'suit':suits2[1], 'value': values2[2]})
+      hand2.append({'suit':suits2[1], 'value': values2[3]})
+      hand2.append({'suit':suits2[1], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(1)
+    end
+
+    it "check if first hand has a straight flush and second hand has a full house" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+
+      suits1 = ["spade", "hearts", "club", "diamond"]
+      values1 = ['2', '3', '5', '4', '6']
+
+      hand1.append({'suit':suits1[0], 'value': values1[0]})
+      hand1.append({'suit':suits1[0], 'value': values1[1]})
+      hand1.append({'suit':suits1[0], 'value': values1[2]})
+      hand1.append({'suit':suits1[0], 'value': values1[3]})
+      hand1.append({'suit':suits1[0], 'value': values1[4]})
+
+      suits2 = ["spade", "hearts", "club", "diamond"]
+      values2 = ['J', 'J', '2', '2', '2']
+
+      hand2.append({'suit':suits2[0], 'value': values2[0]})
+      hand2.append({'suit':suits2[1], 'value': values2[1]})
+      hand2.append({'suit':suits2[0], 'value': values2[2]})
+      hand2.append({'suit':suits2[2], 'value': values2[3]})
+      hand2.append({'suit':suits2[3], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(1)
+    end
+
+    it "check if first hand has a straight flush and second hand has a four of a kind" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+
+      suits1 = ["spade", "hearts", "club", "diamond"]
+      values1 = ['2', '3', '5', '4', '6']
+
+      hand1.append({'suit':suits1[0], 'value': values1[0]})
+      hand1.append({'suit':suits1[0], 'value': values1[1]})
+      hand1.append({'suit':suits1[0], 'value': values1[2]})
+      hand1.append({'suit':suits1[0], 'value': values1[3]})
+      hand1.append({'suit':suits1[0], 'value': values1[4]})
+
+      suits2 = ["spade", "hearts", "club", "diamond"]
+      values2 = ['J', '2', '2', '2', '2']
+
+      hand2.append({'suit':suits2[0], 'value': values2[0]})
+      hand2.append({'suit':suits2[0], 'value': values2[1]})
+      hand2.append({'suit':suits2[1], 'value': values2[2]})
+      hand2.append({'suit':suits2[2], 'value': values2[3]})
+      hand2.append({'suit':suits2[3], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(1)
+    end
+
+    it "check if first hand has a straight flush and second hand has a straight flush" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+
+      suits1 = ["spade", "hearts", "club", "diamond"]
+      values1 = ['2', '3', '5', '4', '6']
+
+      hand1.append({'suit':suits1[0], 'value': values1[0]})
+      hand1.append({'suit':suits1[0], 'value': values1[1]})
+      hand1.append({'suit':suits1[0], 'value': values1[2]})
+      hand1.append({'suit':suits1[0], 'value': values1[3]})
+      hand1.append({'suit':suits1[0], 'value': values1[4]})
+
+      suits2 = ["spade", "hearts", "club", "diamond"]
+      values2 = ['5', '2', '3', '4', '6']
+
+      hand2.append({'suit':suits2[1], 'value': values2[0]})
+      hand2.append({'suit':suits2[1], 'value': values2[1]})
+      hand2.append({'suit':suits2[1], 'value': values2[2]})
+      hand2.append({'suit':suits2[1], 'value': values2[3]})
+      hand2.append({'suit':suits2[1], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(0)
+    end
+
+    it "check if first hand has a straight flush and second hand has a royal flush" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+
+      suits1 = ["spade", "hearts", "club", "diamond"]
+      values1 = ['2', '3', '5', '4', '6']
+
+      hand1.append({'suit':suits1[0], 'value': values1[0]})
+      hand1.append({'suit':suits1[0], 'value': values1[1]})
+      hand1.append({'suit':suits1[0], 'value': values1[2]})
+      hand1.append({'suit':suits1[0], 'value': values1[3]})
+      hand1.append({'suit':suits1[0], 'value': values1[4]})
+
+      suits2 = ["spade", "hearts", "club", "diamond"]
+      values2 = ['A', 'J', 'K', '10', 'Q']
+
+      hand2.append({'suit':suits2[0], 'value': values2[0]})
+      hand2.append({'suit':suits2[0], 'value': values2[1]})
+      hand2.append({'suit':suits2[0], 'value': values2[2]})
+      hand2.append({'suit':suits2[0], 'value': values2[3]})
+      hand2.append({'suit':suits2[0], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(-1)
+    end
+
+    #first hand has a straight flush and second hand has other patterns end
+
+    #first hand has a royal flush and second hand has other patterns
+    it "check if first hand has a royal flush and second hand has high cards" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+
+      suits1 = ["spade", "hearts", "club", "diamond"]
+      values1 = ['A', 'J', 'Q', '10', 'K']
+
+      hand1.append({'suit':suits1[0], 'value': values1[0]})
+      hand1.append({'suit':suits1[0], 'value': values1[1]})
+      hand1.append({'suit':suits1[0], 'value': values1[2]})
+      hand1.append({'suit':suits1[0], 'value': values1[3]})
+      hand1.append({'suit':suits1[0], 'value': values1[4]})
+
+      suits2 = ["spade", "hearts", "club", "diamond"]
+      values2 = ['A', 'J', '9', '8', '7']
+
+      hand2.append({'suit':suits2[0], 'value': values2[0]})
+      hand2.append({'suit':suits2[1], 'value': values2[1]})
+      hand2.append({'suit':suits2[0], 'value': values2[2]})
+      hand2.append({'suit':suits2[3], 'value': values2[3]})
+      hand2.append({'suit':suits2[2], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(1)
+    end
+
+    it "check if first hand has a royal flush and second hand has single pair" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+
+      suits1 = ["spade", "hearts", "club", "diamond"]
+      values1 = ['A', 'J', 'Q', '10', 'K']
+
+      hand1.append({'suit':suits1[0], 'value': values1[0]})
+      hand1.append({'suit':suits1[0], 'value': values1[1]})
+      hand1.append({'suit':suits1[0], 'value': values1[2]})
+      hand1.append({'suit':suits1[0], 'value': values1[3]})
+      hand1.append({'suit':suits1[0], 'value': values1[4]})
+
+      suits2 = ["spade", "hearts", "club", "diamond"]
+      values2 = ['A', 'J', 'A', '8', '7']
+
+      hand2.append({'suit':suits2[0], 'value': values2[0]})
+      hand2.append({'suit':suits2[1], 'value': values2[1]})
+      hand2.append({'suit':suits2[2], 'value': values2[2]})
+      hand2.append({'suit':suits2[3], 'value': values2[3]})
+      hand2.append({'suit':suits2[0], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(1)
+    end
+
+    it "check if first hand has a royal flush and second hand has double pairs" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+
+      suits1 = ["spade", "hearts", "club", "diamond"]
+      values1 = ['A', 'J', 'Q', '10', 'K']
+
+      hand1.append({'suit':suits1[0], 'value': values1[0]})
+      hand1.append({'suit':suits1[0], 'value': values1[1]})
+      hand1.append({'suit':suits1[0], 'value': values1[2]})
+      hand1.append({'suit':suits1[0], 'value': values1[3]})
+      hand1.append({'suit':suits1[0], 'value': values1[4]})
+
+      suits2 = ["spade", "hearts", "club", "diamond"]
+      values2 = ['A', 'J', 'A', 'J', '7']
+
+      hand2.append({'suit':suits2[0], 'value': values2[0]})
+      hand2.append({'suit':suits2[1], 'value': values2[1]})
+      hand2.append({'suit':suits2[2], 'value': values2[2]})
+      hand2.append({'suit':suits2[3], 'value': values2[3]})
+      hand2.append({'suit':suits2[0], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(1)
+    end
+
+    it "check if first hand has a royal flush and second hand has three of a kind" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+
+      suits1 = ["spade", "hearts", "club", "diamond"]
+      values1 = ['A', 'J', 'Q', '10', 'K']
+
+      hand1.append({'suit':suits1[0], 'value': values1[0]})
+      hand1.append({'suit':suits1[0], 'value': values1[1]})
+      hand1.append({'suit':suits1[0], 'value': values1[2]})
+      hand1.append({'suit':suits1[0], 'value': values1[3]})
+      hand1.append({'suit':suits1[0], 'value': values1[4]})
+
+      suits2 = ["spade", "hearts", "club", "diamond"]
+      values2 = ['2', '2', '2', 'J', '7']
+
+      hand2.append({'suit':suits2[0], 'value': values2[0]})
+      hand2.append({'suit':suits2[1], 'value': values2[1]})
+      hand2.append({'suit':suits2[2], 'value': values2[2]})
+      hand2.append({'suit':suits2[3], 'value': values2[3]})
+      hand2.append({'suit':suits2[0], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(1)
+    end
+
+    it "check if first hand has a royal flush and second hand has a straight " do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+
+      suits1 = ["spade", "hearts", "club", "diamond"]
+      values1 = ['A', 'J', 'Q', '10', 'K']
+
+      hand1.append({'suit':suits1[0], 'value': values1[0]})
+      hand1.append({'suit':suits1[0], 'value': values1[1]})
+      hand1.append({'suit':suits1[0], 'value': values1[2]})
+      hand1.append({'suit':suits1[0], 'value': values1[3]})
+      hand1.append({'suit':suits1[0], 'value': values1[4]})
+
+      suits2 = ["spade", "hearts", "club", "diamond"]
+      values2 = ['9', '8', '7', '6', '5']
+
+      hand2.append({'suit':suits2[0], 'value': values2[0]})
+      hand2.append({'suit':suits2[1], 'value': values2[1]})
+      hand2.append({'suit':suits2[2], 'value': values2[2]})
+      hand2.append({'suit':suits2[3], 'value': values2[3]})
+      hand2.append({'suit':suits2[0], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(1)
+    end
+
+    it "check if first hand has a royal flush and second hand has a flush" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+
+      suits1 = ["spade", "hearts", "club", "diamond"]
+      values1 = ['A', 'J', 'Q', '10', 'K']
+
+      hand1.append({'suit':suits1[0], 'value': values1[0]})
+      hand1.append({'suit':suits1[0], 'value': values1[1]})
+      hand1.append({'suit':suits1[0], 'value': values1[2]})
+      hand1.append({'suit':suits1[0], 'value': values1[3]})
+      hand1.append({'suit':suits1[0], 'value': values1[4]})
+
+      suits2 = ["spade", "hearts", "club", "diamond"]
+      values2 = ['A', 'J', '2', '5', '7']
+
+      hand2.append({'suit':suits2[1], 'value': values2[0]})
+      hand2.append({'suit':suits2[1], 'value': values2[1]})
+      hand2.append({'suit':suits2[1], 'value': values2[2]})
+      hand2.append({'suit':suits2[1], 'value': values2[3]})
+      hand2.append({'suit':suits2[1], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(1)
+    end
+
+    it "check if first hand has a royal flush and second hand has a full house" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+
+      suits1 = ["spade", "hearts", "club", "diamond"]
+      values1 = ['A', 'J', 'Q', '10', 'K']
+
+      hand1.append({'suit':suits1[0], 'value': values1[0]})
+      hand1.append({'suit':suits1[0], 'value': values1[1]})
+      hand1.append({'suit':suits1[0], 'value': values1[2]})
+      hand1.append({'suit':suits1[0], 'value': values1[3]})
+      hand1.append({'suit':suits1[0], 'value': values1[4]})
+
+      suits2 = ["spade", "hearts", "club", "diamond"]
+      values2 = ['J', 'J', '2', '2', '2']
+
+      hand2.append({'suit':suits2[0], 'value': values2[0]})
+      hand2.append({'suit':suits2[1], 'value': values2[1]})
+      hand2.append({'suit':suits2[0], 'value': values2[2]})
+      hand2.append({'suit':suits2[2], 'value': values2[3]})
+      hand2.append({'suit':suits2[3], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(1)
+    end
+
+    it "check if first hand has a royal flush and second hand has a four of a kind" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+
+      suits1 = ["spade", "hearts", "club", "diamond"]
+      values1 = ['A', 'J', 'Q', '10', 'K']
+
+      hand1.append({'suit':suits1[0], 'value': values1[0]})
+      hand1.append({'suit':suits1[0], 'value': values1[1]})
+      hand1.append({'suit':suits1[0], 'value': values1[2]})
+      hand1.append({'suit':suits1[0], 'value': values1[3]})
+      hand1.append({'suit':suits1[0], 'value': values1[4]})
+
+      suits2 = ["spade", "hearts", "club", "diamond"]
+      values2 = ['J', '2', '2', '2', '2']
+
+      hand2.append({'suit':suits2[0], 'value': values2[0]})
+      hand2.append({'suit':suits2[0], 'value': values2[1]})
+      hand2.append({'suit':suits2[1], 'value': values2[2]})
+      hand2.append({'suit':suits2[2], 'value': values2[3]})
+      hand2.append({'suit':suits2[3], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(1)
+    end
+
+    it "check if first hand has a royal flush and second hand has a straight flush" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+
+      suits1 = ["spade", "hearts", "club", "diamond"]
+      values1 = ['A', 'J', 'Q', '10', 'K']
+
+      hand1.append({'suit':suits1[0], 'value': values1[0]})
+      hand1.append({'suit':suits1[0], 'value': values1[1]})
+      hand1.append({'suit':suits1[0], 'value': values1[2]})
+      hand1.append({'suit':suits1[0], 'value': values1[3]})
+      hand1.append({'suit':suits1[0], 'value': values1[4]})
+
+      suits2 = ["spade", "hearts", "club", "diamond"]
+      values2 = ['5', '2', '3', '4', '6']
+
+      hand2.append({'suit':suits2[1], 'value': values2[0]})
+      hand2.append({'suit':suits2[1], 'value': values2[1]})
+      hand2.append({'suit':suits2[1], 'value': values2[2]})
+      hand2.append({'suit':suits2[1], 'value': values2[3]})
+      hand2.append({'suit':suits2[1], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(1)
+    end
+
+    it "check if first hand has a royal flush and second hand has a royal flush" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+
+      suits1 = ["spade", "hearts", "club", "diamond"]
+      values1 = ['A', 'J', 'Q', '10', 'K']
+
+      hand1.append({'suit':suits1[0], 'value': values1[0]})
+      hand1.append({'suit':suits1[0], 'value': values1[1]})
+      hand1.append({'suit':suits1[0], 'value': values1[2]})
+      hand1.append({'suit':suits1[0], 'value': values1[3]})
+      hand1.append({'suit':suits1[0], 'value': values1[4]})
+
+      suits2 = ["spade", "hearts", "club", "diamond"]
+      values2 = ['A', 'J', 'K', '10', 'Q']
+
+      hand2.append({'suit':suits2[0], 'value': values2[0]})
+      hand2.append({'suit':suits2[0], 'value': values2[1]})
+      hand2.append({'suit':suits2[0], 'value': values2[2]})
+      hand2.append({'suit':suits2[0], 'value': values2[3]})
+      hand2.append({'suit':suits2[0], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(0)
+    end
+
+
+    #first hand has a straight flush and second hand has other patterns end
+
+    #second hand has high hand and first hand has other patterns
+    it "check if first hand has a high card and second hand has a high cards" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+
+      suits1 = ["spade", "hearts", "club", "diamond"]
+      values1 = ['A', 'J', '9', '10', 'K']
+
+      hand1.append({'suit':suits1[0], 'value': values1[0]})
+      hand1.append({'suit':suits1[1], 'value': values1[1]})
+      hand1.append({'suit':suits1[2], 'value': values1[2]})
+      hand1.append({'suit':suits1[3], 'value': values1[3]})
+      hand1.append({'suit':suits1[0], 'value': values1[4]})
+
+      suits2 = ["spade", "hearts", "club", "diamond"]
+      values2 = ['A', 'J', '9', '8', '7']
+
+      hand2.append({'suit':suits2[0], 'value': values2[0]})
+      hand2.append({'suit':suits2[1], 'value': values2[1]})
+      hand2.append({'suit':suits2[0], 'value': values2[2]})
+      hand2.append({'suit':suits2[3], 'value': values2[3]})
+      hand2.append({'suit':suits2[2], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(1)
+    end
+
+    it "check if first hand has a single pair and second hand has high card" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+
+      suits1 = ["spade", "hearts", "club", "diamond"]
+      values1 = ['A', 'J', '2', '10', '2']
+
+      hand1.append({'suit':suits1[0], 'value': values1[0]})
+      hand1.append({'suit':suits1[1], 'value': values1[1]})
+      hand1.append({'suit':suits1[2], 'value': values1[2]})
+      hand1.append({'suit':suits1[0], 'value': values1[3]})
+      hand1.append({'suit':suits1[3], 'value': values1[4]})
+
+      suits2 = ["spade", "hearts", "club", "diamond"]
+      values2 = ['A', 'J', '9', '8', '7']
+
+      hand2.append({'suit':suits2[0], 'value': values2[0]})
+      hand2.append({'suit':suits2[1], 'value': values2[1]})
+      hand2.append({'suit':suits2[0], 'value': values2[2]})
+      hand2.append({'suit':suits2[3], 'value': values2[3]})
+      hand2.append({'suit':suits2[2], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(1)
+    end
+
+    it "check if first hand has a double pair and second hand has higher cards" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+
+      suits1 = ["spade", "hearts", "club", "diamond"]
+      values1 = ['A', '2', '2', '10', '10']
+
+      hand1.append({'suit':suits1[0], 'value': values1[0]})
+      hand1.append({'suit':suits1[0], 'value': values1[1]})
+      hand1.append({'suit':suits1[1], 'value': values1[2]})
+      hand1.append({'suit':suits1[2], 'value': values1[3]})
+      hand1.append({'suit':suits1[3], 'value': values1[4]})
+
+      suits2 = ["spade", "hearts", "club", "diamond"]
+      values2 = ['A', 'J', '9', '8', '7']
+
+      hand2.append({'suit':suits2[0], 'value': values2[0]})
+      hand2.append({'suit':suits2[1], 'value': values2[1]})
+      hand2.append({'suit':suits2[0], 'value': values2[2]})
+      hand2.append({'suit':suits2[3], 'value': values2[3]})
+      hand2.append({'suit':suits2[2], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(1)
+    end
+
+    it "check if first hand has a three of a kind and second hand has higher cards" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+
+      suits1 = ["spade", "hearts", "club", "diamond"]
+      values1 = ['A', 'J', '2', '2', '2']
+
+      hand1.append({'suit':suits1[0], 'value': values1[0]})
+      hand1.append({'suit':suits1[0], 'value': values1[1]})
+      hand1.append({'suit':suits1[1], 'value': values1[2]})
+      hand1.append({'suit':suits1[2], 'value': values1[3]})
+      hand1.append({'suit':suits1[3], 'value': values1[4]})
+
+      suits2 = ["spade", "hearts", "club", "diamond"]
+      values2 = ['A', 'J', '9', '8', '7']
+
+      hand2.append({'suit':suits2[0], 'value': values2[0]})
+      hand2.append({'suit':suits2[1], 'value': values2[1]})
+      hand2.append({'suit':suits2[0], 'value': values2[2]})
+      hand2.append({'suit':suits2[3], 'value': values2[3]})
+      hand2.append({'suit':suits2[2], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(1)
+    end
+
+    it "check if first hand has a straight and second hand has higher cards " do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+
+      suits1 = ["spade", "hearts", "club", "diamond"]
+      values1 = ['4', '5', '7', '6', '8']
+
+      hand1.append({'suit':suits1[0], 'value': values1[0]})
+      hand1.append({'suit':suits1[1], 'value': values1[1]})
+      hand1.append({'suit':suits1[2], 'value': values1[2]})
+      hand1.append({'suit':suits1[3], 'value': values1[3]})
+      hand1.append({'suit':suits1[0], 'value': values1[4]})
+
+      suits2 = ["spade", "hearts", "club", "diamond"]
+      values2 = ['A', 'J', '9', '8', '7']
+
+      hand2.append({'suit':suits2[0], 'value': values2[0]})
+      hand2.append({'suit':suits2[1], 'value': values2[1]})
+      hand2.append({'suit':suits2[0], 'value': values2[2]})
+      hand2.append({'suit':suits2[3], 'value': values2[3]})
+      hand2.append({'suit':suits2[2], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(1)
+    end
+
+    it "check if first hand has a flush and second hand has higher cards" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+
+      suits1 = ["spade", "hearts", "club", "diamond"]
+      values1 = ['8', '7', '9', '6', '5']
+
+      hand1.append({'suit':suits1[0], 'value': values1[0]})
+      hand1.append({'suit':suits1[0], 'value': values1[1]})
+      hand1.append({'suit':suits1[0], 'value': values1[2]})
+      hand1.append({'suit':suits1[0], 'value': values1[3]})
+      hand1.append({'suit':suits1[0], 'value': values1[4]})
+
+      suits2 = ["spade", "hearts", "club", "diamond"]
+      values2 = ['A', 'J', '9', '8', '7']
+
+      hand2.append({'suit':suits2[0], 'value': values2[0]})
+      hand2.append({'suit':suits2[1], 'value': values2[1]})
+      hand2.append({'suit':suits2[0], 'value': values2[2]})
+      hand2.append({'suit':suits2[3], 'value': values2[3]})
+      hand2.append({'suit':suits2[2], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(1)
+    end
+
+    it "check if first hand has a full house and second hand has higher cards" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+
+      suits1 = ["spade", "hearts", "club", "diamond"]
+      values1 = ['K', 'K', '4', '4', '4']
+
+      hand1.append({'suit':suits1[0], 'value': values1[0]})
+      hand1.append({'suit':suits1[1], 'value': values1[1]})
+      hand1.append({'suit':suits1[0], 'value': values1[2]})
+      hand1.append({'suit':suits1[2], 'value': values1[3]})
+      hand1.append({'suit':suits1[3], 'value': values1[4]})
+
+      suits2 = ["spade", "hearts", "club", "diamond"]
+      values2 = ['A', 'J', '9', '8', '7']
+
+      hand2.append({'suit':suits2[0], 'value': values2[0]})
+      hand2.append({'suit':suits2[1], 'value': values2[1]})
+      hand2.append({'suit':suits2[0], 'value': values2[2]})
+      hand2.append({'suit':suits2[3], 'value': values2[3]})
+      hand2.append({'suit':suits2[2], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(1)
+    end
+
+    it "check if first hand has a four of a kind and second hand has higher cards" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+
+      suits1 = ["spade", "hearts", "club", "diamond"]
+      values1 = ['A', '4', '4', '4', '4']
+
+      hand1.append({'suit':suits1[0], 'value': values1[0]})
+      hand1.append({'suit':suits1[0], 'value': values1[1]})
+      hand1.append({'suit':suits1[1], 'value': values1[2]})
+      hand1.append({'suit':suits1[2], 'value': values1[3]})
+      hand1.append({'suit':suits1[3], 'value': values1[4]})
+
+      suits2 = ["spade", "hearts", "club", "diamond"]
+      values2 = ['A', 'J', '9', '8', '7']
+
+      hand2.append({'suit':suits2[0], 'value': values2[0]})
+      hand2.append({'suit':suits2[1], 'value': values2[1]})
+      hand2.append({'suit':suits2[0], 'value': values2[2]})
+      hand2.append({'suit':suits2[3], 'value': values2[3]})
+      hand2.append({'suit':suits2[2], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(1)
+    end
+
+    it "check if first hand has a straight flush and second hand has higher cards" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+
+      suits1 = ["spade", "hearts", "club", "diamond"]
+      values1 = ['8', '7', '5', '6', '4']
+
+      hand1.append({'suit':suits1[0], 'value': values1[0]})
+      hand1.append({'suit':suits1[0], 'value': values1[1]})
+      hand1.append({'suit':suits1[0], 'value': values1[2]})
+      hand1.append({'suit':suits1[0], 'value': values1[3]})
+      hand1.append({'suit':suits1[0], 'value': values1[4]})
+
+      suits2 = ["spade", "hearts", "club", "diamond"]
+      values2 = ['A', 'J', '9', '8', '7']
+
+      hand2.append({'suit':suits2[0], 'value': values2[0]})
+      hand2.append({'suit':suits2[1], 'value': values2[1]})
+      hand2.append({'suit':suits2[0], 'value': values2[2]})
+      hand2.append({'suit':suits2[3], 'value': values2[3]})
+      hand2.append({'suit':suits2[2], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(1)
+    end
+
+    it "check if first hand has a royal flush and second hand has higher cards" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+
+      suits1 = ["spade", "hearts", "club", "diamond"]
+      values1 = ['A', 'J', 'Q', '10', 'K']
+
+      hand1.append({'suit':suits1[0], 'value': values1[0]})
+      hand1.append({'suit':suits1[0], 'value': values1[1]})
+      hand1.append({'suit':suits1[0], 'value': values1[2]})
+      hand1.append({'suit':suits1[0], 'value': values1[3]})
+      hand1.append({'suit':suits1[0], 'value': values1[4]})
+
+      suits2 = ["spade", "hearts", "club", "diamond"]
+      values2 = ['A', 'J', '9', '8', '7']
+
+      hand2.append({'suit':suits2[0], 'value': values2[0]})
+      hand2.append({'suit':suits2[1], 'value': values2[1]})
+      hand2.append({'suit':suits2[0], 'value': values2[2]})
+      hand2.append({'suit':suits2[3], 'value': values2[3]})
+      hand2.append({'suit':suits2[2], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(1)
+    end
+
+    #second hand has a higher and first hand has other patterns end
+
+    #second hand has a single pair and first hand has other patterns
+    it "check if first hand has a high card and second hand has a single pair" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+
+      suits1 = ["spade", "hearts", "club", "diamond"]
+      values1 = ['A', 'J', '9', '10', 'K']
+
+      hand1.append({'suit':suits1[0], 'value': values1[0]})
+      hand1.append({'suit':suits1[1], 'value': values1[1]})
+      hand1.append({'suit':suits1[2], 'value': values1[2]})
+      hand1.append({'suit':suits1[3], 'value': values1[3]})
+      hand1.append({'suit':suits1[0], 'value': values1[4]})
+
+      suits2 = ["spade", "hearts", "club", "diamond"]
+      values2 = ['A', 'J', '9', '8', '8']
+
+      hand2.append({'suit':suits2[0], 'value': values2[0]})
+      hand2.append({'suit':suits2[1], 'value': values2[1]})
+      hand2.append({'suit':suits2[0], 'value': values2[2]})
+      hand2.append({'suit':suits2[3], 'value': values2[3]})
+      hand2.append({'suit':suits2[2], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(-1)
+    end
+
+    it "check if first hand has a single pair and second hand has single pair" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+
+      suits1 = ["spade", "hearts", "club", "diamond"]
+      values1 = ['A', 'J', '2', '10', '2']
+
+      hand1.append({'suit':suits1[0], 'value': values1[0]})
+      hand1.append({'suit':suits1[1], 'value': values1[1]})
+      hand1.append({'suit':suits1[2], 'value': values1[2]})
+      hand1.append({'suit':suits1[0], 'value': values1[3]})
+      hand1.append({'suit':suits1[3], 'value': values1[4]})
+
+      suits2 = ["spade", "hearts", "club", "diamond"]
+      values2 = ['A', 'J', '9', '8', '8']
+
+      hand2.append({'suit':suits2[0], 'value': values2[0]})
+      hand2.append({'suit':suits2[1], 'value': values2[1]})
+      hand2.append({'suit':suits2[0], 'value': values2[2]})
+      hand2.append({'suit':suits2[3], 'value': values2[3]})
+      hand2.append({'suit':suits2[2], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(-1)
+    end
+
+    it "check if first hand has a double pair and second hand has single pair" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+
+      suits1 = ["spade", "hearts", "club", "diamond"]
+      values1 = ['A', '2', '2', '10', '10']
+
+      hand1.append({'suit':suits1[0], 'value': values1[0]})
+      hand1.append({'suit':suits1[0], 'value': values1[1]})
+      hand1.append({'suit':suits1[1], 'value': values1[2]})
+      hand1.append({'suit':suits1[2], 'value': values1[3]})
+      hand1.append({'suit':suits1[3], 'value': values1[4]})
+
+      suits2 = ["spade", "hearts", "club", "diamond"]
+      values2 = ['A', 'J', '9', '8', '8']
+
+      hand2.append({'suit':suits2[0], 'value': values2[0]})
+      hand2.append({'suit':suits2[1], 'value': values2[1]})
+      hand2.append({'suit':suits2[0], 'value': values2[2]})
+      hand2.append({'suit':suits2[3], 'value': values2[3]})
+      hand2.append({'suit':suits2[2], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(1)
+    end
+
+    it "check if first hand has a three of a kind and second hand has single pair" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+
+      suits1 = ["spade", "hearts", "club", "diamond"]
+      values1 = ['A', 'J', '2', '2', '2']
+
+      hand1.append({'suit':suits1[0], 'value': values1[0]})
+      hand1.append({'suit':suits1[0], 'value': values1[1]})
+      hand1.append({'suit':suits1[1], 'value': values1[2]})
+      hand1.append({'suit':suits1[2], 'value': values1[3]})
+      hand1.append({'suit':suits1[3], 'value': values1[4]})
+
+      suits2 = ["spade", "hearts", "club", "diamond"]
+      values2 = ['A', 'J', '9', '8', '8']
+
+      hand2.append({'suit':suits2[0], 'value': values2[0]})
+      hand2.append({'suit':suits2[1], 'value': values2[1]})
+      hand2.append({'suit':suits2[0], 'value': values2[2]})
+      hand2.append({'suit':suits2[3], 'value': values2[3]})
+      hand2.append({'suit':suits2[2], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(1)
+    end
+
+    it "check if first hand has a straight and second hand has single pair " do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+
+      suits1 = ["spade", "hearts", "club", "diamond"]
+      values1 = ['4', '5', '7', '6', '8']
+
+      hand1.append({'suit':suits1[0], 'value': values1[0]})
+      hand1.append({'suit':suits1[1], 'value': values1[1]})
+      hand1.append({'suit':suits1[2], 'value': values1[2]})
+      hand1.append({'suit':suits1[3], 'value': values1[3]})
+      hand1.append({'suit':suits1[0], 'value': values1[4]})
+
+      suits2 = ["spade", "hearts", "club", "diamond"]
+      values2 = ['A', 'J', '9', '8', '8']
+
+      hand2.append({'suit':suits2[0], 'value': values2[0]})
+      hand2.append({'suit':suits2[1], 'value': values2[1]})
+      hand2.append({'suit':suits2[0], 'value': values2[2]})
+      hand2.append({'suit':suits2[3], 'value': values2[3]})
+      hand2.append({'suit':suits2[2], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(1)
+    end
+
+    it "check if first hand has a flush and second hand has single pair" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+
+      suits1 = ["spade", "hearts", "club", "diamond"]
+      values1 = ['8', '7', '9', '6', '5']
+
+      hand1.append({'suit':suits1[0], 'value': values1[0]})
+      hand1.append({'suit':suits1[0], 'value': values1[1]})
+      hand1.append({'suit':suits1[0], 'value': values1[2]})
+      hand1.append({'suit':suits1[0], 'value': values1[3]})
+      hand1.append({'suit':suits1[0], 'value': values1[4]})
+
+      suits2 = ["spade", "hearts", "club", "diamond"]
+      values2 = ['A', 'J', '9', '8', '8']
+
+      hand2.append({'suit':suits2[0], 'value': values2[0]})
+      hand2.append({'suit':suits2[1], 'value': values2[1]})
+      hand2.append({'suit':suits2[0], 'value': values2[2]})
+      hand2.append({'suit':suits2[3], 'value': values2[3]})
+      hand2.append({'suit':suits2[2], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(1)
+    end
+
+    it "check if first hand has a full house and second hand has single pair" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+
+      suits1 = ["spade", "hearts", "club", "diamond"]
+      values1 = ['K', 'K', '4', '4', '4']
+
+      hand1.append({'suit':suits1[0], 'value': values1[0]})
+      hand1.append({'suit':suits1[1], 'value': values1[1]})
+      hand1.append({'suit':suits1[0], 'value': values1[2]})
+      hand1.append({'suit':suits1[2], 'value': values1[3]})
+      hand1.append({'suit':suits1[3], 'value': values1[4]})
+
+      suits2 = ["spade", "hearts", "club", "diamond"]
+      values2 = ['A', 'J', '9', '8', '8']
+
+      hand2.append({'suit':suits2[0], 'value': values2[0]})
+      hand2.append({'suit':suits2[1], 'value': values2[1]})
+      hand2.append({'suit':suits2[0], 'value': values2[2]})
+      hand2.append({'suit':suits2[3], 'value': values2[3]})
+      hand2.append({'suit':suits2[2], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(1)
+    end
+
+    it "check if first hand has a four of a kind and second hand has single pair" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+
+      suits1 = ["spade", "hearts", "club", "diamond"]
+      values1 = ['A', '4', '4', '4', '4']
+
+      hand1.append({'suit':suits1[0], 'value': values1[0]})
+      hand1.append({'suit':suits1[0], 'value': values1[1]})
+      hand1.append({'suit':suits1[1], 'value': values1[2]})
+      hand1.append({'suit':suits1[2], 'value': values1[3]})
+      hand1.append({'suit':suits1[3], 'value': values1[4]})
+
+      suits2 = ["spade", "hearts", "club", "diamond"]
+      values2 = ['A', 'J', '9', '8', '8']
+
+      hand2.append({'suit':suits2[0], 'value': values2[0]})
+      hand2.append({'suit':suits2[1], 'value': values2[1]})
+      hand2.append({'suit':suits2[0], 'value': values2[2]})
+      hand2.append({'suit':suits2[3], 'value': values2[3]})
+      hand2.append({'suit':suits2[2], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(1)
+    end
+
+    it "check if first hand has a straight flush and second hand has single pair" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+
+      suits1 = ["spade", "hearts", "club", "diamond"]
+      values1 = ['8', '7', '5', '6', '4']
+
+      hand1.append({'suit':suits1[0], 'value': values1[0]})
+      hand1.append({'suit':suits1[0], 'value': values1[1]})
+      hand1.append({'suit':suits1[0], 'value': values1[2]})
+      hand1.append({'suit':suits1[0], 'value': values1[3]})
+      hand1.append({'suit':suits1[0], 'value': values1[4]})
+
+      suits2 = ["spade", "hearts", "club", "diamond"]
+      values2 = ['A', 'J', '9', '8', '8']
+
+      hand2.append({'suit':suits2[0], 'value': values2[0]})
+      hand2.append({'suit':suits2[1], 'value': values2[1]})
+      hand2.append({'suit':suits2[0], 'value': values2[2]})
+      hand2.append({'suit':suits2[3], 'value': values2[3]})
+      hand2.append({'suit':suits2[2], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(1)
+    end
+
+    it "check if first hand has a royal flush and second hand has a single pair" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+
+      suits1 = ["spade", "hearts", "club", "diamond"]
+      values1 = ['A', 'J', 'Q', '10', 'K']
+
+      hand1.append({'suit':suits1[0], 'value': values1[0]})
+      hand1.append({'suit':suits1[0], 'value': values1[1]})
+      hand1.append({'suit':suits1[0], 'value': values1[2]})
+      hand1.append({'suit':suits1[0], 'value': values1[3]})
+      hand1.append({'suit':suits1[0], 'value': values1[4]})
+
+      suits2 = ["spade", "hearts", "club", "diamond"]
+      values2 = ['A', 'J', '9', '8', '8']
+
+      hand2.append({'suit':suits2[0], 'value': values2[0]})
+      hand2.append({'suit':suits2[1], 'value': values2[1]})
+      hand2.append({'suit':suits2[0], 'value': values2[2]})
+      hand2.append({'suit':suits2[3], 'value': values2[3]})
+      hand2.append({'suit':suits2[2], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(1)
+    end
+
+    #second hand has a single pair and first hand has other patterns end
+
+    #second hand has a double pair and first hand has other patterns
+    it "check if first hand has a high card and second hand has a double pair" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+
+      suits1 = ["spade", "hearts", "club", "diamond"]
+      values1 = ['A', 'J', '9', '10', 'K']
+
+      hand1.append({'suit':suits1[0], 'value': values1[0]})
+      hand1.append({'suit':suits1[1], 'value': values1[1]})
+      hand1.append({'suit':suits1[2], 'value': values1[2]})
+      hand1.append({'suit':suits1[3], 'value': values1[3]})
+      hand1.append({'suit':suits1[0], 'value': values1[4]})
+
+      suits2 = ["spade", "hearts", "club", "diamond"]
+      values2 = ['A', '9', '9', '8', '8']
+
+      hand2.append({'suit':suits2[0], 'value': values2[0]})
+      hand2.append({'suit':suits2[1], 'value': values2[1]})
+      hand2.append({'suit':suits2[0], 'value': values2[2]})
+      hand2.append({'suit':suits2[3], 'value': values2[3]})
+      hand2.append({'suit':suits2[2], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(-1)
+    end
+
+    it "check if first hand has a single pair and second hand has double pair" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+
+      suits1 = ["spade", "hearts", "club", "diamond"]
+      values1 = ['A', 'J', '2', '10', '2']
+
+      hand1.append({'suit':suits1[0], 'value': values1[0]})
+      hand1.append({'suit':suits1[1], 'value': values1[1]})
+      hand1.append({'suit':suits1[2], 'value': values1[2]})
+      hand1.append({'suit':suits1[0], 'value': values1[3]})
+      hand1.append({'suit':suits1[3], 'value': values1[4]})
+
+      suits2 = ["spade", "hearts", "club", "diamond"]
+      values2 = ['A', '9', '9', '8', '8']
+
+      hand2.append({'suit':suits2[0], 'value': values2[0]})
+      hand2.append({'suit':suits2[1], 'value': values2[1]})
+      hand2.append({'suit':suits2[0], 'value': values2[2]})
+      hand2.append({'suit':suits2[3], 'value': values2[3]})
+      hand2.append({'suit':suits2[2], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(-1)
+    end
+
+    it "check if first hand has a double pair and second hand has double pair" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+
+      suits1 = ["spade", "hearts", "club", "diamond"]
+      values1 = ['A', '2', '2', '10', '10']
+
+      hand1.append({'suit':suits1[0], 'value': values1[0]})
+      hand1.append({'suit':suits1[0], 'value': values1[1]})
+      hand1.append({'suit':suits1[1], 'value': values1[2]})
+      hand1.append({'suit':suits1[2], 'value': values1[3]})
+      hand1.append({'suit':suits1[3], 'value': values1[4]})
+
+      suits2 = ["spade", "hearts", "club", "diamond"]
+      values2 = ['A', '9', '9', '8', '8']
+
+      hand2.append({'suit':suits2[0], 'value': values2[0]})
+      hand2.append({'suit':suits2[1], 'value': values2[1]})
+      hand2.append({'suit':suits2[0], 'value': values2[2]})
+      hand2.append({'suit':suits2[3], 'value': values2[3]})
+      hand2.append({'suit':suits2[2], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(1)
+    end
+
+    it "check if first hand has a three of a kind and second hand has double pair" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+
+      suits1 = ["spade", "hearts", "club", "diamond"]
+      values1 = ['A', 'J', '2', '2', '2']
+
+      hand1.append({'suit':suits1[0], 'value': values1[0]})
+      hand1.append({'suit':suits1[0], 'value': values1[1]})
+      hand1.append({'suit':suits1[1], 'value': values1[2]})
+      hand1.append({'suit':suits1[2], 'value': values1[3]})
+      hand1.append({'suit':suits1[3], 'value': values1[4]})
+
+      suits2 = ["spade", "hearts", "club", "diamond"]
+      values2 = ['A', '9', '9', '8', '8']
+
+      hand2.append({'suit':suits2[0], 'value': values2[0]})
+      hand2.append({'suit':suits2[1], 'value': values2[1]})
+      hand2.append({'suit':suits2[0], 'value': values2[2]})
+      hand2.append({'suit':suits2[3], 'value': values2[3]})
+      hand2.append({'suit':suits2[2], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(1)
+    end
+
+    it "check if first hand has a straight and second hand has double pair " do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+
+      suits1 = ["spade", "hearts", "club", "diamond"]
+      values1 = ['4', '5', '7', '6', '8']
+
+      hand1.append({'suit':suits1[0], 'value': values1[0]})
+      hand1.append({'suit':suits1[1], 'value': values1[1]})
+      hand1.append({'suit':suits1[2], 'value': values1[2]})
+      hand1.append({'suit':suits1[3], 'value': values1[3]})
+      hand1.append({'suit':suits1[0], 'value': values1[4]})
+
+      suits2 = ["spade", "hearts", "club", "diamond"]
+      values2 = ['A', '9', '9', '8', '8']
+
+      hand2.append({'suit':suits2[0], 'value': values2[0]})
+      hand2.append({'suit':suits2[1], 'value': values2[1]})
+      hand2.append({'suit':suits2[0], 'value': values2[2]})
+      hand2.append({'suit':suits2[3], 'value': values2[3]})
+      hand2.append({'suit':suits2[2], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(1)
+    end
+
+    it "check if first hand has a flush and second hand has double pair" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+
+      suits1 = ["spade", "hearts", "club", "diamond"]
+      values1 = ['8', '7', '9', '6', '5']
+
+      hand1.append({'suit':suits1[0], 'value': values1[0]})
+      hand1.append({'suit':suits1[0], 'value': values1[1]})
+      hand1.append({'suit':suits1[0], 'value': values1[2]})
+      hand1.append({'suit':suits1[0], 'value': values1[3]})
+      hand1.append({'suit':suits1[0], 'value': values1[4]})
+
+      suits2 = ["spade", "hearts", "club", "diamond"]
+      values2 = ['A', '9', '9', '8', '8']
+
+      hand2.append({'suit':suits2[0], 'value': values2[0]})
+      hand2.append({'suit':suits2[1], 'value': values2[1]})
+      hand2.append({'suit':suits2[0], 'value': values2[2]})
+      hand2.append({'suit':suits2[3], 'value': values2[3]})
+      hand2.append({'suit':suits2[2], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(1)
+    end
+
+    it "check if first hand has a full house and second hand has double pair" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+
+      suits1 = ["spade", "hearts", "club", "diamond"]
+      values1 = ['K', 'K', '4', '4', '4']
+
+      hand1.append({'suit':suits1[0], 'value': values1[0]})
+      hand1.append({'suit':suits1[1], 'value': values1[1]})
+      hand1.append({'suit':suits1[0], 'value': values1[2]})
+      hand1.append({'suit':suits1[2], 'value': values1[3]})
+      hand1.append({'suit':suits1[3], 'value': values1[4]})
+
+      suits2 = ["spade", "hearts", "club", "diamond"]
+      values2 = ['A', '9', '9', '8', '8']
+
+      hand2.append({'suit':suits2[0], 'value': values2[0]})
+      hand2.append({'suit':suits2[1], 'value': values2[1]})
+      hand2.append({'suit':suits2[0], 'value': values2[2]})
+      hand2.append({'suit':suits2[3], 'value': values2[3]})
+      hand2.append({'suit':suits2[2], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(1)
+    end
+
+    it "check if first hand has a four of a kind and second hand has double pair" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+
+      suits1 = ["spade", "hearts", "club", "diamond"]
+      values1 = ['A', '4', '4', '4', '4']
+
+      hand1.append({'suit':suits1[0], 'value': values1[0]})
+      hand1.append({'suit':suits1[0], 'value': values1[1]})
+      hand1.append({'suit':suits1[1], 'value': values1[2]})
+      hand1.append({'suit':suits1[2], 'value': values1[3]})
+      hand1.append({'suit':suits1[3], 'value': values1[4]})
+
+      suits2 = ["spade", "hearts", "club", "diamond"]
+      values2 = ['A', '9', '9', '8', '8']
+
+      hand2.append({'suit':suits2[0], 'value': values2[0]})
+      hand2.append({'suit':suits2[1], 'value': values2[1]})
+      hand2.append({'suit':suits2[0], 'value': values2[2]})
+      hand2.append({'suit':suits2[3], 'value': values2[3]})
+      hand2.append({'suit':suits2[2], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(1)
+    end
+
+    it "check if first hand has a straight flush and second hand has double pair" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+
+      suits1 = ["spade", "hearts", "club", "diamond"]
+      values1 = ['8', '7', '5', '6', '4']
+
+      hand1.append({'suit':suits1[0], 'value': values1[0]})
+      hand1.append({'suit':suits1[0], 'value': values1[1]})
+      hand1.append({'suit':suits1[0], 'value': values1[2]})
+      hand1.append({'suit':suits1[0], 'value': values1[3]})
+      hand1.append({'suit':suits1[0], 'value': values1[4]})
+
+      suits2 = ["spade", "hearts", "club", "diamond"]
+      values2 = ['A', '9', '9', '8', '8']
+
+      hand2.append({'suit':suits2[0], 'value': values2[0]})
+      hand2.append({'suit':suits2[1], 'value': values2[1]})
+      hand2.append({'suit':suits2[0], 'value': values2[2]})
+      hand2.append({'suit':suits2[3], 'value': values2[3]})
+      hand2.append({'suit':suits2[2], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(1)
+    end
+
+    it "check if first hand has a royal flush and second hand has a double pair" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+
+      suits1 = ["spade", "hearts", "club", "diamond"]
+      values1 = ['A', 'J', 'Q', '10', 'K']
+
+      hand1.append({'suit':suits1[0], 'value': values1[0]})
+      hand1.append({'suit':suits1[0], 'value': values1[1]})
+      hand1.append({'suit':suits1[0], 'value': values1[2]})
+      hand1.append({'suit':suits1[0], 'value': values1[3]})
+      hand1.append({'suit':suits1[0], 'value': values1[4]})
+
+      suits2 = ["spade", "hearts", "club", "diamond"]
+      values2 = ['A', '9', '9', '8', '8']
+
+      hand2.append({'suit':suits2[0], 'value': values2[0]})
+      hand2.append({'suit':suits2[1], 'value': values2[1]})
+      hand2.append({'suit':suits2[0], 'value': values2[2]})
+      hand2.append({'suit':suits2[3], 'value': values2[3]})
+      hand2.append({'suit':suits2[2], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(1)
+    end
+
+    #second hand has a double pair and first hand has other patterns end
+
+    #second hand has a three of a kind and first hand has other patterns
+    it "check if first hand has a high card and second hand has a three of a kind" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+
+      suits1 = ["spade", "hearts", "club", "diamond"]
+      values1 = ['A', 'J', '9', '10', 'K']
+
+      hand1.append({'suit':suits1[0], 'value': values1[0]})
+      hand1.append({'suit':suits1[1], 'value': values1[1]})
+      hand1.append({'suit':suits1[2], 'value': values1[2]})
+      hand1.append({'suit':suits1[3], 'value': values1[3]})
+      hand1.append({'suit':suits1[0], 'value': values1[4]})
+
+      suits2 = ["spade", "hearts", "club", "diamond"]
+      values2 = ['A', '9', '9', '9', '8']
+
+      hand2.append({'suit':suits2[0], 'value': values2[0]})
+      hand2.append({'suit':suits2[1], 'value': values2[1]})
+      hand2.append({'suit':suits2[0], 'value': values2[2]})
+      hand2.append({'suit':suits2[3], 'value': values2[3]})
+      hand2.append({'suit':suits2[2], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(-1)
+    end
+
+    it "check if first hand has a single pair and second hand has three of a kind" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+
+      suits1 = ["spade", "hearts", "club", "diamond"]
+      values1 = ['A', 'J', '2', '10', '2']
+
+      hand1.append({'suit':suits1[0], 'value': values1[0]})
+      hand1.append({'suit':suits1[1], 'value': values1[1]})
+      hand1.append({'suit':suits1[2], 'value': values1[2]})
+      hand1.append({'suit':suits1[0], 'value': values1[3]})
+      hand1.append({'suit':suits1[3], 'value': values1[4]})
+
+      suits2 = ["spade", "hearts", "club", "diamond"]
+      values2 = ['A', '9', '9', '9', '8']
+
+      hand2.append({'suit':suits2[0], 'value': values2[0]})
+      hand2.append({'suit':suits2[1], 'value': values2[1]})
+      hand2.append({'suit':suits2[0], 'value': values2[2]})
+      hand2.append({'suit':suits2[3], 'value': values2[3]})
+      hand2.append({'suit':suits2[2], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(-1)
+    end
+
+    it "check if first hand has a double pair and second hand has three of a kind" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+
+      suits1 = ["spade", "hearts", "club", "diamond"]
+      values1 = ['A', '2', '2', '10', '10']
+
+      hand1.append({'suit':suits1[0], 'value': values1[0]})
+      hand1.append({'suit':suits1[0], 'value': values1[1]})
+      hand1.append({'suit':suits1[1], 'value': values1[2]})
+      hand1.append({'suit':suits1[2], 'value': values1[3]})
+      hand1.append({'suit':suits1[3], 'value': values1[4]})
+
+      suits2 = ["spade", "hearts", "club", "diamond"]
+      values2 = ['A', '9', '9', '9', '8']
+
+      hand2.append({'suit':suits2[0], 'value': values2[0]})
+      hand2.append({'suit':suits2[1], 'value': values2[1]})
+      hand2.append({'suit':suits2[0], 'value': values2[2]})
+      hand2.append({'suit':suits2[3], 'value': values2[3]})
+      hand2.append({'suit':suits2[2], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(-1)
+    end
+
+    it "check if first hand has a three of a kind and second hand has three of a kind" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+
+      suits1 = ["spade", "hearts", "club", "diamond"]
+      values1 = ['A', 'J', '2', '2', '2']
+
+      hand1.append({'suit':suits1[0], 'value': values1[0]})
+      hand1.append({'suit':suits1[0], 'value': values1[1]})
+      hand1.append({'suit':suits1[1], 'value': values1[2]})
+      hand1.append({'suit':suits1[2], 'value': values1[3]})
+      hand1.append({'suit':suits1[3], 'value': values1[4]})
+
+      suits2 = ["spade", "hearts", "club", "diamond"]
+      values2 = ['A', '9', '9', '9', '8']
+
+      hand2.append({'suit':suits2[0], 'value': values2[0]})
+      hand2.append({'suit':suits2[1], 'value': values2[1]})
+      hand2.append({'suit':suits2[0], 'value': values2[2]})
+      hand2.append({'suit':suits2[3], 'value': values2[3]})
+      hand2.append({'suit':suits2[2], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(-1)
+    end
+
+    it "check if first hand has a straight and second hand has three of a kind " do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+
+      suits1 = ["spade", "hearts", "club", "diamond"]
+      values1 = ['4', '5', '7', '6', '8']
+
+      hand1.append({'suit':suits1[0], 'value': values1[0]})
+      hand1.append({'suit':suits1[1], 'value': values1[1]})
+      hand1.append({'suit':suits1[2], 'value': values1[2]})
+      hand1.append({'suit':suits1[3], 'value': values1[3]})
+      hand1.append({'suit':suits1[0], 'value': values1[4]})
+
+      suits2 = ["spade", "hearts", "club", "diamond"]
+      values2 = ['A', '9', '9', '9', '8']
+
+      hand2.append({'suit':suits2[0], 'value': values2[0]})
+      hand2.append({'suit':suits2[1], 'value': values2[1]})
+      hand2.append({'suit':suits2[0], 'value': values2[2]})
+      hand2.append({'suit':suits2[3], 'value': values2[3]})
+      hand2.append({'suit':suits2[2], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(1)
+    end
+
+    it "check if first hand has a flush and second hand has three of a kind" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+
+      suits1 = ["spade", "hearts", "club", "diamond"]
+      values1 = ['8', '7', '9', '6', '5']
+
+      hand1.append({'suit':suits1[0], 'value': values1[0]})
+      hand1.append({'suit':suits1[0], 'value': values1[1]})
+      hand1.append({'suit':suits1[0], 'value': values1[2]})
+      hand1.append({'suit':suits1[0], 'value': values1[3]})
+      hand1.append({'suit':suits1[0], 'value': values1[4]})
+
+      suits2 = ["spade", "hearts", "club", "diamond"]
+      values2 = ['A', '9', '9', '9', '8']
+
+      hand2.append({'suit':suits2[0], 'value': values2[0]})
+      hand2.append({'suit':suits2[1], 'value': values2[1]})
+      hand2.append({'suit':suits2[0], 'value': values2[2]})
+      hand2.append({'suit':suits2[3], 'value': values2[3]})
+      hand2.append({'suit':suits2[2], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(1)
+    end
+
+    it "check if first hand has a full house and second hand has three of a kind" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+
+      suits1 = ["spade", "hearts", "club", "diamond"]
+      values1 = ['K', 'K', '4', '4', '4']
+
+      hand1.append({'suit':suits1[0], 'value': values1[0]})
+      hand1.append({'suit':suits1[1], 'value': values1[1]})
+      hand1.append({'suit':suits1[0], 'value': values1[2]})
+      hand1.append({'suit':suits1[2], 'value': values1[3]})
+      hand1.append({'suit':suits1[3], 'value': values1[4]})
+
+      suits2 = ["spade", "hearts", "club", "diamond"]
+      values2 = ['A', '9', '9', '9', '8']
+
+      hand2.append({'suit':suits2[0], 'value': values2[0]})
+      hand2.append({'suit':suits2[1], 'value': values2[1]})
+      hand2.append({'suit':suits2[0], 'value': values2[2]})
+      hand2.append({'suit':suits2[3], 'value': values2[3]})
+      hand2.append({'suit':suits2[2], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(1)
+    end
+
+    it "check if first hand has a four of a kind and second hand has three of a kind" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+
+      suits1 = ["spade", "hearts", "club", "diamond"]
+      values1 = ['A', '4', '4', '4', '4']
+
+      hand1.append({'suit':suits1[0], 'value': values1[0]})
+      hand1.append({'suit':suits1[0], 'value': values1[1]})
+      hand1.append({'suit':suits1[1], 'value': values1[2]})
+      hand1.append({'suit':suits1[2], 'value': values1[3]})
+      hand1.append({'suit':suits1[3], 'value': values1[4]})
+
+      suits2 = ["spade", "hearts", "club", "diamond"]
+      values2 = ['A', '9', '9', '9', '8']
+
+      hand2.append({'suit':suits2[0], 'value': values2[0]})
+      hand2.append({'suit':suits2[1], 'value': values2[1]})
+      hand2.append({'suit':suits2[0], 'value': values2[2]})
+      hand2.append({'suit':suits2[3], 'value': values2[3]})
+      hand2.append({'suit':suits2[2], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(1)
+    end
+
+    it "check if first hand has a straight flush and second hand has three of a kind" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+
+      suits1 = ["spade", "hearts", "club", "diamond"]
+      values1 = ['8', '7', '5', '6', '4']
+
+      hand1.append({'suit':suits1[0], 'value': values1[0]})
+      hand1.append({'suit':suits1[0], 'value': values1[1]})
+      hand1.append({'suit':suits1[0], 'value': values1[2]})
+      hand1.append({'suit':suits1[0], 'value': values1[3]})
+      hand1.append({'suit':suits1[0], 'value': values1[4]})
+
+      suits2 = ["spade", "hearts", "club", "diamond"]
+      values2 = ['A', '9', '9', '9', '8']
+
+      hand2.append({'suit':suits2[0], 'value': values2[0]})
+      hand2.append({'suit':suits2[1], 'value': values2[1]})
+      hand2.append({'suit':suits2[0], 'value': values2[2]})
+      hand2.append({'suit':suits2[3], 'value': values2[3]})
+      hand2.append({'suit':suits2[2], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(1)
+    end
+
+    it "check if first hand has a royal flush and second hand has a three of a kind" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+
+      suits1 = ["spade", "hearts", "club", "diamond"]
+      values1 = ['A', 'J', 'Q', '10', 'K']
+
+      hand1.append({'suit':suits1[0], 'value': values1[0]})
+      hand1.append({'suit':suits1[0], 'value': values1[1]})
+      hand1.append({'suit':suits1[0], 'value': values1[2]})
+      hand1.append({'suit':suits1[0], 'value': values1[3]})
+      hand1.append({'suit':suits1[0], 'value': values1[4]})
+
+      suits2 = ["spade", "hearts", "club", "diamond"]
+      values2 = ['A', '9', '9', '9', '8']
+
+      hand2.append({'suit':suits2[0], 'value': values2[0]})
+      hand2.append({'suit':suits2[1], 'value': values2[1]})
+      hand2.append({'suit':suits2[0], 'value': values2[2]})
+      hand2.append({'suit':suits2[3], 'value': values2[3]})
+      hand2.append({'suit':suits2[2], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(1)
+    end
+
+    #second hand has a three of a kind and first hand has other patterns end
+
+    #second hand has a straight and first hand has other patterns
+    it "check if first hand has a high card and second hand has a straight" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+
+      suits1 = ["spade", "hearts", "club", "diamond"]
+      values1 = ['A', 'J', '9', '10', 'K']
+
+      hand1.append({'suit':suits1[0], 'value': values1[0]})
+      hand1.append({'suit':suits1[1], 'value': values1[1]})
+      hand1.append({'suit':suits1[2], 'value': values1[2]})
+      hand1.append({'suit':suits1[3], 'value': values1[3]})
+      hand1.append({'suit':suits1[0], 'value': values1[4]})
+
+      suits2 = ["spade", "hearts", "club", "diamond"]
+      values2 = ['J', '9', '10', '8', 'Q']
+
+      hand2.append({'suit':suits2[0], 'value': values2[0]})
+      hand2.append({'suit':suits2[1], 'value': values2[1]})
+      hand2.append({'suit':suits2[0], 'value': values2[2]})
+      hand2.append({'suit':suits2[3], 'value': values2[3]})
+      hand2.append({'suit':suits2[2], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(-1)
+    end
+
+    it "check if first hand has a single pair and second hand has straight" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+
+      suits1 = ["spade", "hearts", "club", "diamond"]
+      values1 = ['A', 'J', '2', '10', '2']
+
+      hand1.append({'suit':suits1[0], 'value': values1[0]})
+      hand1.append({'suit':suits1[1], 'value': values1[1]})
+      hand1.append({'suit':suits1[2], 'value': values1[2]})
+      hand1.append({'suit':suits1[0], 'value': values1[3]})
+      hand1.append({'suit':suits1[3], 'value': values1[4]})
+
+      suits2 = ["spade", "hearts", "club", "diamond"]
+      values2 = ['J', '9', '10', '8', 'Q']
+
+      hand2.append({'suit':suits2[0], 'value': values2[0]})
+      hand2.append({'suit':suits2[1], 'value': values2[1]})
+      hand2.append({'suit':suits2[0], 'value': values2[2]})
+      hand2.append({'suit':suits2[3], 'value': values2[3]})
+      hand2.append({'suit':suits2[2], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(-1)
+    end
+
+    it "check if first hand has a double pair and second hand has straight" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+
+      suits1 = ["spade", "hearts", "club", "diamond"]
+      values1 = ['A', '2', '2', '10', '10']
+
+      hand1.append({'suit':suits1[0], 'value': values1[0]})
+      hand1.append({'suit':suits1[0], 'value': values1[1]})
+      hand1.append({'suit':suits1[1], 'value': values1[2]})
+      hand1.append({'suit':suits1[2], 'value': values1[3]})
+      hand1.append({'suit':suits1[3], 'value': values1[4]})
+
+      suits2 = ["spade", "hearts", "club", "diamond"]
+      values2 = ['J', '9', '10', '8', 'Q']
+
+      hand2.append({'suit':suits2[0], 'value': values2[0]})
+      hand2.append({'suit':suits2[1], 'value': values2[1]})
+      hand2.append({'suit':suits2[0], 'value': values2[2]})
+      hand2.append({'suit':suits2[3], 'value': values2[3]})
+      hand2.append({'suit':suits2[2], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(-1)
+    end
+
+    it "check if first hand has a three of a kind and second hand has straight" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+
+      suits1 = ["spade", "hearts", "club", "diamond"]
+      values1 = ['A', 'J', '2', '2', '2']
+
+      hand1.append({'suit':suits1[0], 'value': values1[0]})
+      hand1.append({'suit':suits1[0], 'value': values1[1]})
+      hand1.append({'suit':suits1[1], 'value': values1[2]})
+      hand1.append({'suit':suits1[2], 'value': values1[3]})
+      hand1.append({'suit':suits1[3], 'value': values1[4]})
+
+      suits2 = ["spade", "hearts", "club", "diamond"]
+      values2 = ['J', '9', '10', '8', 'Q']
+
+      hand2.append({'suit':suits2[0], 'value': values2[0]})
+      hand2.append({'suit':suits2[1], 'value': values2[1]})
+      hand2.append({'suit':suits2[0], 'value': values2[2]})
+      hand2.append({'suit':suits2[3], 'value': values2[3]})
+      hand2.append({'suit':suits2[2], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(-1)
+    end
+
+    it "check if first hand has a straight and second hand has straight " do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+
+      suits1 = ["spade", "hearts", "club", "diamond"]
+      values1 = ['4', '5', '7', '6', '8']
+
+      hand1.append({'suit':suits1[0], 'value': values1[0]})
+      hand1.append({'suit':suits1[1], 'value': values1[1]})
+      hand1.append({'suit':suits1[2], 'value': values1[2]})
+      hand1.append({'suit':suits1[3], 'value': values1[3]})
+      hand1.append({'suit':suits1[0], 'value': values1[4]})
+
+      suits2 = ["spade", "hearts", "club", "diamond"]
+      values2 = ['J', '9', '10', '8', 'Q']
+
+      hand2.append({'suit':suits2[0], 'value': values2[0]})
+      hand2.append({'suit':suits2[1], 'value': values2[1]})
+      hand2.append({'suit':suits2[0], 'value': values2[2]})
+      hand2.append({'suit':suits2[3], 'value': values2[3]})
+      hand2.append({'suit':suits2[2], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(-1)
+    end
+
+    it "check if first hand has a flush and second hand has straight" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+
+      suits1 = ["spade", "hearts", "club", "diamond"]
+      values1 = ['8', '7', '9', '6', '5']
+
+      hand1.append({'suit':suits1[0], 'value': values1[0]})
+      hand1.append({'suit':suits1[0], 'value': values1[1]})
+      hand1.append({'suit':suits1[0], 'value': values1[2]})
+      hand1.append({'suit':suits1[0], 'value': values1[3]})
+      hand1.append({'suit':suits1[0], 'value': values1[4]})
+
+      suits2 = ["spade", "hearts", "club", "diamond"]
+      values2 = ['J', '9', '10', '8', 'Q']
+
+      hand2.append({'suit':suits2[0], 'value': values2[0]})
+      hand2.append({'suit':suits2[1], 'value': values2[1]})
+      hand2.append({'suit':suits2[0], 'value': values2[2]})
+      hand2.append({'suit':suits2[3], 'value': values2[3]})
+      hand2.append({'suit':suits2[2], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(1)
+    end
+
+    it "check if first hand has a full house and second hand has straight" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+
+      suits1 = ["spade", "hearts", "club", "diamond"]
+      values1 = ['K', 'K', '4', '4', '4']
+
+      hand1.append({'suit':suits1[0], 'value': values1[0]})
+      hand1.append({'suit':suits1[1], 'value': values1[1]})
+      hand1.append({'suit':suits1[0], 'value': values1[2]})
+      hand1.append({'suit':suits1[2], 'value': values1[3]})
+      hand1.append({'suit':suits1[3], 'value': values1[4]})
+
+      suits2 = ["spade", "hearts", "club", "diamond"]
+      values2 = ['J', '9', '10', '8', 'Q']
+
+      hand2.append({'suit':suits2[0], 'value': values2[0]})
+      hand2.append({'suit':suits2[1], 'value': values2[1]})
+      hand2.append({'suit':suits2[0], 'value': values2[2]})
+      hand2.append({'suit':suits2[3], 'value': values2[3]})
+      hand2.append({'suit':suits2[2], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(1)
+    end
+
+    it "check if first hand has a four of a kind and second hand has straight" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+
+      suits1 = ["spade", "hearts", "club", "diamond"]
+      values1 = ['A', '4', '4', '4', '4']
+
+      hand1.append({'suit':suits1[0], 'value': values1[0]})
+      hand1.append({'suit':suits1[0], 'value': values1[1]})
+      hand1.append({'suit':suits1[1], 'value': values1[2]})
+      hand1.append({'suit':suits1[2], 'value': values1[3]})
+      hand1.append({'suit':suits1[3], 'value': values1[4]})
+
+      suits2 = ["spade", "hearts", "club", "diamond"]
+      values2 = ['J', '9', '10', '8', 'Q']
+
+      hand2.append({'suit':suits2[0], 'value': values2[0]})
+      hand2.append({'suit':suits2[1], 'value': values2[1]})
+      hand2.append({'suit':suits2[0], 'value': values2[2]})
+      hand2.append({'suit':suits2[3], 'value': values2[3]})
+      hand2.append({'suit':suits2[2], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(1)
+    end
+
+    it "check if first hand has a straight flush and second hand has straight" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+
+      suits1 = ["spade", "hearts", "club", "diamond"]
+      values1 = ['8', '7', '5', '6', '4']
+
+      hand1.append({'suit':suits1[0], 'value': values1[0]})
+      hand1.append({'suit':suits1[0], 'value': values1[1]})
+      hand1.append({'suit':suits1[0], 'value': values1[2]})
+      hand1.append({'suit':suits1[0], 'value': values1[3]})
+      hand1.append({'suit':suits1[0], 'value': values1[4]})
+
+      suits2 = ["spade", "hearts", "club", "diamond"]
+      values2 = ['J', '9', '10', '8', 'Q']
+
+      hand2.append({'suit':suits2[0], 'value': values2[0]})
+      hand2.append({'suit':suits2[1], 'value': values2[1]})
+      hand2.append({'suit':suits2[0], 'value': values2[2]})
+      hand2.append({'suit':suits2[3], 'value': values2[3]})
+      hand2.append({'suit':suits2[2], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(1)
+    end
+
+    it "check if first hand has a royal flush and second hand has a straight" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+
+      suits1 = ["spade", "hearts", "club", "diamond"]
+      values1 = ['A', 'J', 'Q', '10', 'K']
+
+      hand1.append({'suit':suits1[0], 'value': values1[0]})
+      hand1.append({'suit':suits1[0], 'value': values1[1]})
+      hand1.append({'suit':suits1[0], 'value': values1[2]})
+      hand1.append({'suit':suits1[0], 'value': values1[3]})
+      hand1.append({'suit':suits1[0], 'value': values1[4]})
+
+      suits2 = ["spade", "hearts", "club", "diamond"]
+      values2 = ['J', '9', '10', '8', 'Q']
+
+      hand2.append({'suit':suits2[0], 'value': values2[0]})
+      hand2.append({'suit':suits2[1], 'value': values2[1]})
+      hand2.append({'suit':suits2[0], 'value': values2[2]})
+      hand2.append({'suit':suits2[3], 'value': values2[3]})
+      hand2.append({'suit':suits2[2], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(1)
+    end
+
+    #second hand has a straight and first hand has other patterns end
+
+    #second hand has a flush and first hand has other patterns
+    it "check if first hand has a high card and second hand has a flush" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+
+      suits1 = ["spade", "hearts", "club", "diamond"]
+      values1 = ['A', 'J', '9', '10', 'K']
+
+      hand1.append({'suit':suits1[0], 'value': values1[0]})
+      hand1.append({'suit':suits1[1], 'value': values1[1]})
+      hand1.append({'suit':suits1[2], 'value': values1[2]})
+      hand1.append({'suit':suits1[3], 'value': values1[3]})
+      hand1.append({'suit':suits1[0], 'value': values1[4]})
+
+      suits2 = ["spade", "hearts", "club", "diamond"]
+      values2 = ['J', '7', '10', '8', '4']
+
+      hand2.append({'suit':suits2[3], 'value': values2[0]})
+      hand2.append({'suit':suits2[3], 'value': values2[1]})
+      hand2.append({'suit':suits2[3], 'value': values2[2]})
+      hand2.append({'suit':suits2[3], 'value': values2[3]})
+      hand2.append({'suit':suits2[3], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(-1)
+    end
+
+    it "check if first hand has a single pair and second hand has flush" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+
+      suits1 = ["spade", "hearts", "club", "diamond"]
+      values1 = ['A', 'J', '2', '10', '2']
+
+      hand1.append({'suit':suits1[0], 'value': values1[0]})
+      hand1.append({'suit':suits1[1], 'value': values1[1]})
+      hand1.append({'suit':suits1[2], 'value': values1[2]})
+      hand1.append({'suit':suits1[0], 'value': values1[3]})
+      hand1.append({'suit':suits1[3], 'value': values1[4]})
+
+      suits2 = ["spade", "hearts", "club", "diamond"]
+      values2 = ['J', '7', '10', '8', '4']
+
+      hand2.append({'suit':suits2[3], 'value': values2[0]})
+      hand2.append({'suit':suits2[3], 'value': values2[1]})
+      hand2.append({'suit':suits2[3], 'value': values2[2]})
+      hand2.append({'suit':suits2[3], 'value': values2[3]})
+      hand2.append({'suit':suits2[3], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(-1)
+    end
+
+    it "check if first hand has a double pair and second hand has flush" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+
+      suits1 = ["spade", "hearts", "club", "diamond"]
+      values1 = ['A', '2', '2', '10', '10']
+
+      hand1.append({'suit':suits1[0], 'value': values1[0]})
+      hand1.append({'suit':suits1[0], 'value': values1[1]})
+      hand1.append({'suit':suits1[1], 'value': values1[2]})
+      hand1.append({'suit':suits1[2], 'value': values1[3]})
+      hand1.append({'suit':suits1[3], 'value': values1[4]})
+
+      suits2 = ["spade", "hearts", "club", "diamond"]
+      values2 = ['J', '7', '10', '8', '4']
+
+      hand2.append({'suit':suits2[3], 'value': values2[0]})
+      hand2.append({'suit':suits2[3], 'value': values2[1]})
+      hand2.append({'suit':suits2[3], 'value': values2[2]})
+      hand2.append({'suit':suits2[3], 'value': values2[3]})
+      hand2.append({'suit':suits2[3], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(-1)
+    end
+
+    it "check if first hand has a three of a kind and second hand has flush" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+
+      suits1 = ["spade", "hearts", "club", "diamond"]
+      values1 = ['A', 'J', '2', '2', '2']
+
+      hand1.append({'suit':suits1[0], 'value': values1[0]})
+      hand1.append({'suit':suits1[0], 'value': values1[1]})
+      hand1.append({'suit':suits1[1], 'value': values1[2]})
+      hand1.append({'suit':suits1[2], 'value': values1[3]})
+      hand1.append({'suit':suits1[3], 'value': values1[4]})
+
+      suits2 = ["spade", "hearts", "club", "diamond"]
+      values2 = ['J', '7', '10', '8', '4']
+
+      hand2.append({'suit':suits2[3], 'value': values2[0]})
+      hand2.append({'suit':suits2[3], 'value': values2[1]})
+      hand2.append({'suit':suits2[3], 'value': values2[2]})
+      hand2.append({'suit':suits2[3], 'value': values2[3]})
+      hand2.append({'suit':suits2[3], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(-1)
+    end
+
+    it "check if first hand has a straight and second hand has flush " do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+
+      suits1 = ["spade", "hearts", "club", "diamond"]
+      values1 = ['4', '5', '7', '6', '8']
+
+      hand1.append({'suit':suits1[0], 'value': values1[0]})
+      hand1.append({'suit':suits1[1], 'value': values1[1]})
+      hand1.append({'suit':suits1[2], 'value': values1[2]})
+      hand1.append({'suit':suits1[3], 'value': values1[3]})
+      hand1.append({'suit':suits1[0], 'value': values1[4]})
+
+      suits2 = ["spade", "hearts", "club", "diamond"]
+      values2 = ['J', '7', '10', '8', '4']
+
+      hand2.append({'suit':suits2[3], 'value': values2[0]})
+      hand2.append({'suit':suits2[3], 'value': values2[1]})
+      hand2.append({'suit':suits2[3], 'value': values2[2]})
+      hand2.append({'suit':suits2[3], 'value': values2[3]})
+      hand2.append({'suit':suits2[3], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(-1)
+    end
+
+    it "check if first hand has a flush and second hand has flush" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+
+      suits1 = ["spade", "hearts", "club", "diamond"]
+      values1 = ['8', '7', '2', '6', '5']
+
+      hand1.append({'suit':suits1[0], 'value': values1[0]})
+      hand1.append({'suit':suits1[0], 'value': values1[1]})
+      hand1.append({'suit':suits1[0], 'value': values1[2]})
+      hand1.append({'suit':suits1[0], 'value': values1[3]})
+      hand1.append({'suit':suits1[0], 'value': values1[4]})
+
+      suits2 = ["spade", "hearts", "club", "diamond"]
+      values2 = ['J', '7', '10', '8', '4']
+
+      hand2.append({'suit':suits2[3], 'value': values2[0]})
+      hand2.append({'suit':suits2[3], 'value': values2[1]})
+      hand2.append({'suit':suits2[3], 'value': values2[2]})
+      hand2.append({'suit':suits2[3], 'value': values2[3]})
+      hand2.append({'suit':suits2[3], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(-1)
+    end
+
+    it "check if first hand has a full house and second hand has flush" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+
+      suits1 = ["spade", "hearts", "club", "diamond"]
+      values1 = ['K', 'K', '4', '4', '4']
+
+      hand1.append({'suit':suits1[0], 'value': values1[0]})
+      hand1.append({'suit':suits1[1], 'value': values1[1]})
+      hand1.append({'suit':suits1[0], 'value': values1[2]})
+      hand1.append({'suit':suits1[2], 'value': values1[3]})
+      hand1.append({'suit':suits1[3], 'value': values1[4]})
+
+      suits2 = ["spade", "hearts", "club", "diamond"]
+      values2 = ['J', '7', '10', '8', '4']
+
+      hand2.append({'suit':suits2[3], 'value': values2[0]})
+      hand2.append({'suit':suits2[3], 'value': values2[1]})
+      hand2.append({'suit':suits2[3], 'value': values2[2]})
+      hand2.append({'suit':suits2[3], 'value': values2[3]})
+      hand2.append({'suit':suits2[3], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(1)
+    end
+
+    it "check if first hand has a four of a kind and second hand has flush" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+
+      suits1 = ["spade", "hearts", "club", "diamond"]
+      values1 = ['A', '4', '4', '4', '4']
+
+      hand1.append({'suit':suits1[0], 'value': values1[0]})
+      hand1.append({'suit':suits1[0], 'value': values1[1]})
+      hand1.append({'suit':suits1[1], 'value': values1[2]})
+      hand1.append({'suit':suits1[2], 'value': values1[3]})
+      hand1.append({'suit':suits1[3], 'value': values1[4]})
+
+      suits2 = ["spade", "hearts", "club", "diamond"]
+      values2 = ['J', '7', '10', '8', '4']
+
+      hand2.append({'suit':suits2[3], 'value': values2[0]})
+      hand2.append({'suit':suits2[3], 'value': values2[1]})
+      hand2.append({'suit':suits2[3], 'value': values2[2]})
+      hand2.append({'suit':suits2[3], 'value': values2[3]})
+      hand2.append({'suit':suits2[3], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(1)
+    end
+
+    it "check if first hand has a straight flush and second hand has flush" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+
+      suits1 = ["spade", "hearts", "club", "diamond"]
+      values1 = ['8', '7', '5', '6', '4']
+
+      hand1.append({'suit':suits1[0], 'value': values1[0]})
+      hand1.append({'suit':suits1[0], 'value': values1[1]})
+      hand1.append({'suit':suits1[0], 'value': values1[2]})
+      hand1.append({'suit':suits1[0], 'value': values1[3]})
+      hand1.append({'suit':suits1[0], 'value': values1[4]})
+
+      suits2 = ["spade", "hearts", "club", "diamond"]
+      values2 = ['J', '7', '10', '8', '4']
+
+      hand2.append({'suit':suits2[3], 'value': values2[0]})
+      hand2.append({'suit':suits2[3], 'value': values2[1]})
+      hand2.append({'suit':suits2[3], 'value': values2[2]})
+      hand2.append({'suit':suits2[3], 'value': values2[3]})
+      hand2.append({'suit':suits2[3], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(1)
+    end
+
+    it "check if first hand has a royal flush and second hand has a flush" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+
+      suits1 = ["spade", "hearts", "club", "diamond"]
+      values1 = ['A', 'J', 'Q', '10', 'K']
+
+      hand1.append({'suit':suits1[0], 'value': values1[0]})
+      hand1.append({'suit':suits1[0], 'value': values1[1]})
+      hand1.append({'suit':suits1[0], 'value': values1[2]})
+      hand1.append({'suit':suits1[0], 'value': values1[3]})
+      hand1.append({'suit':suits1[0], 'value': values1[4]})
+
+      suits2 = ["spade", "hearts", "club", "diamond"]
+      values2 = ['J', '7', '10', '8', '4']
+
+      hand2.append({'suit':suits2[3], 'value': values2[0]})
+      hand2.append({'suit':suits2[3], 'value': values2[1]})
+      hand2.append({'suit':suits2[3], 'value': values2[2]})
+      hand2.append({'suit':suits2[3], 'value': values2[3]})
+      hand2.append({'suit':suits2[3], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(1)
+    end
+
+    #second hand has a flush and first hand has other patterns end
+
+    #second hand has a full house and first hand has other patterns
+    it "check if first hand has a high card and second hand has a full house" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+
+      suits1 = ["spade", "hearts", "club", "diamond"]
+      values1 = ['A', 'J', '9', '10', 'K']
+
+      hand1.append({'suit':suits1[0], 'value': values1[0]})
+      hand1.append({'suit':suits1[1], 'value': values1[1]})
+      hand1.append({'suit':suits1[2], 'value': values1[2]})
+      hand1.append({'suit':suits1[3], 'value': values1[3]})
+      hand1.append({'suit':suits1[0], 'value': values1[4]})
+
+      suits2 = ["spade", "hearts", "club", "diamond"]
+      values2 = ['7', '7', '7', 'K', 'K']
+
+      hand2.append({'suit':suits2[0], 'value': values2[0]})
+      hand2.append({'suit':suits2[0], 'value': values2[1]})
+      hand2.append({'suit':suits2[1], 'value': values2[2]})
+      hand2.append({'suit':suits2[2], 'value': values2[3]})
+      hand2.append({'suit':suits2[3], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(-1)
+    end
+
+    it "check if first hand has a single pair and second hand has full house" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+
+      suits1 = ["spade", "hearts", "club", "diamond"]
+      values1 = ['A', 'J', '2', '10', '2']
+
+      hand1.append({'suit':suits1[0], 'value': values1[0]})
+      hand1.append({'suit':suits1[1], 'value': values1[1]})
+      hand1.append({'suit':suits1[2], 'value': values1[2]})
+      hand1.append({'suit':suits1[0], 'value': values1[3]})
+      hand1.append({'suit':suits1[3], 'value': values1[4]})
+
+      suits2 = ["spade", "hearts", "club", "diamond"]
+      values2 = ['7', '7', '7', 'K', 'K']
+
+      hand2.append({'suit':suits2[0], 'value': values2[0]})
+      hand2.append({'suit':suits2[0], 'value': values2[1]})
+      hand2.append({'suit':suits2[1], 'value': values2[2]})
+      hand2.append({'suit':suits2[2], 'value': values2[3]})
+      hand2.append({'suit':suits2[3], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(-1)
+    end
+
+    it "check if first hand has a double pair and second hand has full house" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+
+      suits1 = ["spade", "hearts", "club", "diamond"]
+      values1 = ['A', '2', '2', '10', '10']
+
+      hand1.append({'suit':suits1[0], 'value': values1[0]})
+      hand1.append({'suit':suits1[0], 'value': values1[1]})
+      hand1.append({'suit':suits1[1], 'value': values1[2]})
+      hand1.append({'suit':suits1[2], 'value': values1[3]})
+      hand1.append({'suit':suits1[3], 'value': values1[4]})
+
+      suits2 = ["spade", "hearts", "club", "diamond"]
+      values2 = ['7', '7', '7', 'K', 'K']
+
+      hand2.append({'suit':suits2[0], 'value': values2[0]})
+      hand2.append({'suit':suits2[0], 'value': values2[1]})
+      hand2.append({'suit':suits2[1], 'value': values2[2]})
+      hand2.append({'suit':suits2[2], 'value': values2[3]})
+      hand2.append({'suit':suits2[3], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(-1)
+    end
+
+    it "check if first hand has a three of a kind and second hand has full house" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+
+      suits1 = ["spade", "hearts", "club", "diamond"]
+      values1 = ['A', 'J', '2', '2', '2']
+
+      hand1.append({'suit':suits1[0], 'value': values1[0]})
+      hand1.append({'suit':suits1[0], 'value': values1[1]})
+      hand1.append({'suit':suits1[1], 'value': values1[2]})
+      hand1.append({'suit':suits1[2], 'value': values1[3]})
+      hand1.append({'suit':suits1[3], 'value': values1[4]})
+
+      suits2 = ["spade", "hearts", "club", "diamond"]
+      values2 = ['7', '7', '7', 'K', 'K']
+
+      hand2.append({'suit':suits2[0], 'value': values2[0]})
+      hand2.append({'suit':suits2[0], 'value': values2[1]})
+      hand2.append({'suit':suits2[1], 'value': values2[2]})
+      hand2.append({'suit':suits2[2], 'value': values2[3]})
+      hand2.append({'suit':suits2[3], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(-1)
+    end
+
+    it "check if first hand has a straight and second hand has full house " do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+
+      suits1 = ["spade", "hearts", "club", "diamond"]
+      values1 = ['4', '5', '7', '6', '8']
+
+      hand1.append({'suit':suits1[0], 'value': values1[0]})
+      hand1.append({'suit':suits1[1], 'value': values1[1]})
+      hand1.append({'suit':suits1[2], 'value': values1[2]})
+      hand1.append({'suit':suits1[3], 'value': values1[3]})
+      hand1.append({'suit':suits1[0], 'value': values1[4]})
+
+      suits2 = ["spade", "hearts", "club", "diamond"]
+      values2 = ['7', '7', '7', 'K', 'K']
+
+      hand2.append({'suit':suits2[0], 'value': values2[0]})
+      hand2.append({'suit':suits2[0], 'value': values2[1]})
+      hand2.append({'suit':suits2[1], 'value': values2[2]})
+      hand2.append({'suit':suits2[2], 'value': values2[3]})
+      hand2.append({'suit':suits2[3], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(-1)
+    end
+
+    it "check if first hand has a flush and second hand has full house" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+
+      suits1 = ["spade", "hearts", "club", "diamond"]
+      values1 = ['8', '7', '2', '6', '5']
+
+      hand1.append({'suit':suits1[0], 'value': values1[0]})
+      hand1.append({'suit':suits1[0], 'value': values1[1]})
+      hand1.append({'suit':suits1[0], 'value': values1[2]})
+      hand1.append({'suit':suits1[0], 'value': values1[3]})
+      hand1.append({'suit':suits1[0], 'value': values1[4]})
+
+      suits2 = ["spade", "hearts", "club", "diamond"]
+      values2 = ['7', '7', '7', 'K', 'K']
+
+      hand2.append({'suit':suits2[0], 'value': values2[0]})
+      hand2.append({'suit':suits2[0], 'value': values2[1]})
+      hand2.append({'suit':suits2[1], 'value': values2[2]})
+      hand2.append({'suit':suits2[2], 'value': values2[3]})
+      hand2.append({'suit':suits2[3], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(-1)
+    end
+
+    it "check if first hand has a full house and second hand has full house" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+
+      suits1 = ["spade", "hearts", "club", "diamond"]
+      values1 = ['K', 'K', '4', '4', '4']
+
+      hand1.append({'suit':suits1[0], 'value': values1[0]})
+      hand1.append({'suit':suits1[1], 'value': values1[1]})
+      hand1.append({'suit':suits1[0], 'value': values1[2]})
+      hand1.append({'suit':suits1[2], 'value': values1[3]})
+      hand1.append({'suit':suits1[3], 'value': values1[4]})
+
+      suits2 = ["spade", "hearts", "club", "diamond"]
+      values2 = ['7', '7', '7', 'K', 'K']
+
+      hand2.append({'suit':suits2[0], 'value': values2[0]})
+      hand2.append({'suit':suits2[0], 'value': values2[1]})
+      hand2.append({'suit':suits2[1], 'value': values2[2]})
+      hand2.append({'suit':suits2[2], 'value': values2[3]})
+      hand2.append({'suit':suits2[3], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(-1)
+    end
+
+    it "check if first hand has a four of a kind and second hand has full house" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+
+      suits1 = ["spade", "hearts", "club", "diamond"]
+      values1 = ['A', '4', '4', '4', '4']
+
+      hand1.append({'suit':suits1[0], 'value': values1[0]})
+      hand1.append({'suit':suits1[0], 'value': values1[1]})
+      hand1.append({'suit':suits1[1], 'value': values1[2]})
+      hand1.append({'suit':suits1[2], 'value': values1[3]})
+      hand1.append({'suit':suits1[3], 'value': values1[4]})
+
+      suits2 = ["spade", "hearts", "club", "diamond"]
+      values2 = ['7', '7', '7', 'K', 'K']
+
+      hand2.append({'suit':suits2[0], 'value': values2[0]})
+      hand2.append({'suit':suits2[0], 'value': values2[1]})
+      hand2.append({'suit':suits2[1], 'value': values2[2]})
+      hand2.append({'suit':suits2[2], 'value': values2[3]})
+      hand2.append({'suit':suits2[3], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(1)
+    end
+
+    it "check if first hand has a straight flush and second hand has full house" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+
+      suits1 = ["spade", "hearts", "club", "diamond"]
+      values1 = ['8', '7', '5', '6', '4']
+
+      hand1.append({'suit':suits1[0], 'value': values1[0]})
+      hand1.append({'suit':suits1[0], 'value': values1[1]})
+      hand1.append({'suit':suits1[0], 'value': values1[2]})
+      hand1.append({'suit':suits1[0], 'value': values1[3]})
+      hand1.append({'suit':suits1[0], 'value': values1[4]})
+
+      suits2 = ["spade", "hearts", "club", "diamond"]
+      values2 = ['7', '7', '7', 'K', 'K']
+
+      hand2.append({'suit':suits2[0], 'value': values2[0]})
+      hand2.append({'suit':suits2[0], 'value': values2[1]})
+      hand2.append({'suit':suits2[1], 'value': values2[2]})
+      hand2.append({'suit':suits2[2], 'value': values2[3]})
+      hand2.append({'suit':suits2[3], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(1)
+    end
+
+    it "check if first hand has a royal flush and second hand has a full house" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+
+      suits1 = ["spade", "hearts", "club", "diamond"]
+      values1 = ['A', 'J', 'Q', '10', 'K']
+
+      hand1.append({'suit':suits1[0], 'value': values1[0]})
+      hand1.append({'suit':suits1[0], 'value': values1[1]})
+      hand1.append({'suit':suits1[0], 'value': values1[2]})
+      hand1.append({'suit':suits1[0], 'value': values1[3]})
+      hand1.append({'suit':suits1[0], 'value': values1[4]})
+
+      suits2 = ["spade", "hearts", "club", "diamond"]
+      values2 = ['7', '7', '7', 'K', 'K']
+
+      hand2.append({'suit':suits2[0], 'value': values2[0]})
+      hand2.append({'suit':suits2[0], 'value': values2[1]})
+      hand2.append({'suit':suits2[1], 'value': values2[2]})
+      hand2.append({'suit':suits2[2], 'value': values2[3]})
+      hand2.append({'suit':suits2[3], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(1)
+    end
+
+    #second hand has a full house and first hand has other patterns end
+
+    #second hand has a four of a kind and first hand has other patterns
+    it "check if first hand has a high card and second hand has a four of a kind" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+
+      suits1 = ["spade", "hearts", "club", "diamond"]
+      values1 = ['A', 'J', '9', '10', 'K']
+
+      hand1.append({'suit':suits1[0], 'value': values1[0]})
+      hand1.append({'suit':suits1[1], 'value': values1[1]})
+      hand1.append({'suit':suits1[2], 'value': values1[2]})
+      hand1.append({'suit':suits1[3], 'value': values1[3]})
+      hand1.append({'suit':suits1[0], 'value': values1[4]})
+
+      suits2 = ["spade", "hearts", "club", "diamond"]
+      values2 = ['7', 'K', 'K', 'K', 'K']
+
+      hand2.append({'suit':suits2[0], 'value': values2[0]})
+      hand2.append({'suit':suits2[0], 'value': values2[1]})
+      hand2.append({'suit':suits2[1], 'value': values2[2]})
+      hand2.append({'suit':suits2[2], 'value': values2[3]})
+      hand2.append({'suit':suits2[3], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(-1)
+    end
+
+    it "check if first hand has a single pair and second hand has four of a kind" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+
+      suits1 = ["spade", "hearts", "club", "diamond"]
+      values1 = ['A', 'J', '2', '10', '2']
+
+      hand1.append({'suit':suits1[0], 'value': values1[0]})
+      hand1.append({'suit':suits1[1], 'value': values1[1]})
+      hand1.append({'suit':suits1[2], 'value': values1[2]})
+      hand1.append({'suit':suits1[0], 'value': values1[3]})
+      hand1.append({'suit':suits1[3], 'value': values1[4]})
+
+      suits2 = ["spade", "hearts", "club", "diamond"]
+      values2 = ['7', 'K', 'K', 'K', 'K']
+
+      hand2.append({'suit':suits2[0], 'value': values2[0]})
+      hand2.append({'suit':suits2[0], 'value': values2[1]})
+      hand2.append({'suit':suits2[1], 'value': values2[2]})
+      hand2.append({'suit':suits2[2], 'value': values2[3]})
+      hand2.append({'suit':suits2[3], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(-1)
+    end
+
+    it "check if first hand has a double pair and second hand has four of a kind" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+
+      suits1 = ["spade", "hearts", "club", "diamond"]
+      values1 = ['A', '2', '2', '10', '10']
+
+      hand1.append({'suit':suits1[0], 'value': values1[0]})
+      hand1.append({'suit':suits1[0], 'value': values1[1]})
+      hand1.append({'suit':suits1[1], 'value': values1[2]})
+      hand1.append({'suit':suits1[2], 'value': values1[3]})
+      hand1.append({'suit':suits1[3], 'value': values1[4]})
+
+      suits2 = ["spade", "hearts", "club", "diamond"]
+      values2 = ['7', 'K', 'K', 'K', 'K']
+
+      hand2.append({'suit':suits2[0], 'value': values2[0]})
+      hand2.append({'suit':suits2[0], 'value': values2[1]})
+      hand2.append({'suit':suits2[1], 'value': values2[2]})
+      hand2.append({'suit':suits2[2], 'value': values2[3]})
+      hand2.append({'suit':suits2[3], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(-1)
+    end
+
+    it "check if first hand has a three of a kind and second hand has four of a kind" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+
+      suits1 = ["spade", "hearts", "club", "diamond"]
+      values1 = ['A', 'J', '2', '2', '2']
+
+      hand1.append({'suit':suits1[0], 'value': values1[0]})
+      hand1.append({'suit':suits1[0], 'value': values1[1]})
+      hand1.append({'suit':suits1[1], 'value': values1[2]})
+      hand1.append({'suit':suits1[2], 'value': values1[3]})
+      hand1.append({'suit':suits1[3], 'value': values1[4]})
+
+      suits2 = ["spade", "hearts", "club", "diamond"]
+      values2 = ['7', 'K', 'K', 'K', 'K']
+
+      hand2.append({'suit':suits2[0], 'value': values2[0]})
+      hand2.append({'suit':suits2[0], 'value': values2[1]})
+      hand2.append({'suit':suits2[1], 'value': values2[2]})
+      hand2.append({'suit':suits2[2], 'value': values2[3]})
+      hand2.append({'suit':suits2[3], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(-1)
+    end
+
+    it "check if first hand has a straight and second hand has four of a kind " do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+
+      suits1 = ["spade", "hearts", "club", "diamond"]
+      values1 = ['4', '5', '7', '6', '8']
+
+      hand1.append({'suit':suits1[0], 'value': values1[0]})
+      hand1.append({'suit':suits1[1], 'value': values1[1]})
+      hand1.append({'suit':suits1[2], 'value': values1[2]})
+      hand1.append({'suit':suits1[3], 'value': values1[3]})
+      hand1.append({'suit':suits1[0], 'value': values1[4]})
+
+      suits2 = ["spade", "hearts", "club", "diamond"]
+      values2 = ['7', 'K', 'K', 'K', 'K']
+
+      hand2.append({'suit':suits2[0], 'value': values2[0]})
+      hand2.append({'suit':suits2[0], 'value': values2[1]})
+      hand2.append({'suit':suits2[1], 'value': values2[2]})
+      hand2.append({'suit':suits2[2], 'value': values2[3]})
+      hand2.append({'suit':suits2[3], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(-1)
+    end
+
+    it "check if first hand has a flush and second hand has four of a kind" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+
+      suits1 = ["spade", "hearts", "club", "diamond"]
+      values1 = ['8', '7', '2', '6', '5']
+
+      hand1.append({'suit':suits1[0], 'value': values1[0]})
+      hand1.append({'suit':suits1[0], 'value': values1[1]})
+      hand1.append({'suit':suits1[0], 'value': values1[2]})
+      hand1.append({'suit':suits1[0], 'value': values1[3]})
+      hand1.append({'suit':suits1[0], 'value': values1[4]})
+
+      suits2 = ["spade", "hearts", "club", "diamond"]
+      values2 = ['7', 'K', 'K', 'K', 'K']
+
+      hand2.append({'suit':suits2[0], 'value': values2[0]})
+      hand2.append({'suit':suits2[0], 'value': values2[1]})
+      hand2.append({'suit':suits2[1], 'value': values2[2]})
+      hand2.append({'suit':suits2[2], 'value': values2[3]})
+      hand2.append({'suit':suits2[3], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(-1)
+    end
+
+    it "check if first hand has a full house and second hand has four of a kind" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+
+      suits1 = ["spade", "hearts", "club", "diamond"]
+      values1 = ['K', 'K', '4', '4', '4']
+
+      hand1.append({'suit':suits1[0], 'value': values1[0]})
+      hand1.append({'suit':suits1[1], 'value': values1[1]})
+      hand1.append({'suit':suits1[0], 'value': values1[2]})
+      hand1.append({'suit':suits1[2], 'value': values1[3]})
+      hand1.append({'suit':suits1[3], 'value': values1[4]})
+
+      suits2 = ["spade", "hearts", "club", "diamond"]
+      values2 = ['7', 'K', 'K', 'K', 'K']
+
+      hand2.append({'suit':suits2[0], 'value': values2[0]})
+      hand2.append({'suit':suits2[0], 'value': values2[1]})
+      hand2.append({'suit':suits2[1], 'value': values2[2]})
+      hand2.append({'suit':suits2[2], 'value': values2[3]})
+      hand2.append({'suit':suits2[3], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(-1)
+    end
+
+    it "check if first hand has a four of a kind and second hand has four of a kind" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+
+      suits1 = ["spade", "hearts", "club", "diamond"]
+      values1 = ['A', '4', '4', '4', '4']
+
+      hand1.append({'suit':suits1[0], 'value': values1[0]})
+      hand1.append({'suit':suits1[0], 'value': values1[1]})
+      hand1.append({'suit':suits1[1], 'value': values1[2]})
+      hand1.append({'suit':suits1[2], 'value': values1[3]})
+      hand1.append({'suit':suits1[3], 'value': values1[4]})
+
+      suits2 = ["spade", "hearts", "club", "diamond"]
+      values2 = ['7', 'K', 'K', 'K', 'K']
+
+      hand2.append({'suit':suits2[0], 'value': values2[0]})
+      hand2.append({'suit':suits2[0], 'value': values2[1]})
+      hand2.append({'suit':suits2[1], 'value': values2[2]})
+      hand2.append({'suit':suits2[2], 'value': values2[3]})
+      hand2.append({'suit':suits2[3], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(-1)
+    end
+
+    it "check if first hand has a straight flush and second hand has four of a kind" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+
+      suits1 = ["spade", "hearts", "club", "diamond"]
+      values1 = ['8', '7', '5', '6', '4']
+
+      hand1.append({'suit':suits1[0], 'value': values1[0]})
+      hand1.append({'suit':suits1[0], 'value': values1[1]})
+      hand1.append({'suit':suits1[0], 'value': values1[2]})
+      hand1.append({'suit':suits1[0], 'value': values1[3]})
+      hand1.append({'suit':suits1[0], 'value': values1[4]})
+
+      suits2 = ["spade", "hearts", "club", "diamond"]
+      values2 = ['7', 'K', 'K', 'K', 'K']
+
+      hand2.append({'suit':suits2[0], 'value': values2[0]})
+      hand2.append({'suit':suits2[0], 'value': values2[1]})
+      hand2.append({'suit':suits2[1], 'value': values2[2]})
+      hand2.append({'suit':suits2[2], 'value': values2[3]})
+      hand2.append({'suit':suits2[3], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(1)
+    end
+
+    it "check if first hand has a royal flush and second hand has a four of a kind" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+
+      suits1 = ["spade", "hearts", "club", "diamond"]
+      values1 = ['A', 'J', 'Q', '10', 'K']
+
+      hand1.append({'suit':suits1[0], 'value': values1[0]})
+      hand1.append({'suit':suits1[0], 'value': values1[1]})
+      hand1.append({'suit':suits1[0], 'value': values1[2]})
+      hand1.append({'suit':suits1[0], 'value': values1[3]})
+      hand1.append({'suit':suits1[0], 'value': values1[4]})
+
+      suits2 = ["spade", "hearts", "club", "diamond"]
+      values2 = ['7', 'K', 'K', 'K', 'K']
+
+      hand2.append({'suit':suits2[0], 'value': values2[0]})
+      hand2.append({'suit':suits2[0], 'value': values2[1]})
+      hand2.append({'suit':suits2[1], 'value': values2[2]})
+      hand2.append({'suit':suits2[2], 'value': values2[3]})
+      hand2.append({'suit':suits2[3], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(1)
+    end
+
+    #second hand has a four of a kind and first hand has other patterns end
+
+    #second hand has a straight flush and first hand has other patterns
+    it "check if first hand has a high card and second hand has a straight flush" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+
+      suits1 = ["spade", "hearts", "club", "diamond"]
+      values1 = ['A', 'J', '9', '10', 'K']
+
+      hand1.append({'suit':suits1[0], 'value': values1[0]})
+      hand1.append({'suit':suits1[1], 'value': values1[1]})
+      hand1.append({'suit':suits1[2], 'value': values1[2]})
+      hand1.append({'suit':suits1[3], 'value': values1[3]})
+      hand1.append({'suit':suits1[0], 'value': values1[4]})
+
+      suits2 = ["spade", "hearts", "club", "diamond"]
+      values2 = ['9', 'K', 'Q', 'J', '10']
+
+      hand2.append({'suit':suits2[2], 'value': values2[0]})
+      hand2.append({'suit':suits2[2], 'value': values2[1]})
+      hand2.append({'suit':suits2[2], 'value': values2[2]})
+      hand2.append({'suit':suits2[2], 'value': values2[3]})
+      hand2.append({'suit':suits2[2], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(-1)
+    end
+
+    it "check if first hand has a single pair and second hand has straight flush" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+
+      suits1 = ["spade", "hearts", "club", "diamond"]
+      values1 = ['A', 'J', '2', '10', '2']
+
+      hand1.append({'suit':suits1[0], 'value': values1[0]})
+      hand1.append({'suit':suits1[1], 'value': values1[1]})
+      hand1.append({'suit':suits1[2], 'value': values1[2]})
+      hand1.append({'suit':suits1[0], 'value': values1[3]})
+      hand1.append({'suit':suits1[3], 'value': values1[4]})
+
+      suits2 = ["spade", "hearts", "club", "diamond"]
+      values2 = ['9', 'K', 'Q', 'J', '10']
+
+      hand2.append({'suit':suits2[2], 'value': values2[0]})
+      hand2.append({'suit':suits2[2], 'value': values2[1]})
+      hand2.append({'suit':suits2[2], 'value': values2[2]})
+      hand2.append({'suit':suits2[2], 'value': values2[3]})
+      hand2.append({'suit':suits2[2], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(-1)
+    end
+
+    it "check if first hand has a double pair and second hand has straight flush" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+
+      suits1 = ["spade", "hearts", "club", "diamond"]
+      values1 = ['A', '2', '2', '10', '10']
+
+      hand1.append({'suit':suits1[0], 'value': values1[0]})
+      hand1.append({'suit':suits1[0], 'value': values1[1]})
+      hand1.append({'suit':suits1[1], 'value': values1[2]})
+      hand1.append({'suit':suits1[2], 'value': values1[3]})
+      hand1.append({'suit':suits1[3], 'value': values1[4]})
+
+      suits2 = ["spade", "hearts", "club", "diamond"]
+      values2 = ['9', 'K', 'Q', 'J', '10']
+
+      hand2.append({'suit':suits2[2], 'value': values2[0]})
+      hand2.append({'suit':suits2[2], 'value': values2[1]})
+      hand2.append({'suit':suits2[2], 'value': values2[2]})
+      hand2.append({'suit':suits2[2], 'value': values2[3]})
+      hand2.append({'suit':suits2[2], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(-1)
+    end
+
+    it "check if first hand has a three of a kind and second hand has straight flush" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+
+      suits1 = ["spade", "hearts", "club", "diamond"]
+      values1 = ['A', 'J', '2', '2', '2']
+
+      hand1.append({'suit':suits1[0], 'value': values1[0]})
+      hand1.append({'suit':suits1[0], 'value': values1[1]})
+      hand1.append({'suit':suits1[1], 'value': values1[2]})
+      hand1.append({'suit':suits1[2], 'value': values1[3]})
+      hand1.append({'suit':suits1[3], 'value': values1[4]})
+
+      suits2 = ["spade", "hearts", "club", "diamond"]
+      values2 = ['9', 'K', 'Q', 'J', '10']
+
+      hand2.append({'suit':suits2[2], 'value': values2[0]})
+      hand2.append({'suit':suits2[2], 'value': values2[1]})
+      hand2.append({'suit':suits2[2], 'value': values2[2]})
+      hand2.append({'suit':suits2[2], 'value': values2[3]})
+      hand2.append({'suit':suits2[2], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(-1)
+    end
+
+    it "check if first hand has a straight and second hand has straight flush " do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+
+      suits1 = ["spade", "hearts", "club", "diamond"]
+      values1 = ['4', '5', '7', '6', '8']
+
+      hand1.append({'suit':suits1[0], 'value': values1[0]})
+      hand1.append({'suit':suits1[1], 'value': values1[1]})
+      hand1.append({'suit':suits1[2], 'value': values1[2]})
+      hand1.append({'suit':suits1[3], 'value': values1[3]})
+      hand1.append({'suit':suits1[0], 'value': values1[4]})
+
+      suits2 = ["spade", "hearts", "club", "diamond"]
+      values2 = ['9', 'K', 'Q', 'J', '10']
+
+      hand2.append({'suit':suits2[2], 'value': values2[0]})
+      hand2.append({'suit':suits2[2], 'value': values2[1]})
+      hand2.append({'suit':suits2[2], 'value': values2[2]})
+      hand2.append({'suit':suits2[2], 'value': values2[3]})
+      hand2.append({'suit':suits2[2], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(-1)
+    end
+
+    it "check if first hand has a flush and second hand has straight flush" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+
+      suits1 = ["spade", "hearts", "club", "diamond"]
+      values1 = ['8', '7', '2', '6', '5']
+
+      hand1.append({'suit':suits1[0], 'value': values1[0]})
+      hand1.append({'suit':suits1[0], 'value': values1[1]})
+      hand1.append({'suit':suits1[0], 'value': values1[2]})
+      hand1.append({'suit':suits1[0], 'value': values1[3]})
+      hand1.append({'suit':suits1[0], 'value': values1[4]})
+
+      suits2 = ["spade", "hearts", "club", "diamond"]
+      values2 = ['9', 'K', 'Q', 'J', '10']
+
+      hand2.append({'suit':suits2[2], 'value': values2[0]})
+      hand2.append({'suit':suits2[2], 'value': values2[1]})
+      hand2.append({'suit':suits2[2], 'value': values2[2]})
+      hand2.append({'suit':suits2[2], 'value': values2[3]})
+      hand2.append({'suit':suits2[2], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(-1)
+    end
+
+    it "check if first hand has a full house and second hand has straight flush" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+
+      suits1 = ["spade", "hearts", "club", "diamond"]
+      values1 = ['K', 'K', '4', '4', '4']
+
+      hand1.append({'suit':suits1[0], 'value': values1[0]})
+      hand1.append({'suit':suits1[1], 'value': values1[1]})
+      hand1.append({'suit':suits1[0], 'value': values1[2]})
+      hand1.append({'suit':suits1[2], 'value': values1[3]})
+      hand1.append({'suit':suits1[2], 'value': values1[4]})
+
+      suits2 = ["spade", "hearts", "club", "diamond"]
+      values2 = ['9', 'K', 'Q', 'J', '10']
+
+      hand2.append({'suit':suits2[2], 'value': values2[0]})
+      hand2.append({'suit':suits2[2], 'value': values2[1]})
+      hand2.append({'suit':suits2[2], 'value': values2[2]})
+      hand2.append({'suit':suits2[2], 'value': values2[3]})
+      hand2.append({'suit':suits2[2], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(-1)
+    end
+
+    it "check if first hand has a four of a kind and second hand has straight flush" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+
+      suits1 = ["spade", "hearts", "club", "diamond"]
+      values1 = ['A', '4', '4', '4', '4']
+
+      hand1.append({'suit':suits1[0], 'value': values1[0]})
+      hand1.append({'suit':suits1[0], 'value': values1[1]})
+      hand1.append({'suit':suits1[1], 'value': values1[2]})
+      hand1.append({'suit':suits1[2], 'value': values1[3]})
+      hand1.append({'suit':suits1[3], 'value': values1[4]})
+
+      suits2 = ["spade", "hearts", "club", "diamond"]
+      values2 = ['9', 'K', 'Q', 'J', '10']
+
+      hand2.append({'suit':suits2[2], 'value': values2[0]})
+      hand2.append({'suit':suits2[2], 'value': values2[1]})
+      hand2.append({'suit':suits2[2], 'value': values2[2]})
+      hand2.append({'suit':suits2[2], 'value': values2[3]})
+      hand2.append({'suit':suits2[2], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(-1)
+    end
+
+    it "check if first hand has a straight flush and second hand has straight flush" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+
+      suits1 = ["spade", "hearts", "club", "diamond"]
+      values1 = ['8', '7', '5', '6', '4']
+
+      hand1.append({'suit':suits1[0], 'value': values1[0]})
+      hand1.append({'suit':suits1[0], 'value': values1[1]})
+      hand1.append({'suit':suits1[0], 'value': values1[2]})
+      hand1.append({'suit':suits1[0], 'value': values1[3]})
+      hand1.append({'suit':suits1[0], 'value': values1[4]})
+
+      suits2 = ["spade", "hearts", "club", "diamond"]
+      values2 = ['9', 'K', 'Q', 'J', '10']
+
+      hand2.append({'suit':suits2[2], 'value': values2[0]})
+      hand2.append({'suit':suits2[2], 'value': values2[1]})
+      hand2.append({'suit':suits2[2], 'value': values2[2]})
+      hand2.append({'suit':suits2[2], 'value': values2[3]})
+      hand2.append({'suit':suits2[2], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(-1)
+    end
+
+    it "check if first hand has a royal flush and second hand has a straight flush" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+
+      suits1 = ["spade", "hearts", "club", "diamond"]
+      values1 = ['A', 'J', 'Q', '10', 'K']
+
+      hand1.append({'suit':suits1[0], 'value': values1[0]})
+      hand1.append({'suit':suits1[0], 'value': values1[1]})
+      hand1.append({'suit':suits1[0], 'value': values1[2]})
+      hand1.append({'suit':suits1[0], 'value': values1[3]})
+      hand1.append({'suit':suits1[0], 'value': values1[4]})
+
+      suits2 = ["spade", "hearts", "club", "diamond"]
+      values2 = ['9', 'K', 'Q', 'J', '10']
+
+      hand2.append({'suit':suits2[2], 'value': values2[0]})
+      hand2.append({'suit':suits2[2], 'value': values2[1]})
+      hand2.append({'suit':suits2[2], 'value': values2[2]})
+      hand2.append({'suit':suits2[2], 'value': values2[3]})
+      hand2.append({'suit':suits2[2], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(1)
+    end
+
+    #second hand has a straight flush and first hand has other patterns end
+
+    #second hand has a royal flush and first hand has other patterns
+    it "check if first hand has a high card and second hand has a royal flush" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+
+      suits1 = ["spade", "hearts", "club", "diamond"]
+      values1 = ['A', 'J', '9', '10', 'K']
+
+      hand1.append({'suit':suits1[0], 'value': values1[0]})
+      hand1.append({'suit':suits1[1], 'value': values1[1]})
+      hand1.append({'suit':suits1[2], 'value': values1[2]})
+      hand1.append({'suit':suits1[3], 'value': values1[3]})
+      hand1.append({'suit':suits1[0], 'value': values1[4]})
+
+      suits2 = ["spade", "hearts", "club", "diamond"]
+      values2 = ['A', 'K', 'Q', 'J', '10']
+
+      hand2.append({'suit':suits2[2], 'value': values2[0]})
+      hand2.append({'suit':suits2[2], 'value': values2[1]})
+      hand2.append({'suit':suits2[2], 'value': values2[2]})
+      hand2.append({'suit':suits2[2], 'value': values2[3]})
+      hand2.append({'suit':suits2[2], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(-1)
+    end
+
+    it "check if first hand has a single pair and second hand has royal flush" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+
+      suits1 = ["spade", "hearts", "club", "diamond"]
+      values1 = ['A', 'J', '2', '10', '2']
+
+      hand1.append({'suit':suits1[0], 'value': values1[0]})
+      hand1.append({'suit':suits1[1], 'value': values1[1]})
+      hand1.append({'suit':suits1[2], 'value': values1[2]})
+      hand1.append({'suit':suits1[0], 'value': values1[3]})
+      hand1.append({'suit':suits1[3], 'value': values1[4]})
+
+      suits2 = ["spade", "hearts", "club", "diamond"]
+      values2 = ['A', 'K', 'Q', 'J', '10']
+
+      hand2.append({'suit':suits2[2], 'value': values2[0]})
+      hand2.append({'suit':suits2[2], 'value': values2[1]})
+      hand2.append({'suit':suits2[2], 'value': values2[2]})
+      hand2.append({'suit':suits2[2], 'value': values2[3]})
+      hand2.append({'suit':suits2[2], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(-1)
+    end
+
+    it "check if first hand has a double pair and second hand has royal flush" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+
+      suits1 = ["spade", "hearts", "club", "diamond"]
+      values1 = ['A', '2', '2', '10', '10']
+
+      hand1.append({'suit':suits1[0], 'value': values1[0]})
+      hand1.append({'suit':suits1[0], 'value': values1[1]})
+      hand1.append({'suit':suits1[1], 'value': values1[2]})
+      hand1.append({'suit':suits1[2], 'value': values1[3]})
+      hand1.append({'suit':suits1[3], 'value': values1[4]})
+
+      suits2 = ["spade", "hearts", "club", "diamond"]
+      values2 = ['A', 'K', 'Q', 'J', '10']
+
+      hand2.append({'suit':suits2[2], 'value': values2[0]})
+      hand2.append({'suit':suits2[2], 'value': values2[1]})
+      hand2.append({'suit':suits2[2], 'value': values2[2]})
+      hand2.append({'suit':suits2[2], 'value': values2[3]})
+      hand2.append({'suit':suits2[2], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(-1)
+    end
+
+    it "check if first hand has a three of a kind and second hand has royal flush" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+
+      suits1 = ["spade", "hearts", "club", "diamond"]
+      values1 = ['A', 'J', '2', '2', '2']
+
+      hand1.append({'suit':suits1[0], 'value': values1[0]})
+      hand1.append({'suit':suits1[0], 'value': values1[1]})
+      hand1.append({'suit':suits1[1], 'value': values1[2]})
+      hand1.append({'suit':suits1[2], 'value': values1[3]})
+      hand1.append({'suit':suits1[3], 'value': values1[4]})
+
+      suits2 = ["spade", "hearts", "club", "diamond"]
+      values2 = ['A', 'K', 'Q', 'J', '10']
+
+      hand2.append({'suit':suits2[2], 'value': values2[0]})
+      hand2.append({'suit':suits2[2], 'value': values2[1]})
+      hand2.append({'suit':suits2[2], 'value': values2[2]})
+      hand2.append({'suit':suits2[2], 'value': values2[3]})
+      hand2.append({'suit':suits2[2], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(-1)
+    end
+
+    it "check if first hand has a straight and second hand has royal flush " do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+
+      suits1 = ["spade", "hearts", "club", "diamond"]
+      values1 = ['4', '5', '7', '6', '8']
+
+      hand1.append({'suit':suits1[0], 'value': values1[0]})
+      hand1.append({'suit':suits1[1], 'value': values1[1]})
+      hand1.append({'suit':suits1[2], 'value': values1[2]})
+      hand1.append({'suit':suits1[3], 'value': values1[3]})
+      hand1.append({'suit':suits1[0], 'value': values1[4]})
+
+      suits2 = ["spade", "hearts", "club", "diamond"]
+      values2 = ['A', 'K', 'Q', 'J', '10']
+
+      hand2.append({'suit':suits2[2], 'value': values2[0]})
+      hand2.append({'suit':suits2[2], 'value': values2[1]})
+      hand2.append({'suit':suits2[2], 'value': values2[2]})
+      hand2.append({'suit':suits2[2], 'value': values2[3]})
+      hand2.append({'suit':suits2[2], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(-1)
+    end
+
+    it "check if first hand has a flush and second hand has royal flush" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+
+      suits1 = ["spade", "hearts", "club", "diamond"]
+      values1 = ['8', '7', '2', '6', '5']
+
+      hand1.append({'suit':suits1[0], 'value': values1[0]})
+      hand1.append({'suit':suits1[0], 'value': values1[1]})
+      hand1.append({'suit':suits1[0], 'value': values1[2]})
+      hand1.append({'suit':suits1[0], 'value': values1[3]})
+      hand1.append({'suit':suits1[0], 'value': values1[4]})
+
+      suits2 = ["spade", "hearts", "club", "diamond"]
+      values2 = ['A', 'K', 'Q', 'J', '10']
+
+      hand2.append({'suit':suits2[2], 'value': values2[0]})
+      hand2.append({'suit':suits2[2], 'value': values2[1]})
+      hand2.append({'suit':suits2[2], 'value': values2[2]})
+      hand2.append({'suit':suits2[2], 'value': values2[3]})
+      hand2.append({'suit':suits2[2], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(-1)
+    end
+
+    it "check if first hand has a full house and second hand has royal flush" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+
+      suits1 = ["spade", "hearts", "club", "diamond"]
+      values1 = ['K', 'K', '4', '4', '4']
+
+      hand1.append({'suit':suits1[0], 'value': values1[0]})
+      hand1.append({'suit':suits1[1], 'value': values1[1]})
+      hand1.append({'suit':suits1[0], 'value': values1[2]})
+      hand1.append({'suit':suits1[2], 'value': values1[3]})
+      hand1.append({'suit':suits1[2], 'value': values1[4]})
+
+      suits2 = ["spade", "hearts", "club", "diamond"]
+      values2 = ['A', 'K', 'Q', 'J', '10']
+
+      hand2.append({'suit':suits2[2], 'value': values2[0]})
+      hand2.append({'suit':suits2[2], 'value': values2[1]})
+      hand2.append({'suit':suits2[2], 'value': values2[2]})
+      hand2.append({'suit':suits2[2], 'value': values2[3]})
+      hand2.append({'suit':suits2[2], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(-1)
+    end
+
+    it "check if first hand has a four of a kind and second hand has royal flush" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+
+      suits1 = ["spade", "hearts", "club", "diamond"]
+      values1 = ['A', '4', '4', '4', '4']
+
+      hand1.append({'suit':suits1[0], 'value': values1[0]})
+      hand1.append({'suit':suits1[0], 'value': values1[1]})
+      hand1.append({'suit':suits1[1], 'value': values1[2]})
+      hand1.append({'suit':suits1[2], 'value': values1[3]})
+      hand1.append({'suit':suits1[3], 'value': values1[4]})
+
+      suits2 = ["spade", "hearts", "club", "diamond"]
+      values2 = ['A', 'K', 'Q', 'J', '10']
+
+      hand2.append({'suit':suits2[2], 'value': values2[0]})
+      hand2.append({'suit':suits2[2], 'value': values2[1]})
+      hand2.append({'suit':suits2[2], 'value': values2[2]})
+      hand2.append({'suit':suits2[2], 'value': values2[3]})
+      hand2.append({'suit':suits2[2], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(-1)
+    end
+
+    it "check if first hand has a straight flush and second hand has royal flush" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+
+      suits1 = ["spade", "hearts", "club", "diamond"]
+      values1 = ['8', '7', '5', '6', '4']
+
+      hand1.append({'suit':suits1[0], 'value': values1[0]})
+      hand1.append({'suit':suits1[0], 'value': values1[1]})
+      hand1.append({'suit':suits1[0], 'value': values1[2]})
+      hand1.append({'suit':suits1[0], 'value': values1[3]})
+      hand1.append({'suit':suits1[0], 'value': values1[4]})
+
+      suits2 = ["spade", "hearts", "club", "diamond"]
+      values2 = ['A', 'K', 'Q', 'J', '10']
+
+      hand2.append({'suit':suits2[2], 'value': values2[0]})
+      hand2.append({'suit':suits2[2], 'value': values2[1]})
+      hand2.append({'suit':suits2[2], 'value': values2[2]})
+      hand2.append({'suit':suits2[2], 'value': values2[3]})
+      hand2.append({'suit':suits2[2], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(-1)
+    end
+
+    it "check if first hand has a royal flush and second hand has a royal flush" do
+      hand = Hand.new(@cards)
+      hand1 = []
+      hand2 = []
+
+      suits1 = ["spade", "hearts", "club", "diamond"]
+      values1 = ['A', 'J', 'Q', '10', 'K']
+
+      hand1.append({'suit':suits1[0], 'value': values1[0]})
+      hand1.append({'suit':suits1[0], 'value': values1[1]})
+      hand1.append({'suit':suits1[0], 'value': values1[2]})
+      hand1.append({'suit':suits1[0], 'value': values1[3]})
+      hand1.append({'suit':suits1[0], 'value': values1[4]})
+
+      suits2 = ["spade", "hearts", "club", "diamond"]
+      values2 = ['A', 'K', 'Q', 'J', '10']
+
+      hand2.append({'suit':suits2[2], 'value': values2[0]})
+      hand2.append({'suit':suits2[2], 'value': values2[1]})
+      hand2.append({'suit':suits2[2], 'value': values2[2]})
+      hand2.append({'suit':suits2[2], 'value': values2[3]})
+      hand2.append({'suit':suits2[2], 'value': values2[4]})
+
+      expect(hand.compare_hands(hand1, hand2)).to eql(0)
+    end
 
   end
 end
