@@ -7,4 +7,8 @@ class Player
     @pot = pot
   end
 
+  def fold
+    status = 0
+    return status
+  end
 end
