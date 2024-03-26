@@ -268,4 +268,72 @@ describe Player do
       expect(player.pot).to eql(pot_amount)
     end
   end
+
+  describe "#card_replace" do
+    it "player replaces 1 card and check the new top index of the cards in the deck" do
+      hand = @hands[2]
+      player = Player.new(hand, @pot)
+      top_index = 20
+      hand_card_index = [0]
+      new_top_index = 21
+
+      expect(player.card_replace(@cards, top_index, hand_card_index)).to eql(new_top_index)
+    end
+
+    it "player replaces 1 card and check the replaced card" do
+      hand = @hands[2]
+      player = Player.new(hand, @pot)
+      top_index = 20
+      hand_card_index = [0]
+      player.card_replace(@cards, top_index, hand_card_index)
+      card = @cards[top_index]
+      hand_card = player.hand[4]
+
+      expect(hand_card).to eql(card)
+    end
+
+    it "player replaces 2 cards and check the new top index of the cards in the deck" do
+      hand = @hands[1]
+      player = Player.new(hand, @pot)
+      top_index = 20
+      hand_card_index = [1, 3]
+      new_top_index = 22
+
+      expect(player.card_replace(@cards, top_index, hand_card_index)).to eql(new_top_index)
+    end
+
+    it "player replaces 2 cards and check one replaced card" do
+      hand = @hands[1]
+      player = Player.new(hand, @pot)
+      top_index = 20
+      hand_card_index = [1, 3]
+      player.card_replace(@cards, top_index, hand_card_index)
+      card = @cards[top_index]
+      hand_card = player.hand[3]
+
+      expect(hand_card).to eql(card)
+    end
+
+    it "player replaces 3 cards and check the new top index of the cards in the deck" do
+      hand = @hands[1]
+      player = Player.new(hand, @pot)
+      top_index = 20
+      hand_card_index = [0, 1, 3]
+      new_top_index = 23
+
+      expect(player.card_replace(@cards, top_index, hand_card_index)).to eql(new_top_index)
+    end
+
+    it "player replaces 3 cards and check one replaced card" do
+      hand = @hands[1]
+      player = Player.new(hand, @pot)
+      top_index = 20
+      hand_card_index = [0, 1, 3]
+      player.card_replace(@cards, top_index, hand_card_index)
+      card = @cards[top_index]
+      hand_card = player.hand[2]
+
+      expect(hand_card).to eql(card)
+    end
+  end
 end

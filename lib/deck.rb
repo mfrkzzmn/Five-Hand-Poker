@@ -6,7 +6,6 @@ class Deck
 
   def shuffle_cards
     @cards.shuffle!()
-    return @cards
   end
 
   def deal_cards(shuffled_cards)
@@ -23,7 +22,7 @@ class Deck
       end
       result.append({'player':player, 'hand': cards})
     end
-    return result
+    result
   end
 
 end
