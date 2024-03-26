@@ -3,7 +3,7 @@ require 'player'
 
 describe Player do
   before do
-    @pot = 40
+    @pot = 100
     @cards = []
     suits = ["spade", "hearts", "club", "diamond"]
     values = ['2', '3', '4', '5', '6', '7', '8', '9','10', 'J', 'Q', 'K','A']
@@ -144,6 +144,128 @@ describe Player do
       status = 0
 
       expect(player.fold).to eql(status)
+    end
+  end
+
+  describe "#check" do
+    it "player decides to check the current pot" do
+      hand = @hands[8]
+      player = Player.new(hand, @pot)
+      status = 1
+
+      expect(player.pot_check).to eql(status)
+    end
+  end
+
+  describe "#call" do
+    it "player decides to call the current increased bet when he has the money" do
+      hand = @hands[8]
+      player = Player.new(hand, @pot)
+      call_amount = 10
+      result = 10
+      amount = player.pot_call(call_amount)
+      expect(amount).to eql(result)
+    end
+
+    it "player decides to call the current increased bet when he has the money and check whether his status changes" do
+      hand = @hands[8]
+      player = Player.new(hand, @pot)
+      call_amount = 10
+      status = 2
+      player.pot_call(call_amount)
+      expect(player.status).to eql(status)
+    end
+
+    it "player decides to call the current increased bet when he has the money and check his current pot" do
+      hand = @hands[8]
+      player = Player.new(hand, @pot)
+      call_amount = 10
+      pot_amount = 90
+      player.pot_call(call_amount)
+      expect(player.pot).to eql(pot_amount)
+    end
+
+    it "player decides to call the current increased bet when he has not the money" do
+      hand = @hands[8]
+      player = Player.new(hand, @pot)
+      call_amount = 110
+      result = -1
+      amount = player.pot_call(call_amount)
+      expect(amount).to eql(result)
+    end
+
+    it "player decides to call the current increased bet when he has not the money and check whether his status changes" do
+      hand = @hands[8]
+      player = Player.new(hand, @pot)
+      call_amount = 110
+      status = 1
+      player.pot_call(call_amount)
+      expect(player.status).to eql(status)
+    end
+
+    it "player decides to call the current increased bet when he has the money and check his current pot" do
+      hand = @hands[8]
+      player = Player.new(hand, @pot)
+      call_amount = 110
+      pot_amount = 100
+      player.pot_call(call_amount)
+      expect(player.pot).to eql(pot_amount)
+    end
+  end
+
+  describe "#raise" do
+    it "player decides to raise the game pot when he has the money" do
+      hand = @hands[8]
+      player = Player.new(hand, @pot)
+      call_amount = 10
+      result = 10
+      amount = player.pot_raise(call_amount)
+      expect(amount).to eql(result)
+    end
+
+    it "player decides to raise the game pot when he has the money and check whether his status changes" do
+      hand = @hands[8]
+      player = Player.new(hand, @pot)
+      call_amount = 10
+      status = 3
+      player.pot_raise(call_amount)
+      expect(player.status).to eql(status)
+    end
+
+    it "player decides to raise the game pot when he has the money and check his current pot" do
+      hand = @hands[8]
+      player = Player.new(hand, @pot)
+      call_amount = 10
+      pot_amount = 90
+      player.pot_raise(call_amount)
+      expect(player.pot).to eql(pot_amount)
+    end
+
+    it "player decides to raise the game pot when he has not the money" do
+      hand = @hands[8]
+      player = Player.new(hand, @pot)
+      call_amount = 110
+      result = -1
+      amount = player.pot_raise(call_amount)
+      expect(amount).to eql(result)
+    end
+
+    it "player decides to raise the game pot when he has not the money and check whether his status changes" do
+      hand = @hands[8]
+      player = Player.new(hand, @pot)
+      call_amount = 110
+      status = 1
+      player.pot_raise(call_amount)
+      expect(player.status).to eql(status)
+    end
+
+    it "player decides to raise the game pot when he has the money and check his current pot" do
+      hand = @hands[8]
+      player = Player.new(hand, @pot)
+      call_amount = 110
+      pot_amount = 100
+      player.pot_raise(call_amount)
+      expect(player.pot).to eql(pot_amount)
     end
   end
 end
