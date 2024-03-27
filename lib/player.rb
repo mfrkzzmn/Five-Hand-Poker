@@ -45,9 +45,9 @@ class Player
 
   def card_replace(cards, top_index, card_replaced_index)
     no_of_cards = card_replaced_index.length
-    @hand.delete_if.with_index{|_, i| card_replaced_index.include?(i) }
+    @hand.cards.delete_if.with_index{|_, i| card_replaced_index.include?(i) }
     (0...no_of_cards).each do |n|
-      @hand.append(cards[top_index])
+      @hand.cards.append(cards[top_index])
       top_index = top_index + 1
     end
     top_index
