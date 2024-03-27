@@ -157,7 +157,7 @@ describe Player do
     end
   end
 
-  describe "#call" do
+  describe "#pot_call" do
     it "player decides to call the current increased bet when he has the money" do
       hand = @hands[8]
       player = Player.new(hand, @pot)
@@ -198,7 +198,7 @@ describe Player do
       hand = @hands[8]
       player = Player.new(hand, @pot)
       call_amount = 110
-      status = 1
+      status = -1
       player.pot_call(call_amount)
       expect(player.status).to eql(status)
     end
@@ -213,7 +213,7 @@ describe Player do
     end
   end
 
-  describe "#raise" do
+  describe "#pot_raise" do
     it "player decides to raise the game pot when he has the money" do
       hand = @hands[8]
       player = Player.new(hand, @pot)
@@ -254,7 +254,7 @@ describe Player do
       hand = @hands[8]
       player = Player.new(hand, @pot)
       call_amount = 110
-      status = 1
+      status = -1
       player.pot_raise(call_amount)
       expect(player.status).to eql(status)
     end

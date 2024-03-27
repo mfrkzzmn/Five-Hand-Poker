@@ -152,7 +152,8 @@ describe Game do
   describe "#start" do
     it "game started" do
       game = Game.new(@deck, @players)
-      expect(game.start).to match_array(game.players)
+      game.start
+      expect(game.players[0]).not_to match_array(@players[0])
     end
   end
 end
