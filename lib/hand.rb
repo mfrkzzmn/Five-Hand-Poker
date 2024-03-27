@@ -213,214 +213,125 @@ class Hand
     return result
   end
 
-  def compare_hands(hand1, hand2)
+  def get_hand_pattern(hand)
     #result can be 1, 0, -1. if 1, then hand1 wins. if 0, then it is a tie. if -1, then hand2 wins
-    result = -2
-    continue_hand1 = 1
-    continue_hand2 = 1
-    hand1_value = [0, 0, 0, 0 , 0, 0 , 0, 0, 0]
-    hand2_value = [0, 0, 0, 0 , 0, 0 , 0, 0, 0]
+    continue_hand = 1
+    hand_value = [0, 0, 0, 0 , 0, 0 , 0, 0, 0, 0]
 
-    hand1_straight_flush = 0
-    hand2_straight_flush = 0
+    hand_straight_flush = 0
+    hand_four_of_a_kind = 0
+    hand_full_house = 0
+    hand_flush = 0
+    hand_straight = 0
+    hand_three_of_a_kind = 0
+    hand_double_pair = 0
+    hand_single_pair = 0
+    hand_royal_flush = check_royal_flush(hand)
 
-    hand1_four_of_a_kind = 0
-    hand2_four_of_a_kind = 0
-
-    hand1_full_house = 0
-    hand2_full_house = 0
-
-    hand1_flush = 0
-    hand2_flush = 0
-
-    hand1_straight = 0
-    hand2_straight = 0
-
-    hand1_three_of_a_kind = 0
-    hand2_three_of_a_kind = 0
-
-    hand1_double_pair = 0
-    hand2_double_pair = 0
-
-    hand1_single_pair = 0
-    hand2_single_pair = 0
-
-    hand1_royal_flush = check_royal_flush(hand1)
-    hand2_royal_flush = check_royal_flush(hand2)
-
-    if hand1_royal_flush == 1
-      continue_hand1 = 0
-      hand1_value[8] = 1
-    end
-
-    if hand2_royal_flush == 1
-      continue_hand2 = 0
-      hand2_value[8] = 1
+    # check if hand got royal flush
+    if hand_royal_flush == 1
+      continue_hand = 0
+      hand_value[9] = 1
     end
 
     # check if hand checking continues or not, straight flush
-
-    if continue_hand1 == 1
-      hand1_straight_flush = check_straight_flush(hand1)
+    if continue_hand == 1
+      hand_straight_flush = check_straight_flush(hand)
     end
 
-    if continue_hand2 == 1
-      hand2_straight_flush = check_straight_flush(hand2)
-    end
-
-    if hand1_straight_flush == 1
-      continue_hand1 = 0
-      hand1_value[7] = 1
-    end
-
-    if hand2_straight_flush == 1
-      continue_hand2 = 0
-      hand2_value[7] = 1
+    if hand_straight_flush == 1
+      continue_hand = 0
+      hand_value[8] = 1
     end
 
     # check if hand checking continues or not, four of a kinds.
-
-    if continue_hand1 == 1
-      hand1_four_of_a_kind = check_four_of_a_kind(hand1)
+    if continue_hand == 1
+      hand_four_of_a_kind = check_four_of_a_kind(hand)
     end
 
-    if continue_hand2 == 1
-      hand2_four_of_a_kind = check_four_of_a_kind(hand2)
-    end
-
-    if hand1_four_of_a_kind == 1
-      continue_hand1 = 0
-      hand1_value[6] = 1
-    end
-
-    if hand2_four_of_a_kind == 1
-      continue_hand2 = 0
-      hand2_value[6] = 1
+    if hand_four_of_a_kind == 1
+      continue_hand = 0
+      hand_value[7] = 1
     end
 
     # check if hand checking continues or not, full house.
-
-    if continue_hand1 == 1
-      hand1_full_house = check_full_house(hand1)
+    if continue_hand == 1
+      hand_full_house = check_full_house(hand)
     end
 
-    if continue_hand2 == 1
-      hand2_full_house = check_full_house(hand2)
-    end
-
-    if hand1_full_house == 1
-      continue_hand1 = 0
-      hand1_value[5] = 1
-    end
-
-    if hand2_full_house == 1
-      continue_hand2 = 0
-      hand2_value[5] = 1
+    if hand_full_house == 1
+      continue_hand = 0
+      hand_value[6] = 1
     end
 
     # check if hand checking continues or not, flush.
-
-    if continue_hand1 == 1
-      hand1_flush = check_flush(hand1)
+    if continue_hand == 1
+      hand_flush = check_flush(hand)
     end
 
-    if continue_hand2 == 1
-      hand2_flush = check_flush(hand2)
-    end
-
-    if hand1_flush == 1
-      continue_hand1 = 0
-      hand1_value[4] = 1
-    end
-
-    if hand2_flush == 1
-      continue_hand2 = 0
-      hand2_value[4] = 1
+    if hand_flush == 1
+      continue_hand = 0
+      hand_value[5] = 1
     end
 
     # check if hand checking continues or not, straight.
-
-    if continue_hand1 == 1
-      hand1_straight = check_straight(hand1)
+    if continue_hand == 1
+      hand_straight = check_straight(hand)
     end
 
-    if continue_hand2 == 1
-      hand2_straight = check_straight(hand2)
-    end
-
-    if hand1_straight == 1
-      continue_hand1 = 0
-      hand1_value[3] = 1
-    end
-
-    if hand2_straight == 1
-      continue_hand2 = 0
-      hand2_value[3] = 1
+    if hand_straight == 1
+      continue_hand = 0
+      hand_value[4] = 1
     end
 
     # check if hand checking continues or not, three of a kinds.
-
-    if continue_hand1 == 1
-      hand1_three_of_a_kind = check_three_of_a_kind(hand1)
+    if continue_hand == 1
+      hand_three_of_a_kind = check_three_of_a_kind(hand)
     end
 
-    if continue_hand2 == 1
-      hand2_three_of_a_kind = check_three_of_a_kind(hand2)
-    end
-
-    if hand1_three_of_a_kind == 1
-      continue_hand1 = 0
-      hand1_value[2] = 1
-    end
-
-    if  hand2_three_of_a_kind == 1
-      continue_hand2 = 0
-      hand2_value[2] = 1
+    if hand_three_of_a_kind == 1
+      continue_hand = 0
+      hand_value[3] = 1
     end
 
      # check if hand checking continues or not, double pairs.
-
-    if continue_hand1 == 1
-      hand1_double_pair = check_double_pairs(hand1)
+    if continue_hand == 1
+      hand_double_pair = check_double_pairs(hand)
     end
 
-    if continue_hand2 == 1
-      hand2_double_pair = check_double_pairs(hand2)
-    end
-
-    if hand1_double_pair == 1
-      continue_hand1 = 0
-      hand1_value[1] = 1
-    end
-
-    if hand2_double_pair == 1
-      continue_hand2 = 0
-      hand2_value[1] = 1
+    if hand_double_pair == 1
+      continue_hand = 0
+      hand_value[2] = 1
     end
 
     # check if hand checking continues or not, single pair.
-
-    if continue_hand1 == 1
-      hand1_single_pair = check_single_pair(hand1)
+    if continue_hand == 1
+      hand_single_pair = check_single_pair(hand)
     end
 
-    if continue_hand2 == 1
-      hand2_single_pair = check_single_pair(hand2)
+    if hand_single_pair == 1
+      continue_hand = 0
+      hand_value[1] = 1
     end
 
-    if hand1_single_pair == 1
-      continue_hand1 = 0
-      hand1_value[0] = 1
+    # if hand1 contunues, then it is high cards
+    if continue_hand == 1
+      hand_value[0] = 1
     end
 
-    if  hand2_single_pair == 1
-      continue_hand2 = 0
-      hand2_value[0] = 1
-    end
+    return hand_value
+  end
 
-    # if hand1 and hand2 contunues, then we need to check high cards
+  def compare_hands(hand1, hand2)
+    #result can be 1, 0, -1. if 1, then hand1 wins. if 0, then it is a tie. if -1, then hand2 wins
+    result = -2
+    hand1_value = get_hand_pattern(hand1)
+    hand2_value = get_hand_pattern(hand2)
 
-    if continue_hand1 == 0 && continue_hand2 == 0
+    is_hand1_high_card = hand1_value[0]
+    is_hand2_high_card = hand2_value[0]
+
+    if is_hand1_high_card == 0 && is_hand2_high_card == 0
       index1 = hand1_value.find_index(1)
       index2 = hand2_value.find_index(1)
 
@@ -433,7 +344,7 @@ class Hand
         hand2_card_index = get_hand_index_array(hand2)
 
         flag = 0
-        if index1 == 0 || index1 == 1 || index1 == 2 || index1 == 6
+        if index1 == 1 || index1 == 2 || index1 == 3 || index1 == 7
           hand1_pair, hand1_pairs_unique = get_pair_arrays(hand1)
           hand2_pair, hand2_pairs_unique = get_pair_arrays(hand2)
           flag = 1
@@ -451,15 +362,16 @@ class Hand
           result = check_same_hand(hand1_card_index, hand2_card_index)
         end
       end
-    elsif continue_hand1 == 0 && continue_hand2 == 1
+    elsif is_hand1_high_card == 0 && is_hand2_high_card == 1
       result = 1
-    elsif continue_hand1 == 1 && continue_hand2 == 0
+    elsif is_hand1_high_card == 1 && is_hand2_high_card == 0
       result = -1
-    elsif continue_hand1 == 1 and continue_hand2 == 1
+    elsif is_hand1_high_card == 1 and is_hand2_high_card == 1
       result = check_high_hand(hand1, hand2)
     end
 
     return result
   end
+
 
 end
