@@ -1,13 +1,21 @@
 class Player
   #status can be 0=>fold, 1=>check, 2=>call, 3=>raise
   attr_accessor :status
-  attr_accessor :pot
+  # attr_accessor :pot
   attr_accessor :hand
 
   def initialize(hand, pot)
     @hand = hand
     @pot = pot
     @status = -1
+  end
+
+  def set_pot(pot)
+    @pot = pot
+  end
+
+  def get_pot
+    @pot
   end
 
   def deduct_pot(amount)
@@ -19,7 +27,7 @@ class Player
     end
   end
 
-  def fold
+  def pot_fold
     @status = 0
   end
 
@@ -45,9 +53,9 @@ class Player
 
   def card_replace(cards, top_index, card_replaced_index)
     no_of_cards = card_replaced_index.length
-    @hand.cards.delete_if.with_index{|_, i| card_replaced_index.include?(i) }
+    @hand.get_cards.delete_if.with_index{|_, i| card_replaced_index.include?(i) }
     (0...no_of_cards).each do |n|
-      @hand.cards.append(cards[top_index])
+      @hand.get_cards.append(cards[top_index])
       top_index = top_index + 1
     end
     top_index

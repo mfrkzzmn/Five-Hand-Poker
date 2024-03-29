@@ -1,8 +1,16 @@
 class Hand
-  attr_accessor :cards
+  # attr_accessor :cards
 
   def initialize(cards)
     @cards = cards
+  end
+
+  def set_cards(cards)
+    @cards = cards
+  end
+
+  def get_cards
+    @cards
   end
 
   def get_hand_card_index

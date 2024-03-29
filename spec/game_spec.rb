@@ -33,15 +33,18 @@ describe Game do
     @players = []
 
     player_pot = 100
-    empty_hand = []
-    empty_player_hand = Hand.new(empty_hand)
-    @players.append(Player.new(empty_player_hand, player_pot))
-    @players.append(Player.new(empty_player_hand, player_pot))
-    @players.append(Player.new(empty_player_hand, player_pot))
-    @players.append(Player.new(empty_player_hand, player_pot))
+    init_cards = []
 
-    @player1 = Player.new(empty_player_hand, player_pot)
-    @player2 = Player.new(empty_player_hand, player_pot)
+    #high card hand
+    suits1 = ["spade", "hearts", "club", "diamond"]
+    values1 = ['A', 'J', '9', '10', 'K']
+
+    init_cards.append({'suit':suits1[0], 'value': values1[0]})
+    init_cards.append({'suit':suits1[1], 'value': values1[1]})
+    init_cards.append({'suit':suits1[2], 'value': values1[2]})
+    init_cards.append({'suit':suits1[3], 'value': values1[3]})
+    init_cards.append({'suit':suits1[0], 'value': values1[4]})
+
 
     #high card hand
     suits1 = ["spade", "hearts", "club", "diamond"]
@@ -153,18 +156,154 @@ describe Game do
     @cards10.append({'suit':suits2[2], 'value': values2[3]})
     @cards10.append({'suit':suits2[2], 'value': values2[4]})
 
-    @game = Game.new(@deck, @players)
+    init_player_hand1 = Hand.new(@cards1)
+    init_player_hand2 = Hand.new(@cards2)
+    init_player_hand3 = Hand.new(@cards3)
+    init_player_hand4 = Hand.new(@cards4)
+    init_player_hand5 = Hand.new(@cards5)
+    init_player_hand6 = Hand.new(@cards6)
 
+
+    @players.append(Player.new(init_player_hand1, player_pot))
+    @players.append(Player.new(init_player_hand2, player_pot))
+    @players.append(Player.new(init_player_hand3, player_pot))
+    @players.append(Player.new(init_player_hand4, player_pot))
+
+    @player1 = Player.new(init_player_hand5, player_pot)
+    @player2 = Player.new(init_player_hand6, player_pot)
+
+    @game = Game.new(@deck, @players)
   end
 
   describe "#start" do
-    it "game started" do
+    it "game started initial pot" do
       @game.start
-      expect(@game.players[0]).not_to match_array(@players[0])
+      expect(@game.game_pot).to eql(60)
+    end
+
+    it "game started player1 hand 1" do
+      @game.start
+      puts @game.player1.hand
+      expect(@game.player1.hand.get_cards[0]).to match_array(@game.cards[0])
+    end
+
+    it "game started player1 hand 2" do
+      @game.start
+      expect(@game.player1.hand.get_cards[1]).to match_array(@game.cards[4])
+    end
+
+    it "game started player1 hand 3" do
+      @game.start
+      expect(@game.player1.hand.get_cards[2]).to match_array(@game.cards[8])
+    end
+
+    it "game started player1 hand 4" do
+      @game.start
+      expect(@game.player1.hand.get_cards[3]).to match_array(@game.cards[12])
+    end
+
+    it "game started player1 hand 5" do
+      @game.start
+      expect(@game.player1.hand.get_cards[4]).to match_array(@game.cards[16])
+    end
+
+    it "game started player1 initial pot" do
+      @game.start
+      expect(@game.player1.get_pot).to eql(90)
+    end
+
+    it "game started player2 hand 1" do
+      @game.start
+      expect(@game.player2.hand.get_cards[0]).to match_array(@game.cards[1])
+    end
+
+    it "game started player2 hand 2" do
+      @game.start
+      expect(@game.player2.hand.get_cards[1]).to match_array(@game.cards[5])
+    end
+
+    it "game started player2 hand 3" do
+      @game.start
+      expect(@game.player2.hand.get_cards[2]).to match_array(@game.cards[9])
+    end
+
+    it "game started player2 hand 4" do
+      @game.start
+      expect(@game.player2.hand.get_cards[3]).to match_array(@game.cards[13])
+    end
+
+    it "game started player2 hand 5" do
+      @game.start
+      expect(@game.player2.hand.get_cards[4]).to match_array(@game.cards[17])
+    end
+
+    it "game started player2 initial pot" do
+      @game.start
+      expect(@game.player2.get_pot).to eql(80)
+    end
+
+    it "game started player3 hand 1" do
+      @game.start
+      expect(@game.player3.hand.get_cards[0]).to match_array(@game.cards[2])
+    end
+
+    it "game started player3 hand 2" do
+      @game.start
+      expect(@game.player3.hand.get_cards[1]).to match_array(@game.cards[6])
+    end
+
+    it "game started player3 hand 3" do
+      @game.start
+      expect(@game.player3.hand.get_cards[2]).to match_array(@game.cards[10])
+    end
+
+    it "game started player3 hand 4" do
+      @game.start
+      expect(@game.player3.hand.get_cards[3]).to match_array(@game.cards[14])
+    end
+
+    it "game started player3 hand 5" do
+      @game.start
+      expect(@game.player3.hand.get_cards[4]).to match_array(@game.cards[18])
+    end
+
+    it "game started player3 initial pot" do
+      @game.start
+      expect(@game.player3.get_pot).to eql(90)
+    end
+
+    it "game started player4 hand 1" do
+      @game.start
+      expect(@game.player4.hand.get_cards[0]).to match_array(@game.cards[3])
+    end
+
+    it "game started player4 hand 2" do
+      @game.start
+      expect(@game.player4.hand.get_cards[1]).to match_array(@game.cards[7])
+    end
+
+    it "game started player4 hand 3" do
+      @game.start
+      expect(@game.player4.hand.get_cards[2]).to match_array(@game.cards[11])
+    end
+
+    it "game started player4 hand 4" do
+      @game.start
+      expect(@game.player4.hand.get_cards[3]).to match_array(@game.cards[15])
+    end
+
+    it "game started player4 hand 5" do
+      @game.start
+      expect(@game.player4.hand.get_cards[4]).to match_array(@game.cards[19])
+    end
+
+    it "game started player4 initial pot" do
+      @game.start
+      expect(@game.player4.get_pot).to eql(80)
     end
   end
 
-  describe "#compare hands" do
+  describe "#compare_hands" do
     it "check if first hand has high cards and second hand has same high cards" do
       hand1 = Hand.new(@cards1)
       hand2 = Hand.new(@cards1)
@@ -2224,4 +2363,45 @@ describe Game do
 
   end
 
+  describe "#first_betting_round" do
+    it "check first player pot after first round" do
+      @game.start
+      player_pattern = @game.player1.hand.get_hand_pattern
+      player_pot_amount = @game.player1.get_pot
+      @game.betting_round
+
+      player_pot_after_first_round = @game.player1.get_pot
+
+      if player_pattern[0] == 1
+        expect(player_pot_after_first_round).to eql(player_pot_amount)
+      else
+        expect(player_pot_after_first_round).not_to eql(player_pot_amount)
+      end
+    end
+
+  end
+
+  describe "#card_discard_round" do
+    it "check if first player card replaces" do
+      @game.start
+      player_pattern_before = @game.player1.hand.get_hand_pattern
+      t_index = 20
+
+      @game.card_discard_round
+
+      pattern = player_pattern_before.find_index(1)
+      if pattern == 0 || pattern == 1 || pattern == 2 || pattern == 3
+        expect(@game.top_index).not_to eql(t_index)
+      else
+        expect(@game.top_index).to eql(t_index)
+      end
+    end
+  end
+
+  describe "#start_five_hand_poker" do
+    it "check if game runs" do
+      @game.start_five_hand_poker
+      expect(@game.total_winners).not_to eql(0)
+    end
+  end
 end

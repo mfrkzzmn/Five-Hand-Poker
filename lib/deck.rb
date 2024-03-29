@@ -16,7 +16,7 @@ class Deck
       cards = []
       i = i + 1
       card_index = i
-      (1...6).each do |n|
+      (0...5).each do |n|
         cards.append(shuffled_cards[card_index])
         card_index = card_index + 4
       end
