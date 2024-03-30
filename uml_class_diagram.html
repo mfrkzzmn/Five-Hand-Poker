@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Diagram</title>
+</head>
+<body>
+  <script src="https://unpkg.com/graphre/dist/graphre.js"></script>
+  <script src="https://unpkg.com/nomnoml/dist/nomnoml.js"></script>
+
+  <canvas id="target-canvas"></canvas>
+  <script>
+      var canvas = document.getElementById('target-canvas');
+      var source = `#direction: right
+#zoom: 0.9
+
+#font: Roboto
+#fontSize: 20
+#leading: 2
+#padding: 12
+
+#fillArrows: true
+#arrowSize: 0.5
+#spacing: 130
+
+#lineWidth: 1.5
+#stroke: #33322E
+
+#.class: fill=#FEDCC4 title=bold
+#.module: fill=#D9E6FF title=bold
+[<class> Card |
+   |
+  +make_values; +make_suits; +make_card_set |
+  
+]
+[<class> Deck |
+  @cards |
+  +initialize(cards); +shuffle_cards; +deal_cards(shuffled_cards) |
+  
+]
+[<class> Game |
+  @game_pot; @total_winners; @top_index; @deck |
+  +initialize(deck, new_players); +start; +check_high_hand(player1, player2); +check_same_hand(player1, player2); +compare_hands(player1, player2); +discard_card(player, top_index); +card_discard_round; +check_should_bet(player, bet); +betting_round; +start_five_hand_poker |
+  
+]
+[<class> Hand |
+  @cards |
+  +initialize(cards); +set_cards(cards); +get_cards; +get_hand_card_index; +get_card_pairs; +check_single_pair; +check_double_pair; +check_three_of_a_kind; +check_four_of_a_kind; +check_pre_straight; +check_straight; +check_straight_flush; +check_royal_flush; +check_flush; +check_full_house; +get_hand_pattern |
+  
+]
+[<class> Player |
+  @hand; @pot; @status |
+  +initialize(hand, pot); +set_pot(pot); +get_pot; +deduct_pot(amount); +pot_fold; +pot_check; +pot_call(amount); +pot_raise(amount); +card_replace(cards, top_index, card_replaced_index) |
+  
+]
+`;
+      nomnoml.draw(canvas, source);
+  </script>
+</body>
+</html>

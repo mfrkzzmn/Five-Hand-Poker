@@ -146,7 +146,7 @@ describe Player do
       player = Player.new(@hand1, @pot)
       status = 0
 
-      expect(player.fold).to eql(status)
+      expect(player.pot_fold).to eql(status)
     end
   end
 
@@ -181,7 +181,7 @@ describe Player do
       call_amount = 10
       pot_amount = 90
       player.pot_call(call_amount)
-      expect(player.pot).to eql(pot_amount)
+      expect(player.get_pot).to eql(pot_amount)
     end
 
     it "player decides to call the current increased bet when he has not the money" do
@@ -205,7 +205,7 @@ describe Player do
       call_amount = 110
       pot_amount = 100
       player.pot_call(call_amount)
-      expect(player.pot).to eql(pot_amount)
+      expect(player.get_pot).to eql(pot_amount)
     end
   end
 
@@ -231,7 +231,7 @@ describe Player do
       call_amount = 10
       pot_amount = 90
       player.pot_raise(call_amount)
-      expect(player.pot).to eql(pot_amount)
+      expect(player.get_pot).to eql(pot_amount)
     end
 
     it "player decides to raise the game pot when he has not the money" do
@@ -255,7 +255,7 @@ describe Player do
       call_amount = 110
       pot_amount = 100
       player.pot_raise(call_amount)
-      expect(player.pot).to eql(pot_amount)
+      expect(player.get_pot).to eql(pot_amount)
     end
   end
 
@@ -275,7 +275,7 @@ describe Player do
       hand_card_index = [0]
       player.card_replace(@cards, top_index, hand_card_index)
       card = @cards[top_index]
-      hand_card = player.hand.cards[4]
+      hand_card = player.hand.get_cards[4]
 
       expect(hand_card).to eql(card)
     end
@@ -295,7 +295,7 @@ describe Player do
       hand_card_index = [1, 3]
       player.card_replace(@cards, top_index, hand_card_index)
       card = @cards[top_index]
-      hand_card = player.hand.cards[3]
+      hand_card = player.hand.get_cards[3]
 
       expect(hand_card).to eql(card)
     end
@@ -315,7 +315,7 @@ describe Player do
       hand_card_index = [0, 1, 3]
       player.card_replace(@cards, top_index, hand_card_index)
       card = @cards[top_index]
-      hand_card = player.hand.cards[2]
+      hand_card = player.hand.get_cards[2]
 
       expect(hand_card).to eql(card)
     end

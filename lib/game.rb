@@ -608,16 +608,12 @@ class Game
     n = winner_players.length
     if n == 1
       puts "Winner player #{winner_players[0]}"
-      puts "He wins $#{@game_pot}"
     elsif n == 2
       puts "Winner player #{winner_players[0]} and #{winner_players[1]}"
-      puts "Each player wins $#{@game_pot/2}"
     elsif n == 3
       puts "Winner player #{winner_players[0]} and #{winner_players[1]} and #{winner_players[2]}"
-      puts "Each player wins $#{@game_pot/3}"
     else
       puts "Winner player #{winner_players[0]} and #{winner_players[1]} and #{winner_players[2]} and #{winner_players[3]}"
-      puts "Each player wins $#{@game_pot/4}"
     end
     @total_winners = n
   end
